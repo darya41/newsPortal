@@ -27,7 +27,7 @@
             <div class="auth-buttons">
                 <c:choose>
                     <c:when test="${not empty sessionScope.user}">
-                        <a href="goToPersonalAccount" class="login-button">Личный кабинет</a>
+                        <a href="Controller?command=go_to_personal_account" class="login-button">Личный кабинет</a>
                     </c:when>
                     <c:otherwise>
                         <a href="goToAuto" class="login-button">Войти</a>

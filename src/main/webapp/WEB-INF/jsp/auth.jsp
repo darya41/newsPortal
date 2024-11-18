@@ -28,7 +28,7 @@
     </header>
     <div class="login-container">
         <div class="login-image">
-            <img src="src\mainresources\auth.jpg" alt="Login Image">
+            <img src="/images/auth.png" alt="Login Image">
         </div>
         <h2>Вход</h2>
         <div class="error-message" id="error-message" style="color: red; margin-top:0;">
@@ -47,14 +47,15 @@
                 <label for="password">Пароль</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <div class="input-group remember-me">
-                <input type="checkbox" id="remember-me" name="remember-me">
-                <label for="remember-me">Запомнить меня</label>
-            </div>
+           <div class="input-group remember-me">
+    <input type="checkbox" id="remember-me" name="remember-me">
+    <label for="remember-me">Запомнить меня</label>
+</div>
+
             <button type="submit">Войти</button>
             <div class="links">
                 <a href="#">Забыли пароль?</a>
-                <a href="goToRegistration">Регистрация</a>
+                <a href="Controller?command=go_to_registration">Регистрация</a>
             </div>
         </form>
     </div>

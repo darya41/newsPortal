@@ -241,11 +241,13 @@ nav .menu li a {
 .remember-me {
     display: flex;
     align-items: center;
+    margin-bottom: 15px;
 }
 
 .remember-me input {
     margin-right: 10px;
 }
+
 
 button {
     width: 100%;

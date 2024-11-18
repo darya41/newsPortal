@@ -7,6 +7,8 @@ import app.yarmak.newsportal.controller.concrete.imp.DoAuth;
 import app.yarmak.newsportal.controller.concrete.imp.DoRegistration;
 import app.yarmak.newsportal.controller.concrete.imp.GoToIndexMain;
 import app.yarmak.newsportal.controller.concrete.imp.GoToRegistration;
+import app.yarmak.newsportal.controller.concrete.imp.GoToPersonalAccount;
+
 
 public class CommandProvider {
 private Map<CommandName, Command> commands = new HashMap<>();
@@ -17,6 +19,7 @@ private Map<CommandName, Command> commands = new HashMap<>();
 		commands.put(CommandName.GO_TO_INDEX_MAIN, new GoToIndexMain());
 		commands.put(CommandName.GO_TO_REGISTRATION,new GoToRegistration());
 		commands.put(CommandName.NO_SUCH_COMMAND, new NoSuchCommand());
+		commands.put(CommandName.GO_TO_PERSONAL_ACCOUNT, new GoToPersonalAccount());
 		commands.put(CommandName.NO_AUTH, new app.yarmak.newsportal.controller.concrete.imp.NoAuth());
 	}
 	public Command takeCommand(String userCommand) {

@@ -8,11 +8,11 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class GoToRegistration implements Command {
+public class GoToPersonalAccount implements Command {
 
 	@Override
 	public void execute(HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registration.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/personal_account.jsp");
 		dispatcher.forward(request, response);
 		
 	}
