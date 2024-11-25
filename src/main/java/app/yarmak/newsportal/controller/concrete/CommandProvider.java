@@ -5,6 +5,7 @@ import java.util.Map;
 
 import app.yarmak.newsportal.controller.concrete.imp.DoAuth;
 import app.yarmak.newsportal.controller.concrete.imp.DoRegistration;
+import app.yarmak.newsportal.controller.concrete.imp.GoToAuth;
 import app.yarmak.newsportal.controller.concrete.imp.GoToIndexMain;
 import app.yarmak.newsportal.controller.concrete.imp.GoToRegistration;
 import app.yarmak.newsportal.controller.concrete.imp.GoToPersonalAccount;
@@ -14,6 +15,7 @@ public class CommandProvider {
 private Map<CommandName, Command> commands = new HashMap<>();
 	
 	public CommandProvider() {
+		commands.put(CommandName.GO_TO_AUTH, new GoToAuth());
 		commands.put(CommandName.DO_AUTH, new DoAuth());
 		commands.put(CommandName.DO_REGISTRATION, new DoRegistration());
 		commands.put(CommandName.GO_TO_INDEX_MAIN, new GoToIndexMain());

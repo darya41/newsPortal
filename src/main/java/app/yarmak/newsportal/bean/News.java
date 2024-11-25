@@ -1,7 +1,6 @@
 package app.yarmak.newsportal.bean;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.Comparator;
 import java.util.Objects;
 
@@ -13,8 +12,8 @@ public class News implements Serializable {
 	 private String brief;
 	 private String content;
 	 private String author;
-	 private ZonedDateTime  publicationDate;
-	 private Category category;
+	 private java.sql.Timestamp publicationDate;
+	 private int idCategory;
 	 private int views;
 	 private int priority;
 	
@@ -22,7 +21,7 @@ public class News implements Serializable {
 	}
 	
 	public News(int id,String title, String brief, String content, String author, 
-			ZonedDateTime  publicationDate,Category category,int views, int priority) {
+			java.sql.Timestamp  publicationDate,int idCategory,int views, int priority) {
 		super();
 		this.id=id;
 		this.title = title;
@@ -30,10 +29,9 @@ public class News implements Serializable {
 		this.content=content;
 		this.author=author;
 		this.publicationDate=publicationDate;
-		this.category=category;
+		this.idCategory=idCategory;
 		this.views=views;
 		this.priority = priority;
-		
 	}
 	public int getId() {
 		return id;
@@ -75,20 +73,20 @@ public class News implements Serializable {
        this.author = author;
    }
 
-   public ZonedDateTime  getPublicationDate() {
+   public java.sql.Timestamp  getPublicationDate() {
        return publicationDate;
    }
 
-   public void setPublicationDate(ZonedDateTime  publicationDate) {
+   public void setPublicationDate(java.sql.Timestamp  publicationDate) {
        this.publicationDate = publicationDate;
    }
 
-   public Category getCategory() {
-       return category;
+   public int getCategory() {
+       return idCategory;
    }
 
-   public void setCategory(Category category) {
-       this.category = category;
+   public void setCategory(int category) {
+       this.idCategory = category;
    }
 
    public int getViews() {
@@ -110,7 +108,7 @@ public class News implements Serializable {
 	
 	@Override
 	public int hashCode() {
-		 return Objects.hash(id, title, brief, content, author, publicationDate, category, views);
+		 return Objects.hash(id, title, brief, content, author, publicationDate, idCategory, views);
 	}
 	
 	@Override
@@ -125,7 +123,7 @@ public class News implements Serializable {
 	            Objects.equals(content, news.content) &&
 	            Objects.equals(author, news.author) &&
 	            Objects.equals(publicationDate, news.publicationDate) &&
-	            Objects.equals(category, news.category)&&
+	            Objects.equals(idCategory, news.idCategory)&&
 	            Objects.equals(priority, news.priority);
 	    
 	}
@@ -139,7 +137,7 @@ public class News implements Serializable {
                ", content='" + content + '\'' +
                ", author='" + author + '\'' +
                ", publicationDate=" + publicationDate +
-               ", category='" + category + '\'' +
+               ", category='" + idCategory + '\'' +
                ", views=" + views +
                '}';
    }	

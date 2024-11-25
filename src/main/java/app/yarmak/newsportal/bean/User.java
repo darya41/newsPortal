@@ -1,54 +1,196 @@
 package app.yarmak.newsportal.bean;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private String name;
-	private AuthInfo auth;
+	private int id;
+	private String lastName;
+	private String firstName;
+	private java.sql.Timestamp dateBirth;
+	private String role;
+	private String login;
+	private String password;
+	private String phone;
+	private List<Integer> bookmarkedArticles;
+	private List<Integer> readingHistory;
+	private List<Integer> commentList;
+	private List<Integer> likesList;
+	
+	
 	
 	public User() {
 		
 	}
-	public User(String name, AuthInfo auth) {
-		this.auth=auth;
-		this.name=name;
-	}
 	
-	public String getName() {
-		return name;
-	}
+	public User(int id, String lastName, String firstName, java.sql.Timestamp dateBirth, 
+			String role,String login, String password, String phone, 
+			List<Integer> bookmarkedArticles, List<Integer> readingHistory, 
+			List<Integer> commentList, List<Integer> likesList) {
+        this.id = id;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.dateBirth = dateBirth;
+        this.role = role;
+        this.login=login;
+        this.password =password;
+        this.phone = phone;
+        this.bookmarkedArticles = bookmarkedArticles;
+        this.readingHistory = readingHistory;
+        this.commentList = commentList;
+        this.likesList = likesList;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
 
-	public AuthInfo getAuth() {
-		return auth;
-	}
 
-	public void setAuth(AuthInfo auth) {
-		this.auth = auth;
-	}
+	public int getId() {
+        return id;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(name, auth);
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		return Objects.equals(name, other.name) && Objects.equals(auth, other.auth);
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public java.sql.Timestamp getDateBirth() {
+        return dateBirth;
+    }
+
+    public void setDateBirth(java.sql.Timestamp dateBirth) {
+        this.dateBirth = dateBirth;
+    }
+
+   
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+    
+    public String getPassword() {
+    	return password;
+    }
+    public void setPassword(String password) {
+    	this.password=password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public List<Integer> getBookmarkedArticles() {
+        return bookmarkedArticles;
+    }
+
+    public void setBookmarkedArticles(List<Integer> bookmarkedArticles) {
+        this.bookmarkedArticles = bookmarkedArticles;
+    }
+
+    public List<Integer> getReadingHistory() {
+        return readingHistory;
+    }
+
+    public void setReadingHistory(List<Integer> readingHistory) {
+        this.readingHistory = readingHistory;
+    }
+
+    public List<Integer> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<Integer> commentList) {
+        this.commentList = commentList;
+    }
+
+    public List<Integer> getLikesList() {
+        return likesList;
+    }
+
+    public void setLikesList(List<Integer> likesList) {
+        this.likesList = likesList;
+    }
+
+    // hashCode
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, lastName, firstName, dateBirth, 
+        		role, login, password, phone, bookmarkedArticles, 
+        		readingHistory, commentList, likesList);
+    }
+
+    // equals
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        User user = (User) obj;
+        return id == user.id &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(firstName, user.firstName) &&
+                Objects.equals(dateBirth, user.dateBirth) &&
+                
+                Objects.equals(role, user.role) &&
+                Objects.equals(login, user.login) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(phone, user.phone) &&
+                Objects.equals(bookmarkedArticles, user.bookmarkedArticles) &&
+                Objects.equals(readingHistory, user.readingHistory) &&
+                Objects.equals(commentList, user.commentList) &&
+                Objects.equals(likesList, user.likesList);
+    }
+
+    // toString
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", dateBirth=" + dateBirth +
+                
+                ", role='" + role + '\'' +
+                ", login=" + login +
+                ", password=" + password +
+                ", phone='" + phone + '\'' +
+                ", bookmarkedArticles=" + bookmarkedArticles +
+                ", readingHistory=" + readingHistory +
+                ", commentList=" + commentList +
+                ", likesList=" + likesList +
+                '}';
+    }
+	
 }

@@ -8,14 +8,21 @@ body {
 
 
 header {
-	background-color: #333;
-	color: white;
-	padding: 10px 0;
-	display: flex;
-	align-items: center;
-	
-	justify-content: space-between;
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: -webkit-sticky; /* Для поддержки в Safari */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 2px ridge;
+    margin-bottom: 0;
 }
+
+
 
 header .logo {
 	font-size: 24px;
@@ -358,41 +365,39 @@ h2 {
 }
 
 /* Personal Account*/
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-}
-
 .navbar {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-}
-
-.sidebar {
-    background-color: #4CAF50;
-    color: white;
-    padding: 15px;
-    width: 200px;
-    float: left;
-}
-
-.main-content {
-    margin-left: 220px;
-    padding: 20px;
-}
-
-.profile {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.saved-news, .likes-comments {
-    background-color: white;
-    margin-top: 20px;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .sidebar {
+            width: 200px;
+            background-color: #388E3C;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            height: 100%;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .main-panel {
+            margin-left: 220px;
+            padding: 20px;
+        }
+        .content {
+            display: none;
+        }
+        .content.active {
+            display: block;
+        }

@@ -2,19 +2,23 @@ package app.yarmak.newsportal.controller.concrete.imp;
 
 import java.io.IOException;
 
+import com.google.protobuf.ServiceException;
+
 import app.yarmak.newsportal.bean.User;
 import app.yarmak.newsportal.controller.concrete.Command;
-import app.yarmak.newsportal.logic.CheckAuth;
+
+import app.yarmak.newsportal.service.ServiceProvider;
+import app.yarmak.newsportal.service.UserService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 public class DoAuth implements Command {
-	private CheckAuth checkAuth=new CheckAuth();
 
-	
+	private final UserService userService = ServiceProvider.getInstance().getUserService();
 
 	@Override
 	public void execute(HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException {
@@ -24,7 +28,14 @@ public class DoAuth implements Command {
 		String password = request.getParameter("password");
 		System.out.println(password);
 		
-		User user = checkAuth.CheckAuthUser(login,password);
+		User user = null;
+		try {
+			user = userService.signIn(login,password);
+			System.out.println(user.toString());
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(user !=null) {
 			HttpSession session = (HttpSession) request.getSession(true);
 			session.setAttribute("user", user);
