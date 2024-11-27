@@ -13,8 +13,7 @@ public class User implements Serializable{
 	private String firstName;
 	private java.sql.Timestamp dateBirth;
 	private String role;
-	private String login;
-	private String password;
+	private String email;
 	private String phone;
 	private List<Integer> bookmarkedArticles;
 	private List<Integer> readingHistory;
@@ -28,7 +27,7 @@ public class User implements Serializable{
 	}
 	
 	public User(int id, String lastName, String firstName, java.sql.Timestamp dateBirth, 
-			String role,String login, String password, String phone, 
+			String role,String email, String phone, 
 			List<Integer> bookmarkedArticles, List<Integer> readingHistory, 
 			List<Integer> commentList, List<Integer> likesList) {
         this.id = id;
@@ -36,8 +35,7 @@ public class User implements Serializable{
         this.firstName = firstName;
         this.dateBirth = dateBirth;
         this.role = role;
-        this.login=login;
-        this.password =password;
+        this.email=email;
         this.phone = phone;
         this.bookmarkedArticles = bookmarkedArticles;
         this.readingHistory = readingHistory;
@@ -89,20 +87,14 @@ public class User implements Serializable{
         this.role = role;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setEmail(String email) {
+        this.email = email;
     }
     
-    public String getPassword() {
-    	return password;
-    }
-    public void setPassword(String password) {
-    	this.password=password;
-    }
 
     public String getPhone() {
         return phone;
@@ -148,7 +140,7 @@ public class User implements Serializable{
     @Override
     public int hashCode() {
         return Objects.hash(id, lastName, firstName, dateBirth, 
-        		role, login, password, phone, bookmarkedArticles, 
+        		role, email, phone, bookmarkedArticles, 
         		readingHistory, commentList, likesList);
     }
 
@@ -164,8 +156,7 @@ public class User implements Serializable{
                 Objects.equals(dateBirth, user.dateBirth) &&
                 
                 Objects.equals(role, user.role) &&
-                Objects.equals(login, user.login) &&
-                Objects.equals(password, user.password) &&
+                Objects.equals(email, user.email) &&
                 Objects.equals(phone, user.phone) &&
                 Objects.equals(bookmarkedArticles, user.bookmarkedArticles) &&
                 Objects.equals(readingHistory, user.readingHistory) &&
@@ -183,8 +174,7 @@ public class User implements Serializable{
                 ", dateBirth=" + dateBirth +
                 
                 ", role='" + role + '\'' +
-                ", login=" + login +
-                ", password=" + password +
+                ", email=" + email +
                 ", phone='" + phone + '\'' +
                 ", bookmarkedArticles=" + bookmarkedArticles +
                 ", readingHistory=" + readingHistory +

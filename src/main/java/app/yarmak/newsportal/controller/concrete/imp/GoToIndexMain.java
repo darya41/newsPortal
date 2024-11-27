@@ -29,7 +29,6 @@ public class GoToIndexMain implements Command{
 			
 			e.printStackTrace();
 		}
-	       // System.out.println("list: " + newsList);
 	        
 	        List<News> mainNews = null;
 	        List<News> latestNews = null;
@@ -43,13 +42,10 @@ public class GoToIndexMain implements Command{
 				        catch (ServiceException e) {
 				e.printStackTrace();
 			}
-	       // System.out.println("Main News: " + mainNews);
 	        request.setAttribute("mainNews", mainNews);
 	  
-	       // System.out.println("last News: " + latestNews);
 	        request.setAttribute("latestNews", latestNews);
 	      	      			
-	       // System.out.println("popular News: " + popularNews);
 	        request.setAttribute("popularNews", popularNews);
 
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index_main.jsp");

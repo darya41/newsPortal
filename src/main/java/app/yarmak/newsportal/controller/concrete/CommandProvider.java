@@ -11,8 +11,8 @@ import app.yarmak.newsportal.controller.concrete.imp.GoToRegistration;
 import app.yarmak.newsportal.controller.concrete.imp.GoToPersonalAccount;
 
 
-public class CommandProvider {
-private Map<CommandName, Command> commands = new HashMap<>();
+public final class  CommandProvider {
+	private final Map<CommandName, Command> commands = new HashMap<>();
 	
 	public CommandProvider() {
 		commands.put(CommandName.GO_TO_AUTH, new GoToAuth());

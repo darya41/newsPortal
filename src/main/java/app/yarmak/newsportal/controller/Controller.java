@@ -19,11 +19,6 @@ public class Controller extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Controller() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */

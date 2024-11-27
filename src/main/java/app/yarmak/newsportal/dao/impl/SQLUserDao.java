@@ -19,17 +19,15 @@ public class SQLUserDao implements UserDao{
 	}
 
 	@Override
-	public User authorization(String login, String password) throws DaoException {
+	public User authorization(String email, String password) throws DaoException {
 try {
-		    System.out.println(login+"-------------");
-		    System.out.println(password+"-------------");
 		    Class.forName("com.mysql.cj.jdbc.Driver");
 		    	   
 		    Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/newsportalbd?useSSL=false&serverTimezone=UTC", "root", "Daria1234");
 		    
 		    Statement st = con.createStatement();
 		   
-		    String query =  "SELECT * FROM user WHERE login='" + login + "' AND password='" + password + "'";
+		    String query =  "SELECT * FROM user WHERE login='" + email + "' AND password='" + password + "'";
 		    ResultSet rs = st.executeQuery(query);
 		    if (rs.next()) {
 				
@@ -46,7 +44,7 @@ try {
 		    	List<Integer> likesList = null;
 		    	
 				return new User (id,lastName,firstName,dateBirth,role,
-						login,password, phone, bookmarkedArticles,readingHistory,commentList,likesList);
+						email, phone, bookmarkedArticles,readingHistory,commentList,likesList);
 				
 			}
 		    
