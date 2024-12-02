@@ -312,14 +312,35 @@ h2 {
         <section class="hero">
         	<c:choose>
 		    	<c:when test="${not empty sessionScope.user}">
-		        	<h1> ${sessionScope.user.lastName} добро пожаловать на наш Новостной Портал!</h1>
-		        	<p>Последние новости и обновления</p>
+		    		<c:if test="${sessionScope.user.role == 'user' }">
+                      <h1> ${sessionScope.user.lastName} добро пожаловать на наш Новостной Портал!</h1>
+		        		<p>Последние новости и обновления</p>
+                  </c:if>
+		        	
 		    	</c:when>
 		    	<c:otherwise>
 		        	<h1> Добро пожаловать на наш Новостной Портал!</h1>
             		<p>Последние новости и обновления</p>
 		   		 </c:otherwise>
-			</c:choose>           
+			</c:choose>
+			
+			<c:if test="${sessionScope.user.role == 'admin'}">
+    			<section class="admin-panel">
+        		<h2>Панель администратора</h2>
+        		<p>Здесь вы можете управлять пользователями и контентом.</p>
+        		<!-- Добавьте ссылки на страницы управления -->
+    			</section>
+			</c:if>
+			
+			<c:if test="${sessionScope.user.role == 'author'}">
+    			<section class="author-panel">
+        		<h2>Панель автора</h2>
+        		<p>Здесь вы можете создавать и редактировать свои новости.</p>
+       		 	<!-- Добавьте ссылки на страницы создания и редактирования новостей -->
+    			</section>
+			</c:if>
+			
+			           
         </section>
         <section class="slider">
             <h2>Главные Новости</h2>
@@ -328,9 +349,25 @@ h2 {
                     <div class="slide">
                         <h3><c:out value="${item.title}" /></h3>
                         <p><c:out value="${item.brief}" /></p>
+                         <p>Автор: <c:out value="${item.author}" /></p>
                          
                         <button class="more-btn" 
                         onclick="window.location.href='goController?command=no_auth'">Подробнее</button>
+                        
+                        <c:if test="${not empty sessionScope.user}">
+                         <!-- Проверка роли пользователя и владельца статьи -->
+                        <c:set var="fullName" value="${sessionScope.user.lastName} ${sessionScope.user.firstName}" />
+                		<c:choose>
+                    		
+<c:when test="${sessionScope.user.role == 'admin' 
+|| (fullName == item.author && sessionScope.user.role == 'author')}">
+
+
+                        		<button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${last.id}'">Редактировать</button>
+                        		<button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${last.id}'">Удалить</button>
+                    		</c:when>
+                		</c:choose>
+                		</c:if>
 
                     </div>
                 </c:forEach>                
@@ -344,10 +381,26 @@ h2 {
                     <div class="slide">
                         <h3><c:out value="${last.title}" /></h3>
                         <p><c:out value="${last.brief}" /></p>
+                        <p>Автор: <c:out value="${last.author}" /></p>
                          
                         <button class="more-btn" 
                         onclick="window.location.href='goController?command=no_auth'">
                         Подробнее</button>
+                        
+                         <c:if test="${not empty sessionScope.user}">
+                         <!-- Проверка роли пользователя и владельца статьи -->
+                        <c:set var="fullName" value="${sessionScope.user.lastName} ${sessionScope.user.firstName}" />
+                		<c:choose>
+                    		
+<c:when test="${sessionScope.user.role == 'admin' 
+|| (fullName == last.author && sessionScope.user.role == 'author')}">
+
+
+                        		<button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${last.id}'">Редактировать</button>
+                        		<button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${last.id}'">Удалить</button>
+                    		</c:when>
+                		</c:choose>
+                		</c:if>
 
                     </div>
                 </c:forEach>    
@@ -361,15 +414,33 @@ h2 {
                 		<div class="popular-slide">
                     		<h3><c:out value="${item.title}" /></h3>
                     		<p><c:out value="${item.brief}" /></p>
+                    		 <p>Автор: <c:out value="${item.author}" /></p>
                     		<button class="more-btn" 
                     		onclick="window.location.href='goController?command=no_auth'">
                     		Подробнее</button>
+                    		
+                    		 <c:if test="${not empty sessionScope.user}">
+                         <!-- Проверка роли пользователя и владельца статьи -->
+                        <c:set var="fullName" value="${sessionScope.user.lastName} ${sessionScope.user.firstName}" />
+                		<c:choose>
+                    		
+<c:when test="${sessionScope.user.role == 'admin' 
+|| (fullName == item.author && sessionScope.user.role == 'author')}">
+
+
+                        		<button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${last.id}'">Редактировать</button>
+                        		<button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${last.id}'">Удалить</button>
+                    		</c:when>
+                		</c:choose>
+                		</c:if>
+                    		
                 		</div>
             		</li>
         		</c:forEach>
     		</ul>
 		</section>
         <c:if test="${not empty sessionScope.user}">
+        	<c:if test="${sessionScope.user.role == 'user' && sessionScope.user.role == 'author' }">
             <section class="exclusive-news">
                 <h2>Новости по вашим интересам</h2>
                 <article>
@@ -377,7 +448,8 @@ h2 {
                     <p>Краткое описание  новости...</p>
                 </article>
             </section>
-        </c:if>
+        	</c:if>
+         </c:if>
     </main>
     <footer>
         <p>© 2024 Новостной Портал. Все права защищены.</p>
