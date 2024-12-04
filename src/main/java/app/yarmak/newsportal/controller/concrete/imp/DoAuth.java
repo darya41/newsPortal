@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.google.protobuf.ServiceException;
 
+import app.yarmak.newsportal.bean.Auth;
 import app.yarmak.newsportal.bean.User;
 import app.yarmak.newsportal.controller.concrete.Command;
 
@@ -25,23 +26,27 @@ public class DoAuth implements Command {
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
 		
-		User user = null;
+		Auth auth = null;
 		try {
-			user = userService.signIn(login,password);
-			System.out.println(user.toString());
+			System.out.println("-----------1");
+			auth = userService.signIn(login,password);
+			System.out.println(auth);
 		} catch (ServiceException e) {
 			e.printStackTrace();
 		}
-		if(user == null) {
+		if(auth == null) {
 			request.setAttribute("authError", "Неправильный логин или пароль!");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/auth.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("goController?command=go_to_auth");
             dispatcher.forward(request, response);
             return;
 		}
-		HttpSession session = (HttpSession) request.getSession(true);
-		session.setAttribute("user", user);
+			HttpSession session = (HttpSession) request.getSession(true);
+			session.setAttribute("user", auth);
+		System.out.println("User set in session: " + session.getAttribute("user"));
 		
-		response.sendRedirect("goController?command=go_to_index_main");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("goController?command=go_to_index_main");
+		dispatcher.forward(request, response);
+
 		
 	}
 

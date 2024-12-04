@@ -5,9 +5,12 @@ import java.util.Map;
 
 import app.yarmak.newsportal.controller.concrete.imp.DoAuth;
 import app.yarmak.newsportal.controller.concrete.imp.DoRegistration;
+import app.yarmak.newsportal.controller.concrete.imp.GoToApplyAuthor;
 import app.yarmak.newsportal.controller.concrete.imp.GoToAuth;
 import app.yarmak.newsportal.controller.concrete.imp.GoToIndexMain;
 import app.yarmak.newsportal.controller.concrete.imp.GoToRegistration;
+import app.yarmak.newsportal.controller.concrete.imp.LogOut;
+import app.yarmak.newsportal.controller.concrete.imp.NoAuth;
 import app.yarmak.newsportal.controller.concrete.imp.GoToPersonalAccount;
 
 
@@ -22,7 +25,9 @@ public final class  CommandProvider {
 		commands.put(CommandName.GO_TO_REGISTRATION,new GoToRegistration());
 		commands.put(CommandName.NO_SUCH_COMMAND, new NoSuchCommand());
 		commands.put(CommandName.GO_TO_PERSONAL_ACCOUNT, new GoToPersonalAccount());
-		commands.put(CommandName.NO_AUTH, new app.yarmak.newsportal.controller.concrete.imp.NoAuth());
+		commands.put(CommandName.GO_TO_APPLY_AUTHOR, new GoToApplyAuthor());
+		commands.put(CommandName.NO_AUTH, new NoAuth());
+		commands.put(CommandName.LOG_OUT,new LogOut() );
 	}
 	public Command takeCommand(String userCommand) {
 		CommandName commandName = null;

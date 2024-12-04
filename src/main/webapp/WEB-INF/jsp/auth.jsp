@@ -124,8 +124,8 @@ display: flex;
     align-items: center; /* Центрирование по вертикали */
     gap: 20px; /* Расстояние между изображением и формой */
     width: 60%;
-    margin: 50px auto;
-    padding: 50px;
+    margin: 10px auto;
+    padding: 20px 50px;
     background-color: white;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -133,10 +133,11 @@ display: flex;
 }
 
 .login-container .login-image {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 .login-image {
-    flex: 1; /* Изображение занимает одну часть */
+    flex: 1; 
+   margin-bottom:5px;/* Изображение занимает одну часть */
 }
 
 .login-form {
@@ -203,8 +204,17 @@ button:hover {
     text-decoration: none;
     margin: 0 10px;
 }
+
+    .error-message {
+        color: red;
+        margin-top: 0;
+        font-weight: bold; 
+         text-align: center;
+    }
+</style>
+
     
-    </style>
+
 </head>
 <body>
     <header>
@@ -230,7 +240,6 @@ button:hover {
         <div class="error-message" id="error-message" style="color: red; margin-top:0;">
             <c:if test="${not empty requestScope.authError}">
                 <c:out value="${requestScope.authError}" />
-                <script>console.log("authError: ${requestScope.authError}");</script>
             </c:if>
         </div>
             <input type="hidden" name="command" value="do_auth">

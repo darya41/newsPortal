@@ -1,9 +1,9 @@
 package app.yarmak.newsportal.dao;
-
-import app.yarmak.newsportal.bean.User;
+import app.yarmak.newsportal.bean.Auth;
 
 public interface UserDao {
-	User registration() throws DaoException;
-	User authorization(String login, String password) throws DaoException;
+	
+	Auth getUserById(int id) throws DaoException;
+    boolean isEmailRegistered(String email) throws DaoException;
 	
 }

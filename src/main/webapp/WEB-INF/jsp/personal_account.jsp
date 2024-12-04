@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="./css/style.css">
 <link rel="stylesheet" href="./css/styleNew.css">
 <style>
- body {
+  body {
 	font-family: Arial, sans-serif;
 	margin: 0;
 	padding: 0;
@@ -92,176 +92,126 @@ footer a {
 	color: #1abc9c;
 	text-decoration: none;
 }
-.content {
-    display: none;
-}
-
-.content.active {
-    display: block;
-}
-
-
-    body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-}
-
-.sidebar {
-    width: 200px;
-    background-color: #1abc9c;
-    color: white;
-    padding: 20px;
-    position: fixed;
-    height: 100%;
-}
-
-.sidebar ul {
+nav .menu {
     list-style: none;
     padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
 }
 
-.sidebar ul li {
-    margin: 20px 0;
+nav .menu li {
+    margin: 0 15px;
 }
 
-.sidebar ul li a {
+nav .menu li a {
     color: white;
     text-decoration: none;
     font-weight: bold;
 }
 
-.main-panel {
-    margin-left: 220px;
-    padding: 20px;
-}
-
-.content {
-    display: none;
-}
-
-.content.active {
-    display: block;
-}
-
-#profile {
-     display: flex;  
-    justify-content: space-between;
-}
-
-.profile, .calendar {
-    flex: 1;
-    margin: 10px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    padding: 20px;
-}
-
-.profile {
-    width: 55%;
-}
-
-.calendar {
-    width: 40%;
-    height: 70vh;
-    margin-right:40px;
-}
-
-.stats {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.stats > div {
-    flex: 1;
-    margin: 10px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    padding: 20px;
-}
-
-/* Стили для заголовка */
-.fc-toolbar {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
-    padding: 10px;
-    border-radius: 10px 10px 0 0;
-}
-
-.first-item{
-margin-left: 40px;
- width: 55%;
-    height: 70vh;
-}
-/* Стили для кнопок */
-.fc-button {
-    background-color: #007bff;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    margin: 0 5px;
-}
-
-.fc-button:hover {
-    background-color: #0056b3;
-}
-
-/* Стили для заголовка месяца */
-.fc-toolbar-title {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #343a40;
-}
-
-/* Дополнительные стили для улучшения внешнего вида */
-.edit_profile {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    cursor: pointer;
+.auth-buttons {
     margin-top: 10px;
 }
 
-.edit_profile:hover {
-    background-color: #0056b3;
-}
-.profile{
- display: flex;
- justify-content: space-between;
- width:90%;
- padding: 0 auto;
+.auth-buttons .login-button {
+    background-color: #1abc9c;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
 }
 
-.profile img {
-    border-radius: 50%;
-    width: 90%;
-    height: 90%;
-    object-fit: cover;
-    margin-bottom: 10px;
-    border-color:black;
-}
-.profile .content-profile{
-	margin-left: 20px;
-	width:90%;
-}
-.profile .content-profile h2 {
-    font-size: 1.5em;
-    margin: 10px 0;
-}
 
-.profile .content-profile p {
-    color: #666;
-    margin: 5px 0;
-}
+    .sidebar {
+        width: 200px;
+        float: left;
+        background-color:#1abc9c;
+        padding: 10px;
+       padding: 10px;
+        min-height: 75vh; 
+        height: 100%; /* Растягиваем боковую панель на всю высоту страницы */
+        box-sizing: border-box;
+        
+    }
 
+    .sidebar ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .sidebar ul li {
+        margin: 10px 0;
+    }
+
+    .sidebar ul li a {
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .main-panel {
+        margin-left: 220px;
+        padding: 20px;
+         
+    }
+
+    .content {
+        display: none;
+    }
+
+    .content.active {
+        display: block;
+    }
+
+    .profile {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .profile img {
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        margin-right: 20px;
+         border: 2px solid black; 
+    }
+
+    .content-profile {
+        flex-grow: 1;
+    }
+
+    .content-profile h2 {
+        margin: 0;
+        font-size: 24px;
+    }
+
+    .content-profile p {
+        margin: 5px 0;
+        color: #666;
+    }
+
+    .edit_profile {
+        color: #007bff;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .stats {
+        margin-top: 20px;
+    }
+
+    .stats h3 {
+        margin-bottom: 10px;
+    }
+
+    .stats p {
+        margin: 5px 0;
+    }
 </style>
+
+
 </head>
 <body>
     <header>
@@ -273,7 +223,7 @@ margin-left: 40px;
                 <li><a href="#">Категории</a></li>
             </ul>
             <div class="auth-buttons">
-                <a href="logout" class="login-button">Выйти</a>
+                <a href="goController?command=log_out" class="login-button">Выйти</a>
             </div>
         </nav>
     </header>
@@ -291,25 +241,58 @@ margin-left: 40px;
     </div>
     <div class="main-panel">
         <div id="profile" class="content active">
-            <div class="first-item">
-                <div class="profile">
-                
-                    <img src="profile.jpg" alt="Ирина Рыбина">
-                 
-                 <div class= "content-profile">
-                    <h2>Ирина Рыбина</h2>
-                    <p>Руководитель подразделения продаж</p>
-                    <div class="edit_profile">Редактировать профиль           ></div>
-                    </div>
-                </div>
-                <div class="stats">
-                    <h3>Статистика</h3>
-                   
-                </div>
-
-             </div>
-               
-            <div id='calendar'></div>
+        <c:if test="${not empty sessionScope.user}">
+	            <div class="profile">
+	                <img src="profile.jpg" alt="">
+	                <div class="content-profile">
+	                    <h2><c:out value="${sessionScope.user.username} ${sessionScope.user.lastName}"/></h2>
+	                    <c:if test="${sessionScope.user.role=='user'}">
+	                    	<p>Пользователь новостного портала</p>
+	                    </c:if>
+	                    <c:if test="${sessionScope.user.role == 'author'}">
+	                    	<p>Автор новостей</p>
+	                    </c:if>
+	                    <div class="edit_profile">Редактировать профиль ></div>
+	                </div>
+	            </div>
+	            <div class="stats">
+	                <h3>Информация о пользователе</h3>
+	                <p><strong>Имя:</strong> <c:out value="${sessionScope.user.username}"/></p>
+	                <p><strong>Фамилия:</strong> <c:out value="${sessionScope.user.lastName}"/></p>
+	                <p><strong>Дата рождения:</strong> 
+	                	<c:if test="${ not empty sessionScope.user.dateBirth}">
+	                		<c:out value="${sessionScope.user.dateBirth}"/>
+	                	</c:if>
+	                	<c:if test="${empty sessionScope.user.dateBirth}">
+	                		Отсутствует
+	                	</c:if>
+	                </p>
+	                <p><strong>Роль:</strong> 
+						<c:if test="${sessionScope.user.role=='user'}">
+	                    	Пользователь новостного портала
+	                    </c:if>
+	                    <c:if test="${sessionScope.user.role == 'author'}">
+	                    	Автор новостей
+	                    </c:if>
+					</p>
+	                <p><strong>Электронная почта:</strong><c:out value="${sessionScope.user.email}"/> </p>
+	                <p><strong>Номер телефона:</strong> 
+	                <c:if test="${ not empty sessionScope.user.phone}">
+	                		<c:out value="${sessionScope.user.phone}"/>
+	                	</c:if>
+	                	<c:if test="${empty sessionScope.user.phone}">
+	                		Отсутствует
+	                	</c:if>
+	                </p>
+	            </div>
+	            <div class="stats">
+	            <br>
+	                <h3>Статистика</h3>
+	                <p>Количество сохраненных новостей: 10</p>
+	                <p>Количество отметок "Нравится": 25</p>
+	                <p>Количество комментариев: 15</p>
+	            </div>
+            </c:if>
         </div>
         <div id="bookmarks" class="content">Сохраненные статьи</div>
         <div id="history" class="content">История чтения</div>
@@ -318,42 +301,7 @@ margin-left: 40px;
         <div id="time-spend" class="content">Потраченное время</div>
         <div id="settings" class="content">Настройки</div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                },
-                events: [
-                    {
-                        title: 'Посещение',
-                        start: '2024-11-01',
-                        color: '#378006' // Цвет для выделения
-                    },
-                    {
-                        title: 'Посещение',
-                        start: '2024-11-05',
-                        color: '#378006'
-                    },
-                    {
-                        title: 'Посещение',
-                        start: '2024-11-10',
-                        color: '#378006'
-                    }
-                    // Добавьте больше событий по необходимости
-                ],
-                eventColor: '#378006', // Цвет событий
-                themeSystem: 'bootstrap' // Использование темы Bootstrap
-            });
-
-            calendar.render();
-        });
-        </script>
+   
         
 
         <script>

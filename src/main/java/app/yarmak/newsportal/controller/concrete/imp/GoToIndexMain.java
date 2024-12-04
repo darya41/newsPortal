@@ -14,6 +14,7 @@ import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 public class GoToIndexMain implements Command{
 	private final NewsService provider = ServiceProvider.getInstance().getNewsService();
@@ -47,6 +48,8 @@ public class GoToIndexMain implements Command{
 	        request.setAttribute("latestNews", latestNews);
 	      	      			
 	        request.setAttribute("popularNews", popularNews);
+	        HttpSession session = (HttpSession) request.getSession(true);
+			System.out.println("User set in session in GoToMainIndex: " + session.getAttribute("user"));
 
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index_main.jsp");
 	        dispatcher.forward(request, response); 

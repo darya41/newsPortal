@@ -2,62 +2,63 @@ package app.yarmak.newsportal.dao.impl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
+
+import app.yarmak.newsportal.bean.Auth;
 import app.yarmak.newsportal.bean.User;
 import app.yarmak.newsportal.dao.DaoException;
 import app.yarmak.newsportal.dao.UserDao;
 
 public class SQLUserDao implements UserDao{
 
-	@Override
-	public User registration() throws DaoException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	private static final String DB_URL = "jdbc:mysql://127.0.0.1/newsportalbd?useSSL=false&serverTimezone=UTC";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "Daria1234";
+    
 
 	@Override
-	public User authorization(String email, String password) throws DaoException {
-try {
-		    Class.forName("com.mysql.cj.jdbc.Driver");
-		    	   
-		    Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/newsportalbd?useSSL=false&serverTimezone=UTC", "root", "Daria1234");
-		    
-		    Statement st = con.createStatement();
-		   
-		    String query =  "SELECT * FROM user WHERE login='" + email + "' AND password='" + password + "'";
-		    ResultSet rs = st.executeQuery(query);
-		    if (rs.next()) {
-				
-		    	int id = rs.getInt("id");
-		    	String lastName = rs.getString("lastName");
-		    	String firstName = rs.getString("firstName");
-		    	 System.out.println(id+"-------------");
-		    	java.sql.Timestamp dateBirth = rs.getTimestamp("dateBirth");;
-		    	String role =rs.getString("role");
-		    	String phone =rs.getString("phone");
-		    	List<Integer> bookmarkedArticles = null;
-		    	List<Integer> readingHistory = null;
-		    	List<Integer> commentList = null;
-		    	List<Integer> likesList = null;
-		    	
-				return new User (id,lastName,firstName,dateBirth,role,
-						email, phone, bookmarkedArticles,readingHistory,commentList,likesList);
-				
-			}
-		    
-		    	   
-		} catch (ClassNotFoundException e) {
-		    e.printStackTrace();
-		    System.out.println("MySQL Driver not found.");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		    System.out.println("Failed to retrieve news: " + e.getMessage());
-		}
-
-		return null;
+	public boolean isEmailRegistered(String email) throws DaoException {
+		String query = "SELECT COUNT(*) FROM users WHERE email = ?";
+	    try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+	         PreparedStatement statement = conn.prepareStatement(query)) {
+	        statement.setString(1, email);
+	        try (ResultSet resultSet = statement.executeQuery()) {
+	            if (resultSet.next()) {
+	                return resultSet.getInt(1) > 0;
+	            }
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	    return false;
 	}
 
+	public Auth getUserById(int id) throws DaoException{
+		 String query = "SELECT * FROM users WHERE id = ?";
+	        try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+	             PreparedStatement statement = connection.prepareStatement(query)) {
+	            statement.setInt(1, id);
+	            try (ResultSet resultSet = statement.executeQuery()) {
+	                if (resultSet.next()) {
+	                    Auth auth = new Auth(id, query, query, query, query, null, query);
+	                    auth.setId(resultSet.getInt("id"));
+	                    auth.setLastName(resultSet.getString("lastName"));
+	                    auth.setUsername(resultSet.getString("firstName"));  
+	                    auth.setRole(resultSet.getString("role"));	
+	                    auth.setEmail(resultSet.getString("email"));
+	                    java.sql.Timestamp   registrationDate= resultSet.getTimestamp("registration_date");
+	                    auth.setRegistrationDate(registrationDate);
+	                    auth.setStatus(resultSet.getString("status"));
+
+	                    return auth;
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return null;
+    
+	}
 }

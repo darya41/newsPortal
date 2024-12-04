@@ -11,11 +11,12 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href=".\css\style.css">
     <title>Главная страница</title>
-    <link rel="stylesheet" href="./css/style.css">
+    
    
     <style>
-    body {
+body {
 	font-family: Arial, sans-serif;
 	margin: 0;
 	padding: 0;
@@ -254,7 +255,7 @@ h2 {
     margin-top: 0;
 }
 
-.more-btn {
+.more-btn,.edit-btn,.delete-btn {
     background-color: #1abc9c;
     color: white;
     border: none;
@@ -266,7 +267,7 @@ h2 {
     margin-top: 10px;
 }
 
-.more-btn:hover {
+.more-btn:hover,.edit-btn:hover,.delete-btn:hover {
     background-color: #005bb5;
 }
 
@@ -309,11 +310,13 @@ h2 {
         </nav>
     </header>
     <main>
+    
+
         <section class="hero">
         	<c:choose>
 		    	<c:when test="${not empty sessionScope.user}">
 		    		<c:if test="${sessionScope.user.role == 'user' }">
-                      <h1> ${sessionScope.user.lastName} добро пожаловать на наш Новостной Портал!</h1>
+                      <h1> ${sessionScope.user.username} добро пожаловать на наш Новостной Портал!</h1>
 		        		<p>Последние новости и обновления</p>
                   </c:if>
 		        	
@@ -335,6 +338,8 @@ h2 {
 			<c:if test="${sessionScope.user.role == 'author'}">
     			<section class="author-panel">
         		<h2>Панель автора</h2>
+        		<c:set var="fullName" value=" ${user.username} ${user.lastName}" />
+        		<h3>${user.username} ${user.lastName}</h3>
         		<p>Здесь вы можете создавать и редактировать свои новости.</p>
        		 	<!-- Добавьте ссылки на страницы создания и редактирования новостей -->
     			</section>
@@ -342,103 +347,110 @@ h2 {
 			
 			           
         </section>
-        <section class="slider">
-            <h2>Главные Новости</h2>
-            <div class="carousel">
-            	<c:forEach var="item" items="${mainNews}">
-                    <div class="slide">
-                        <h3><c:out value="${item.title}" /></h3>
-                        <p><c:out value="${item.brief}" /></p>
-                         <p>Автор: <c:out value="${item.author}" /></p>
-                         
-                        <button class="more-btn" 
-                        onclick="window.location.href='goController?command=no_auth'">Подробнее</button>
-                        
-                        <c:if test="${not empty sessionScope.user}">
-                         <!-- Проверка роли пользователя и владельца статьи -->
-                        <c:set var="fullName" value="${sessionScope.user.lastName} ${sessionScope.user.firstName}" />
-                		<c:choose>
-                    		
-<c:when test="${sessionScope.user.role == 'admin' 
-|| (fullName == item.author && sessionScope.user.role == 'author')}">
-
-
-                        		<button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${last.id}'">Редактировать</button>
-                        		<button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${last.id}'">Удалить</button>
-                    		</c:when>
-                		</c:choose>
-                		</c:if>
-
-                    </div>
-                </c:forEach>                
+        <section class="slider">	
+    <h2>Главные Новости</h2>
+    <div class="carousel">
+        <c:forEach var="item" items="${mainNews}">
+            <div class="slide">
+                <h3><c:out value="${item.title}" /></h3>
+                <p><c:out value="${item.brief}" /></p>
+                <p>Автор: <c:out value="${item.author}" /></p>
+                <button class="more-btn" onclick="window.location.href='goController?command=no_auth'">Подробнее</button>
+                
+                <c:if test="${not empty sessionScope.user}">
+                    <c:set var="user" value="${sessionScope.user}" />
+                     <c:if test="${not empty user.lastName}">
+                    <c:set var="fullName" value="${user.username} ${user.lastName}" />
+                    <c:choose>
+                        <c:when test="${(fullName == item.author && user.role == 'author')}">
+                            <button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${item.id}'">Редактировать</button>
+                            <button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${item.id}'">Удалить</button>
+                        </c:when>
+                    </c:choose>
+                    </c:if>
+               
+                <c:choose>
+                        <c:when test="${user.role == 'admin'}">
+                            <button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${item.id}'">Редактировать</button>
+                            <button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${item.id}'">Удалить</button>
+                        </c:when>
+                    </c:choose>
+                     </c:if>
             </div>
-        </section>
-        
-        <section class="news">
-            <h2>Последние Новости</h2>
-            <c:if test="${not empty latestNews}">
-            	<c:forEach var="last" items="${latestNews}">
-                    <div class="slide">
-                        <h3><c:out value="${last.title}" /></h3>
-                        <p><c:out value="${last.brief}" /></p>
-                        <p>Автор: <c:out value="${last.author}" /></p>
-                         
-                        <button class="more-btn" 
-                        onclick="window.location.href='goController?command=no_auth'">
-                        Подробнее</button>
-                        
-                         <c:if test="${not empty sessionScope.user}">
-                         <!-- Проверка роли пользователя и владельца статьи -->
-                        <c:set var="fullName" value="${sessionScope.user.lastName} ${sessionScope.user.firstName}" />
-                		<c:choose>
-                    		
-<c:when test="${sessionScope.user.role == 'admin' 
-|| (fullName == last.author && sessionScope.user.role == 'author')}">
+        </c:forEach>
+    </div>
+</section>
 
+<section class="news">
+    <h2>Последние Новости</h2>
+    <c:if test="${not empty latestNews}">
+        <c:forEach var="last" items="${latestNews}">
+            <div class="slide">
+                <h3><c:out value="${last.title}" /></h3>
+                <p><c:out value="${last.brief}" /></p>
+                <p>Автор: <c:out value="${last.author}" /></p>
+                <button class="more-btn" onclick="window.location.href='goController?command=no_auth'">Подробнее</button>
+                
+                <c:if test="${not empty sessionScope.user}">
+                    <c:set var="user" value="${sessionScope.user}" />
+                     <c:if test="${not empty user.lastName}">
+                    <c:set var="fullName" value="${user.username} ${user.lastName}" />
+                    <c:choose>
+                        <c:when test="${(fullName == last.author && user.role == 'author')}">
+                            <button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${item.id}'">Редактировать</button>
+                            <button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${item.id}'">Удалить</button>
+                        </c:when>
+                    </c:choose>
+                    </c:if>
+               
+                <c:choose>
+                        <c:when test="${user.role == 'admin'}">
+                            <button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${item.id}'">Редактировать</button>
+                            <button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${item.id}'">Удалить</button>
+                        </c:when>
+                    </c:choose>
+                     </c:if>
+            </div>
+        </c:forEach>
+    </c:if>
+</section>
 
-                        		<button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${last.id}'">Редактировать</button>
-                        		<button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${last.id}'">Удалить</button>
-                    		</c:when>
-                		</c:choose>
-                		</c:if>
+<section class="popular-news">
+    <h2>Популярные Новости</h2>
+    <ul class="popular-news-list">
+        <c:forEach var="item" items="${popularNews}">
+            <li class="news-item">
+                <div class="popular-slide">
+                    <h3><c:out value="${item.title}" /></h3>
+                    <p><c:out value="${item.brief}" /></p>
+                    <p>Автор: <c:out value="${item.author}" /></p>
+                    <button class="more-btn" onclick="window.location.href='goController?command=no_auth'">Подробнее</button>
+                    
+                    <c:if test="${not empty sessionScope.user}">
+                    <c:set var="user" value="${sessionScope.user}" />
+                     <c:if test="${not empty user.lastName}">
+                    <c:set var="fullName" value="${user.username} ${user.lastName}" />
+                    <c:choose>
+                        <c:when test="${(fullName == item.author && user.role == 'author')}">
+                            <button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${item.id}'">Редактировать</button>
+                            <button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${item.id}'">Удалить</button>
+                        </c:when>
+                    </c:choose>
+                    </c:if>
+               
+                <c:choose>
+                        <c:when test="${user.role == 'admin'}">
+                            <button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${item.id}'">Редактировать</button>
+                            <button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${item.id}'">Удалить</button>
+                        </c:when>
+                    </c:choose>
+                     </c:if>
+                </div>
+            </li>
+        </c:forEach>
+    </ul>
+</section>
 
-                    </div>
-                </c:forEach>    
-			</c:if>  
-        </section>
-        <section class="popular-news">
-    		<h2>Популярные Новости</h2>
-    		<ul class="popular-news-list">
-        		<c:forEach var="item" items="${popularNews}">
-            		<li class="news-item">
-                		<div class="popular-slide">
-                    		<h3><c:out value="${item.title}" /></h3>
-                    		<p><c:out value="${item.brief}" /></p>
-                    		 <p>Автор: <c:out value="${item.author}" /></p>
-                    		<button class="more-btn" 
-                    		onclick="window.location.href='goController?command=no_auth'">
-                    		Подробнее</button>
-                    		
-                    		 <c:if test="${not empty sessionScope.user}">
-                         <!-- Проверка роли пользователя и владельца статьи -->
-                        <c:set var="fullName" value="${sessionScope.user.lastName} ${sessionScope.user.firstName}" />
-                		<c:choose>
-                    		
-<c:when test="${sessionScope.user.role == 'admin' 
-|| (fullName == item.author && sessionScope.user.role == 'author')}">
-
-
-                        		<button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${last.id}'">Редактировать</button>
-                        		<button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${last.id}'">Удалить</button>
-                    		</c:when>
-                		</c:choose>
-                		</c:if>
-                    		
-                		</div>
-            		</li>
-        		</c:forEach>
-    		</ul>
-		</section>
         <c:if test="${not empty sessionScope.user}">
         	<c:if test="${sessionScope.user.role == 'user' && sessionScope.user.role == 'author' }">
             <section class="exclusive-news">
@@ -455,6 +467,6 @@ h2 {
         <p>© 2024 Новостной Портал. Все права защищены.</p>
         <p><a href="#">Политика Конфиденциальности</a> | <a href="#">Условия Использования</a></p>
     </footer>
-</body>
+</body> 
 
 </html>
