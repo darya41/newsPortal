@@ -6,9 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
-
-import com.google.protobuf.Timestamp;
 
 import app.yarmak.newsportal.bean.Auth;
 import app.yarmak.newsportal.bean.User;
@@ -33,8 +30,7 @@ public class SQLAuthDao implements AuthDao {
 		        stmt.setString(3, password);
 		        stmt.setString(4,"user");
 		        java.sql.Timestamp protoTimestamp = auth.getRegistrationDate();
-	            java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(protoTimestamp.getSeconds() * 1000);
-	            stmt.setTimestamp(5, sqlTimestamp);
+	            stmt.setTimestamp(5, protoTimestamp);
 
 	            stmt.setString(6, auth.getStatus());
 	            stmt.executeUpdate();
