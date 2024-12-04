@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +14,6 @@ body {
     padding: 0;
     background-color: #f4f4f4;
 }
-
 header {
     background-color: #333;
     color: white;
@@ -27,20 +28,17 @@ header {
     border-bottom: 2px ridge;
     margin-bottom: 0;
 }
-
 header .logo {
     font-size: 24px;
     font-weight: bold;
     margin-left: 20px;
 }
-
 nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
 }
-
 nav ul {
     list-style: none;
     padding: 0;
@@ -48,15 +46,12 @@ nav ul {
     display: flex;
     text-align: center;
 }
-
 nav ul li {
-    margin: 0 15px; /* расстояние между пунктами меню */
+    margin: 0 15px; 
 }
-
 nav .auth-buttons {
     margin-right: 20px;
 }
-
 nav .login-button {
     color: white;
     text-decoration: none;
@@ -64,7 +59,6 @@ nav .login-button {
     padding: 10px 20px;
     border-radius: 5px;
 }
-
 footer {
     background-color: #333;
     color: white;
@@ -96,10 +90,7 @@ footer a {
 .auth-buttons {
     display: flex;
 }
-
 /* Стили для формы подачи заявки на автора */
-
-
 button[type="submit"] {
     width: 30%;
       margin: 0 auto;
@@ -152,6 +143,7 @@ label {
 input[type="text"],
 input[type="email"],
 input[type="password"],
+input[type="confirm-password"],
 input[type="tel"],
 textarea {
     padding: 10px;
@@ -198,45 +190,45 @@ textarea {
     <main>
     <div class="form-apply-author">
     <h2>Заявка на автора</h2>
-    <form action="Controller" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="command" value="apply_author">
+    <form action="goController" method="post" >
+        <input type="hidden" name="command" value="do_apply_author">
 
-        <h3>Основная информация:</h3>
+       <h3>Основная информация:</h3>
         <label for="firstName">Имя:</label>
-        <input type="text" id="firstName" name="firstName" required><br><br>
+        <input type="text" id="firstName" name="firstName" value="${sessionScope.authorApply.firstName}" required><br><br>
         <label for="lastName">Фамилия:</label>
-        <input type="text" id="lastName" name="lastName" required><br><br>
+        <input type="text" id="lastName" name="lastName" value="${sessionScope.authorApply.lastName}" required><br><br>
         <label for="email">Электронная почта:</label>
-        <input type="email" id="email" name="email" required><br><br>
+        <input type="email" id="email" name="email" value="${sessionScope.authorApply.email}" required><br><br>
         <label for="password">Пароль:</label>
         <input type="password" id="password" name="password" required><br><br>
+        <div class="error-message" id="error-message" style="color: red; margin-top:0;">
+            <c:if test="${not empty requestScope.authError}">
+                <c:out value="${requestScope.authError}" />
+            </c:if>
+        </div>
+        <label for="confirm-password">Подтвердите пароль:</label>
+        <input type="password" id="confirm-password" name="confirm-password" required><br><br>
 
         <h3>Профессиональная информация:</h3>
         <label for="bio">Биография:</label><br>
-        <textarea id="bio" name="bio" rows="4" cols="50" required></textarea><br><br>
+        <textarea id="bio" name="bio" rows="4" cols="50" required>${sessionScope.authorApply.bio}</textarea><br><br>
         <label for="specialization">Темы, в которых вы специализируетесь:</label><br>
-        <textarea id="specialization" name="specialization" rows="2" cols="50" required></textarea><br><br>
+        <textarea id="specialization" name="specialization" rows="2" cols="50" required>${sessionScope.authorApply.specialization}</textarea><br><br>
         <label for="workExamples">Примеры работ (ссылки):</label><br>
-        <textarea id="workExamples" name="workExamples" rows="2" cols="50"></textarea><br><br>
+        <textarea id="workExamples" name="workExamples" rows="2" cols="50">${sessionScope.authorApply.workExamples}</textarea><br><br>
 
         <h3>Контактная информация:</h3>
         <label for="phone">Телефонный номер:</label>
-        <input type="tel" id="phone" name="phone" required><br><br>
+        <input type="tel" id="phone" name="phone" value="${sessionScope.authorApply.phone}" required><br><br>
         <label for="socialLinks">Ссылки на профили в социальных сетях:</label><br>
-        <textarea id="socialLinks" name="socialLinks" rows="2" cols="50"></textarea><br><br>
-
-        <h3>Дополнительная информация:</h3>
-        <label for="profilePicture">Фотография профиля:</label>
-        <input type="file" id="profilePicture" name="profilePicture"><br><br>
-        <label for="resume">Резюме (если требуется):</label>
-        <input type="file" id="resume" name="resume"><br><br>
+        <textarea id="socialLinks" name="socialLinks" rows="2" cols="50">${sessionScope.authorApply.socialLinks}</textarea><br><br>
 
         <h3>Согласие и подтверждение:</h3>
         <label>
             <input type="checkbox" name="terms" required>
             Согласие с условиями использования и политикой конфиденциальности
         </label><br><br>
-
 
         <button type="submit">Отправить заявку</button>
     </form>

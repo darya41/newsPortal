@@ -35,11 +35,11 @@ public class DoRegistration implements Command{
 	    	    .setNanos(minskTime.getNano())
 	    	    .build();
 	    java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp( timestamp.getSeconds() * 1000);
-	    Auth user = new Auth(0,username,null,"user", email,  sqlTimestamp, "active");
+	    Auth auth = new Auth(0,username,null,"user", email,  sqlTimestamp, "active");
 	    	
 	    
 	    try {
-	    	if(authService.registrration(user, password)) {
+	    	if(authService.registrration(auth, password)) {
 	    		RequestDispatcher dispatcher = request.getRequestDispatcher("goController?command=go_to_auth");
 	            dispatcher.forward(request, response); 
 	            return;
