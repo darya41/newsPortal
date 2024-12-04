@@ -260,12 +260,12 @@ nav .menu li a {
 	                <p><strong>Имя:</strong> <c:out value="${sessionScope.user.username}"/></p>
 	                <p><strong>Фамилия:</strong> <c:out value="${sessionScope.user.lastName}"/></p>
 	                <p><strong>Дата рождения:</strong> 
-	                	<c:if test="${ not empty sessionScope.user.dateBirth}">
-	                		<c:out value="${sessionScope.user.dateBirth}"/>
-	                	</c:if>
-	                	<c:if test="${empty sessionScope.user.dateBirth}">
-	                		Отсутствует
-	                	</c:if>
+	                	<c:if test="${not empty sessionScope.userDetail.dateBirth}">
+    						<fmt:formatDate value="${sessionScope.userDetail.dateBirth}" pattern="yyyy-MM-dd" />
+						</c:if>
+						<c:if test="${empty sessionScope.userDetail.dateBirth}">
+    						Отсутствует
+						</c:if>
 	                </p>
 	                <p><strong>Роль:</strong> 
 						<c:if test="${sessionScope.user.role=='user'}">
@@ -277,10 +277,10 @@ nav .menu li a {
 					</p>
 	                <p><strong>Электронная почта:</strong><c:out value="${sessionScope.user.email}"/> </p>
 	                <p><strong>Номер телефона:</strong> 
-	                <c:if test="${ not empty sessionScope.user.phone}">
-	                		<c:out value="${sessionScope.user.phone}"/>
+	                <c:if test="${ not empty sessionScope.userDetail.phone}">
+	                		<c:out value="${sessionScope.userDetail.phone}"/>
 	                	</c:if>
-	                	<c:if test="${empty sessionScope.user.phone}">
+	                	<c:if test="${empty sessionScope.userDetail.phone}">
 	                		Отсутствует
 	                	</c:if>
 	                </p>

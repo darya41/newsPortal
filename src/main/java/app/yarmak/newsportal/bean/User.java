@@ -8,12 +8,7 @@ public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private int id;
-	private String lastName;
-	private String firstName;
 	private java.sql.Timestamp dateBirth;
-	private String role;
-	private String email;
 	private String phone;
 	private List<Integer> bookmarkedArticles;
 	private List<Integer> readingHistory;
@@ -26,47 +21,15 @@ public class User implements Serializable{
 		
 	}
 	
-	public User(int id, String lastName, String firstName, java.sql.Timestamp dateBirth, 
-			String role,String email, String phone, 
+	public User(java.sql.Timestamp dateBirth, String phone, 
 			List<Integer> bookmarkedArticles, List<Integer> readingHistory, 
 			List<Integer> commentList, List<Integer> likesList) {
-        this.id = id;
-        this.lastName = lastName;
-        this.firstName = firstName;
         this.dateBirth = dateBirth;
-        this.role = role;
-        this.email=email;
         this.phone = phone;
         this.bookmarkedArticles = bookmarkedArticles;
         this.readingHistory = readingHistory;
         this.commentList = commentList;
         this.likesList = likesList;
-    }
-
-
-
-	public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public java.sql.Timestamp getDateBirth() {
@@ -77,23 +40,6 @@ public class User implements Serializable{
         this.dateBirth = dateBirth;
     }
 
-   
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
     
 
     public String getPhone() {
@@ -139,8 +85,7 @@ public class User implements Serializable{
     // hashCode
     @Override
     public int hashCode() {
-        return Objects.hash(id, lastName, firstName, dateBirth, 
-        		role, email, phone, bookmarkedArticles, 
+        return Objects.hash( dateBirth,phone, bookmarkedArticles, 
         		readingHistory, commentList, likesList);
     }
 
@@ -150,13 +95,7 @@ public class User implements Serializable{
         if (this == obj) return true;
         if (obj == null || getClass() != obj.getClass()) return false;
         User user = (User) obj;
-        return id == user.id &&
-                Objects.equals(lastName, user.lastName) &&
-                Objects.equals(firstName, user.firstName) &&
-                Objects.equals(dateBirth, user.dateBirth) &&
-                
-                Objects.equals(role, user.role) &&
-                Objects.equals(email, user.email) &&
+        return  Objects.equals(dateBirth, user.dateBirth) &&
                 Objects.equals(phone, user.phone) &&
                 Objects.equals(bookmarkedArticles, user.bookmarkedArticles) &&
                 Objects.equals(readingHistory, user.readingHistory) &&
@@ -168,13 +107,7 @@ public class User implements Serializable{
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", lastName='" + lastName + '\'' +
-                ", firstName='" + firstName + '\'' +
                 ", dateBirth=" + dateBirth +
-                
-                ", role='" + role + '\'' +
-                ", email=" + email +
                 ", phone='" + phone + '\'' +
                 ", bookmarkedArticles=" + bookmarkedArticles +
                 ", readingHistory=" + readingHistory +

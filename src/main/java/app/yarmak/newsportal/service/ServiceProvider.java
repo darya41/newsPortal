@@ -1,5 +1,6 @@
 package app.yarmak.newsportal.service;
 
+import app.yarmak.newsportal.service.impl.AuthServiceImpl;
 import app.yarmak.newsportal.service.impl.NewsServiceImpl;
 import app.yarmak.newsportal.service.impl.UserServiceImpl;
 
@@ -8,6 +9,7 @@ public class ServiceProvider {
 	
 	private final UserService userService = new UserServiceImpl();
 	private final NewsService newsService = new NewsServiceImpl();
+	private final AuthService authService = new AuthServiceImpl();
 	
 	private ServiceProvider() {
 		
@@ -19,6 +21,9 @@ public class ServiceProvider {
 	
 	public NewsService getNewsService() {
 		return newsService;
+	}
+	public AuthService getAuthService() {
+		return authService;
 	}
 	
 	public static ServiceProvider getInstance() {

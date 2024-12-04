@@ -9,15 +9,15 @@ import com.google.protobuf.Timestamp;
 
 import app.yarmak.newsportal.bean.Auth;
 import app.yarmak.newsportal.controller.concrete.Command;
+import app.yarmak.newsportal.service.AuthService;
 import app.yarmak.newsportal.service.ServiceProvider;
-import app.yarmak.newsportal.service.UserService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class DoRegistration implements Command{
-	private final UserService userService = ServiceProvider.getInstance().getUserService();
+	private final AuthService authService = ServiceProvider.getInstance().getAuthService();
 	ZonedDateTime minskTime = ZonedDateTime.now(ZoneId.of("Europe/Minsk"));
 	
 	@Override
@@ -39,7 +39,7 @@ public class DoRegistration implements Command{
 	    	
 	    
 	    try {
-	    	if(userService.registrration(user, password)) {
+	    	if(authService.registrration(user, password)) {
 	    		RequestDispatcher dispatcher = request.getRequestDispatcher("goController?command=go_to_auth");
 	            dispatcher.forward(request, response); 
 	            return;

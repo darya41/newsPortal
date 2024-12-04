@@ -5,11 +5,9 @@ import java.io.IOException;
 import com.google.protobuf.ServiceException;
 
 import app.yarmak.newsportal.bean.Auth;
-import app.yarmak.newsportal.bean.User;
 import app.yarmak.newsportal.controller.concrete.Command;
-
+import app.yarmak.newsportal.service.AuthService;
 import app.yarmak.newsportal.service.ServiceProvider;
-import app.yarmak.newsportal.service.UserService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +16,7 @@ import jakarta.servlet.http.HttpSession;
 
 public class DoAuth implements Command {
 
-	private final UserService userService = ServiceProvider.getInstance().getUserService();
+	private final AuthService authService = ServiceProvider.getInstance().getAuthService();
 
 	@Override
 	public void execute(HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException {
@@ -29,7 +27,7 @@ public class DoAuth implements Command {
 		Auth auth = null;
 		try {
 			System.out.println("-----------1");
-			auth = userService.signIn(login,password);
+			auth = authService.signIn(login,password);
 			System.out.println(auth);
 		} catch (ServiceException e) {
 			e.printStackTrace();
