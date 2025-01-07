@@ -265,6 +265,7 @@ h2 {
     text-align: center;
     display: inline-block;
     margin-top: 10px;
+    width:80%;
 }
 
 .more-btn:hover,.edit-btn:hover,.delete-btn:hover {
@@ -282,6 +283,7 @@ h2 {
 .exclusive-news h3 {
     margin-top: 0;
 }
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4); } .modal-content { background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 500px; text-align: center; } .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; } .close:hover, .close:focus { color: black; text-decoration: none; cursor: pointer; } .confirm-btn, .cancel-btn { padding: 10px 20px; margin: 10px; border: none; cursor: pointer; } .confirm-btn { background-color: #e74c3c; color: white; } .cancel-btn { background-color: #1abc9c; color: white; }
 	
 }
   </style>
@@ -317,6 +319,7 @@ h2 {
 		    	<c:when test="${not empty sessionScope.user}">
 		    		<c:if test="${sessionScope.user.role == 'user' }">
                       <h1> ${sessionScope.user.username} добро пожаловать на наш Новостной Портал!</h1>
+                      
 		        		<p>Последние новости и обновления</p>
                   </c:if>
 		        	
@@ -324,6 +327,9 @@ h2 {
 		    	<c:otherwise>
 		        	<h1> Добро пожаловать на наш Новостной Портал!</h1>
             		<p>Последние новости и обновления</p>
+            		<c:if test="${not empty errorMessage}">
+                      	<p style="color=red;">${errorMessage}</p>
+                      </c:if>
 		   		 </c:otherwise>
 			</c:choose>
 			
@@ -355,7 +361,12 @@ h2 {
                 <h3><c:out value="${item.title}" /></h3>
                 <p><c:out value="${item.brief}" /></p>
                 <p>Автор: <c:out value="${item.author}" /></p>
-                <button class="more-btn" onclick="window.location.href='goController?command=no_auth'">Подробнее</button>
+                 <c:if test="${not empty sessionScope.user}">
+                	<button class="more-btn" onclick="window.location.href='goController?command=go_to_page_news&id=${item.id}'">Подробнее</button>
+                 </c:if>
+                 <c:if test="${empty sessionScope.user}">                
+                 	<button class="more-btn" onclick="window.location.href='goController?command=no_auth'">Подробнее</button>
+                </c:if>
                 
                 <c:if test="${not empty sessionScope.user}">
                     <c:set var="user" value="${sessionScope.user}" />
@@ -364,17 +375,17 @@ h2 {
                     <c:choose>
                         <c:when test="${(fullName == item.author && user.role == 'author')}">
     						<button class="edit-btn" onclick="window.location.href='Controller?command=go_to_edit_news&id=${item.id}'">Редактировать</button>
-    						<button class="delete-btn" onclick="window.location.href='Controller?command=delete_news&id=${item.id}'">Удалить</button>
+    						<button class="delete-btn" onclick="showModal(${item.id}, '${item.title}')">Удалить</button>
 						</c:when>
 
                     </c:choose>
                     </c:if>
                
                 <c:choose>
-                        <c:when test="${user.role == 'admin'}">
-                            <button class="edit-btn" onclick="window.location.href='goController?command=go_to_edit_news&id=${item.id}'">Редактировать</button>
-                            <button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${item.id}'">Удалить</button>
-                        </c:when>
+                          <c:when test="${user.role == 'admin'}">
+    						<button class="edit-btn" onclick="window.location.href='Controller?command=go_to_edit_news&id=${item.id}'">Редактировать</button>
+    						<button class="delete-btn" onclick="showModal(${item.id}, '${item.title}')">Удалить</button>
+						</c:when>
                     </c:choose>
                      </c:if>
             </div>
@@ -390,24 +401,29 @@ h2 {
                 <h3><c:out value="${last.title}" /></h3>
                 <p><c:out value="${last.brief}" /></p>
                 <p>Автор: <c:out value="${last.author}" /></p>
-                <button class="more-btn" onclick="window.location.href='goController?command=no_auth'">Подробнее</button>
+                 <c:if test="${not empty sessionScope.user}">
+                	<button class="more-btn" onclick="window.location.href='goController?command=go_to_page_news&id=${item.id}'">Подробнее</button>
+                 </c:if>
+                 <c:if test="${empty sessionScope.user}">                
+                 	<button class="more-btn" onclick="window.location.href='goController?command=no_auth'">Подробнее</button>
+                </c:if>
                 
                 <c:if test="${not empty sessionScope.user}">
                     <c:set var="user" value="${sessionScope.user}" />
                      <c:if test="${not empty user.lastName}">
                     <c:set var="fullName" value="${user.username} ${user.lastName}" />
                     <c:choose>
-                        <c:when test="${(fullName == last.author && user.role == 'author')}">
-                            <button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${item.id}'">Редактировать</button>
-                            <button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${item.id}'">Удалить</button>
-                        </c:when>
+                       <c:when test="${(fullName == last.author && user.role == 'author')}">
+    						<button class="edit-btn" onclick="window.location.href='Controller?command=go_to_edit_news&id=${last.id}'">Редактировать</button>
+    						<button class="delete-btn" onclick="showModal(${last.id}, '${last.title}')">Удалить</button>
+						</c:when>
                     </c:choose>
                     </c:if>
                
                 <c:choose>
                         <c:when test="${user.role == 'admin'}">
-                            <button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${item.id}'">Редактировать</button>
-                            <button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${item.id}'">Удалить</button>
+                           <button class="edit-btn" onclick="window.location.href='Controller?command=go_to_edit_news&id=${last.id}'">Редактировать</button>
+    						<button class="delete-btn" onclick="showModal(${last.id}, '${last.title}')">Удалить</button>
                         </c:when>
                     </c:choose>
                      </c:if>
@@ -425,24 +441,29 @@ h2 {
                     <h3><c:out value="${item.title}" /></h3>
                     <p><c:out value="${item.brief}" /></p>
                     <p>Автор: <c:out value="${item.author}" /></p>
-                    <button class="more-btn" onclick="window.location.href='goController?command=no_auth'">Подробнее</button>
-                    
+                     <c:if test="${not empty sessionScope.user}">
+                	<button class="more-btn" onclick="window.location.href='goController?command=go_to_page_news&id=${item.id}'">Подробнее</button>
+                 </c:if>
+                 <c:if test="${empty sessionScope.user}">                
+                 	<button class="more-btn" onclick="window.location.href='goController?command=no_auth'">Подробнее</button>
+                </c:if>
+                
                     <c:if test="${not empty sessionScope.user}">
                     <c:set var="user" value="${sessionScope.user}" />
                      <c:if test="${not empty user.lastName}">
                     <c:set var="fullName" value="${user.username} ${user.lastName}" />
                     <c:choose>
                         <c:when test="${(fullName == item.author && user.role == 'author')}">
-                            <button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${item.id}'">Редактировать</button>
-                            <button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${item.id}'">Удалить</button>
+                            <button class="edit-btn" onclick="window.location.href='Controller?command=go_to_edit_news&id=${item.id}'">Редактировать</button>
+    						<button class="delete-btn" onclick="showModal(${item.id}, '${item.title}')">Удалить</button>
                         </c:when>
                     </c:choose>
                     </c:if>
                
                 <c:choose>
                         <c:when test="${user.role == 'admin'}">
-                            <button class="edit-btn" onclick="window.location.href='goController?command=command=go_to_edit_news&id=${item.id}'">Редактировать</button>
-                            <button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${item.id}'">Удалить</button>
+                           <button class="edit-btn" onclick="window.location.href='Controller?command=go_to_edit_news&id=${item.id}'">Редактировать</button>
+    						<button class="delete-btn" onclick="showModal(${item.id}, '${item.title}')">Удалить</button>
                         </c:when>
                     </c:choose>
                      </c:if>
@@ -463,6 +484,8 @@ h2 {
             </section>
         	</c:if>
          </c:if>
+         <div id="deleteModal" class="modal"> <div class="modal-content"> <span class="close" onclick="closeModal()">&times;</span> <h2>Подтверждение удаления</h2> <p id="modalMessage">Точно ли хотите удалить эту новость?</p> <button class="confirm-btn" onclick="confirmDelete()">Удалить</button> <button class="cancel-btn" onclick="closeModal()">Отмена</button> </div> </div>
+    <script> let newsIdToDelete; function showModal(newsId, newsTitle) { newsIdToDelete = newsId; document.getElementById('modalMessage').innerText = "Точно ли хотите удалить эту новость?\n" + newsTitle; document.getElementById('deleteModal').style.display = 'block'; } function closeModal() { document.getElementById('deleteModal').style.display = 'none'; } function confirmDelete() { window.location.href = 'Controller?command=delete_news&id=' + newsIdToDelete; } </script>
     </main>
     <footer>
         <p>© 2024 Новостной Портал. Все права защищены.</p>

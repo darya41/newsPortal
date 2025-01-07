@@ -32,7 +32,7 @@ public class AuthServiceImpl implements AuthService{
 			authDao.registration(auth,password);
 			
 		} catch (DaoException e) {
-			e.printStackTrace();
+			throw new ServiceException(e);
 		}
 		return true;
 	}

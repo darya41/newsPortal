@@ -170,7 +170,7 @@ nav .login-button {
                 <h2><c:out value="${news.title}" /></h2>
                 <p><c:out value="${news.brief}" /></p>
                 <p>Автор: <c:out value="${news.author}" /></p>
-                <a href="Controller?command=go_to_news_detail&id=${news.id}">Подробнее</a>
+                <a href="Controller?command=go_to_page_news&id=${news.id}">Подробнее</a>
             </div>
         </c:forEach>
     </div>

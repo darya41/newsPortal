@@ -3,6 +3,7 @@ package app.yarmak.newsportal.controller.concrete;
 import java.util.HashMap;
 import java.util.Map;
 
+import app.yarmak.newsportal.controller.concrete.imp.DeleteNews;
 import app.yarmak.newsportal.controller.concrete.imp.DoApplyAuthor;
 import app.yarmak.newsportal.controller.concrete.imp.DoAuth;
 import app.yarmak.newsportal.controller.concrete.imp.DoRegistration;
@@ -39,6 +40,7 @@ public final class  CommandProvider {
 		commands.put(CommandName.EDIT_NEWS, new EditNews());
 		commands.put(CommandName.GO_TO_ALL_NEWS_PAGE, new GoToAllNewsPage());
 		commands.put(CommandName.GO_TO_PAGE_NEWS, new GoToPageNews());
+		commands.put(CommandName.DELETE_NEWS, new DeleteNews());
 		commands.put(CommandName.LOG_OUT,new LogOut() );
 	}
 	public Command takeCommand(String userCommand) {

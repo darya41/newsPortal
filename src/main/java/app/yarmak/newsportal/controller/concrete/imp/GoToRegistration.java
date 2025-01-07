@@ -16,8 +16,11 @@ public class GoToRegistration implements Command {
 		try {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registration.jsp");
 			dispatcher.forward(request, response);
-		}catch (Exception e) {
-			response.sendRedirect("WEB-INF/jsp/error.jsp");
+		}
+		catch (Exception e) { 
+			// logging 
+			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
+			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
 		}
 		
 	}

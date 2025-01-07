@@ -78,6 +78,18 @@ nav .menu li a {
     text-decoration: none;
     font-weight: bold;
 }
+nav .auth-buttons {
+	margin-right: 20px;
+}
+
+nav .login-button {
+	color: white;
+	text-decoration: none;
+	background-color: #1abc9c;
+	padding: 10px 20px;
+	border-radius: 5px;
+}
+
 footer {
 	background-color: #333;
 	color: white;
@@ -87,6 +99,50 @@ footer {
 footer a{
  color: #1abc9c;
 }
+
+.news-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.news-title {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.news-brief {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.news-content {
+    font-size: 1em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.news-author {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.news-date {
+    font-size: 0.9em;
+    color: #888;
+}
+
+.news-views {
+    font-size: 0.9em;
+    color: #888;
+}
+
+
+
 </style>
 </head>
 <body>
@@ -111,7 +167,16 @@ footer a{
         </nav>
     </header>
     <main>
-    	
+
+    <div class="news-container">
+        <div class="news-title">${news.title}</div>
+        <div class="news-brief">${news.brief}</div>
+        <div class="news-content">${news.content}</div>
+        <div class="news-author">Автор: ${news.author}</div>
+        <div class="news-date">Дата публикации: <fmt:formatDate value="${news.publicationDate}" pattern="dd.MM.yyyy HH:mm" /></div>
+        <div class="news-views">Просмотры: ${news.views}</div>
+    </div>
+
     </main>
     <footer>
         <p>© 2024 Новостной Портал. Все права защищены.</p>

@@ -5,23 +5,21 @@
 	
   <display-name>Archetype Created Web Application</display-name>
   
-  <servlet>
+  	<servlet>
 		<servlet-name>Auto</servlet-name>
 		<jsp-file>/WEB-INF/jsp/auth.jsp</jsp-file>
 	</servlet>
-
+	
 	<servlet-mapping>
 		<servlet-name>Auto</servlet-name>
 		<url-pattern>/goToAuto</url-pattern>
 	</servlet-mapping>
 	
   
-
 	<servlet>
 		<servlet-name>Controller</servlet-name>
 		<servlet-class>app.yarmak.newsportal.controller.Controller</servlet-class>
 	</servlet>
-
 
 	<servlet-mapping>
 		<servlet-name>Controller</servlet-name>
@@ -29,18 +27,26 @@
 	</servlet-mapping>
 	
 	
-
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 	
 
-  
-
-	<error-page>
-		<error-code>404</error-code>
-		<location>/error/404.jsp</location>
+	  <error-page>
+	    <error-code>404</error-code>
+	    <location>/error.jsp</location>
 	</error-page>
+	
+	<error-page>
+	    <error-code>500</error-code>
+	    <location>/error.jsp</location>
+	</error-page>
+	
+	<error-page>
+	    <exception-type>java.lang.Exception</exception-type>
+	    <location>/error.jsp</location>
+	</error-page>
+  
 	
 	<servlet-mapping>
     	<servlet-name>default</servlet-name>

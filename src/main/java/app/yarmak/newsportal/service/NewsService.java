@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.protobuf.ServiceException;
 
 import app.yarmak.newsportal.bean.News;
+import app.yarmak.newsportal.dao.DaoException;
 
 public interface NewsService {
 	List<News> getAllNews() throws ServiceException;
@@ -15,6 +16,7 @@ public interface NewsService {
 	void upDate(News news) throws ServiceException;
 	int getTotalNewsCount()throws ServiceException;
 	List<News> getNewsByPage(int page, int pageSize) throws ServiceException;
-	
+	void deleteNews(News news) throws ServiceException;
+	void AddNewView(News news) throws ServiceException;
 
 }

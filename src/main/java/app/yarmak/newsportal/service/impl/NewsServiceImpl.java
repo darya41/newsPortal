@@ -100,4 +100,28 @@ public class NewsServiceImpl implements NewsService{
 		}
 	}
 
+
+	@Override
+	public void deleteNews(News news) throws ServiceException {
+		try {
+			newsDao.deleteNews(news);
+		} catch (DaoException e) {
+			//logging
+	        throw new ServiceException("Failed to retrieve news");
+		}
+		
+	}
+
+
+	@Override
+	public void AddNewView(News news) throws ServiceException {
+		try {
+			newsDao.AddNewView(news);
+		} catch (DaoException e) {
+			//logging
+	        throw new ServiceException("Failed to retrieve news");
+		}
+		
+	}
+
 }

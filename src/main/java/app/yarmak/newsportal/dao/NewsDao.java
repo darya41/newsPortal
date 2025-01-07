@@ -16,6 +16,8 @@ public interface NewsDao {
 	List<News> findPopularNews () throws DaoException;
 	int getTotalNewsCount() throws DaoException;
 	List<News> getNewsByPage(int page, int pageSize)  throws DaoException;
+	void deleteNews(News news) throws DaoException;
+	void AddNewView(News news) throws DaoException;
 	
 
 }

@@ -34,8 +34,16 @@ public class GoToEditNews implements Command{
 	        dispatcher.forward(request, response);
 		} catch (ServiceException e) {
 			//logging
-			response.sendRedirect("WEB-INF/jsp/error.jsp");
+			request.setAttribute("errorMessage", "Произошла ошибка в сервисном слое.");
+			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response);
+		}	
+		catch (Exception e) { 
+			// logging 
+			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
+			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
 		}
+		
+		
 		
 		 
 		

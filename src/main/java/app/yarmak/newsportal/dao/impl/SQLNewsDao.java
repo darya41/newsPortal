@@ -1,7 +1,6 @@
 package app.yarmak.newsportal.dao.impl;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,9 +11,12 @@ import java.util.List;
 import app.yarmak.newsportal.bean.News;
 import app.yarmak.newsportal.dao.DaoException;
 import app.yarmak.newsportal.dao.NewsDao;
+import app.yarmak.newsportal.jdbc.ConnectionPool;
+import app.yarmak.newsportal.jdbc.ConnectionPoolException;
 
 public class SQLNewsDao implements NewsDao{
 
+	ConnectionPool connectionPool = ConnectionPool.getInstance();
 	@Override
 	public void add(News news) throws DaoException {
 		// TODO Auto-generated method stub
@@ -24,26 +26,26 @@ public class SQLNewsDao implements NewsDao{
 	@Override
 	public News findById(int id) throws DaoException {
 		News news = null ;
+		Connection con = null; 
+		PreparedStatement ps = null; 
+		ResultSet rs = null;
 		try {
-		    
-		    Class.forName("com.mysql.cj.jdbc.Driver");
-		    	   
-		    Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/newsportalbd?useSSL=false&serverTimezone=UTC", "root", "Daria1234");		    
-		    Statement st = con.createStatement();
-		   
+		    con = connectionPool.takeConnection();
 		    String query = "SELECT * FROM news WHERE id = ?"; 
-		    PreparedStatement ps = con.prepareStatement(query); 
+		    ps = con.prepareStatement(query); 
 		    ps.setInt(1, id); 
-		    ResultSet rs = ps.executeQuery();
+		    rs = ps.executeQuery();
 		    if (rs.next()) 
-		    { news = createNewsFromResultSet(rs); }
+		    { 
+		    	news = createNewsFromResultSet(rs);
+		    }
 			   
-		} catch (ClassNotFoundException e) {
-			//logging
-		    System.out.println("MySQL Driver not found.");
 		} catch (SQLException e) {
-			//logging
-		    System.out.println("Failed to retrieve news: " + e.getMessage());
+			throw new DaoException("Ошибка в работе с данными", e);
+		} catch (ConnectionPoolException e) {
+			throw new DaoException("Ошибка в работе с пулом соединений", e);
+		}finally { 
+			connectionPool.closeConnection(con, ps, rs); 
 		}
 		return news;
 	}
@@ -51,13 +53,15 @@ public class SQLNewsDao implements NewsDao{
 	@Override
 	public void upDate(News news) throws DaoException {
 
-		    
+		Connection con = null; 
+		PreparedStatement ps = null; 
 	
+		    
 	    try {
-	        Class.forName("com.mysql.cj.jdbc.Driver");
-	        Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/newsportalbd?useSSL=false&serverTimezone=UTC", "root", "Daria1234");
+	        
+	        con = connectionPool.takeConnection();
 	        String query = "UPDATE news SET title = ?, brief = ?, content = ?, author = ?, idCategory = ?, priority = ? WHERE id = ?";
-	        PreparedStatement ps = con.prepareStatement(query);
+	        ps = con.prepareStatement(query);
 	        ps.setString(1, news.getTitle());
 	        ps.setString(2, news.getBrief());
 	        ps.setString(3, news.getContent());
@@ -66,15 +70,61 @@ public class SQLNewsDao implements NewsDao{
 	        ps.setInt(6, news.getPriority());
 	        ps.setInt(7, news.getId());
 	        ps.executeUpdate();
-	    } catch (ClassNotFoundException e) {
-	        // logging
-	        System.out.println("MySQL Driver not found.");
 	    } catch (SQLException e) {
-	        // logging
-	        System.out.println("Failed to update news: " + e.getMessage());
-	    
-	    }
+			throw new DaoException("Ошибка в работе с данными", e);
+		} catch (ConnectionPoolException e) {
+			throw new DaoException("Ошибка в работе с пулом соединений", e);
+		}
+	    finally {
+	    	connectionPool.closeConnection(con, ps); 
+	    	}
+	}
+	
+	public void AddNewView(News news) throws DaoException {
 
+		Connection con = null; 
+		PreparedStatement ps = null; 
+		    
+	    try {
+	        
+	        con = connectionPool.takeConnection();
+	        String query = "UPDATE news SET views=? WHERE id = ?";
+	        ps = con.prepareStatement(query);
+	        ps.setInt(1, news.getViews()+1);
+	        ps.setInt(2, news.getId());
+	        ps.executeUpdate();
+	    } catch (SQLException e) {
+			throw new DaoException("Ошибка в работе с данными", e);
+		} catch (ConnectionPoolException e) {
+			throw new DaoException("Ошибка в работе с пулом соединений", e);
+		}
+	    finally {
+	    	connectionPool.closeConnection(con, ps); 
+	    	}
+	}
+	
+	public void deleteNews(News news) throws DaoException {
+		Connection con = null; 
+		PreparedStatement ps = null; 
+	
+		    
+	    try {
+	        
+	        con = connectionPool.takeConnection();
+	        String query = "UPDATE news SET statusNews=? WHERE id = ?";
+	        ps = con.prepareStatement(query);
+	        ps.setString(1, news.getStatus());	       
+	        ps.setInt(2, news.getId());
+	        ps.executeUpdate();
+	    } catch (SQLException e) {
+			throw new DaoException("Ошибка в работе с данными", e);
+		} catch (ConnectionPoolException e) {
+			throw new DaoException("Ошибка в работе с пулом соединений", e);
+		}
+	    finally {
+	    	connectionPool.closeConnection(con, ps); 
+	    	}
+		
 	}
 	
 
@@ -85,15 +135,19 @@ public class SQLNewsDao implements NewsDao{
 	}
 	public List<News> findMainNews () throws DaoException{
 		List<News> newsList = new ArrayList<>();
+		Connection con = null; 
+		Statement st = null;
+		ResultSet rs = null;
 		try {
 		    
-		    Class.forName("com.mysql.cj.jdbc.Driver");
+		    
 		    	   
-		    Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/newsportalbd?useSSL=false&serverTimezone=UTC", "root", "Daria1234");		    
-		    Statement st = con.createStatement();
+		    con = connectionPool.takeConnection();    
+		    st = con.createStatement();
 		   
-		    String query = "SELECT * FROM news ORDER BY priority DESC LIMIT 6;";
-		    ResultSet rs = st.executeQuery(query);
+		    String query = "SELECT * FROM news WHERE statusNews = 'active' ORDER BY priority DESC LIMIT 6;";
+
+		    rs = st.executeQuery(query);
 		    System.out.println(rs.toString());
 		    while (rs.next()) {
 		    	
@@ -101,28 +155,30 @@ public class SQLNewsDao implements NewsDao{
 		        newsList.add(news);		     
 		    }
 			   
-		} catch (ClassNotFoundException e) {
-			//logging
-		    System.out.println("MySQL Driver not found.");
-		} catch (SQLException e) {
-			//logging
-		    System.out.println("Failed to retrieve news: " + e.getMessage());
-		}
+		}  catch (SQLException e) {
+			throw new DaoException("Ошибка в работе с данными", e);
+		} catch (ConnectionPoolException e) {
+			throw new DaoException("Ошибка в работе с пулом соединений", e);
+		}finally { 
+			connectionPool.closeConnection(con, st, rs); 
+			}
 
 		return newsList;
 	}
 	
 	public List<News> findLatestNews () throws DaoException{
 		List<News> newsList = new ArrayList<>();
+		Connection con = null; 
+		Statement st = null;
+		ResultSet rs = null;
 		try {
 		    
-		    Class.forName("com.mysql.cj.jdbc.Driver");
-		    	   
-		    Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/newsportalbd?useSSL=false&serverTimezone=UTC", "root", "Daria1234");		    
-		    Statement st = con.createStatement();
+		    
+		    con =connectionPool.takeConnection();	    
+		    st = con.createStatement();
 		   
-		    String query = "SELECT * FROM news ORDER BY views DESC LIMIT 4;";
-		    ResultSet rs = st.executeQuery(query);
+		    String query = "SELECT * FROM news WHERE statusNews = 'active' ORDER BY views DESC LIMIT 4;";
+		    rs = st.executeQuery(query);
 		    System.out.println(rs.toString());
 		    while (rs.next()) {
 		    	
@@ -130,28 +186,29 @@ public class SQLNewsDao implements NewsDao{
 		        newsList.add(news);		     
 		    }
 			   
-		} catch (ClassNotFoundException e) {
-			//logging
-		    System.out.println("MySQL Driver not found.");
 		} catch (SQLException e) {
-			//logging
-		    System.out.println("Failed to retrieve news: " + e.getMessage());
-		}
+			throw new DaoException("Ошибка в работе с данными", e);
+		} catch (ConnectionPoolException e) {
+			throw new DaoException("Ошибка в работе с пулом соединений", e);
+		}finally { 
+			connectionPool.closeConnection(con, st, rs); 
+			}
 
 		return newsList;
 	}
 	
 	public List<News> findPopularNews () throws DaoException{
 		List<News> newsList = new ArrayList<>();
+		Connection con = null; 
+		Statement st = null;
+		ResultSet rs = null;
 		try {
-		    
-		    Class.forName("com.mysql.cj.jdbc.Driver");
 		    	   
-		    Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/newsportalbd?useSSL=false&serverTimezone=UTC", "root", "Daria1234");		    
-		    Statement st = con.createStatement();
+		    con = connectionPool.takeConnection();	    
+		   st = con.createStatement();
 		   
-		    String query = "SELECT * FROM news ORDER BY publicationDate DESC LIMIT 4;";
-		    ResultSet rs = st.executeQuery(query);
+		    String query = "SELECT * FROM news WHERE statusNews = 'active' ORDER BY publicationDate DESC LIMIT 4;";
+		    rs = st.executeQuery(query);
 		    System.out.println(rs.toString());
 		    while (rs.next()) {
 		    	
@@ -159,16 +216,18 @@ public class SQLNewsDao implements NewsDao{
 		        newsList.add(news);		     
 		    }
 			   
-		} catch (ClassNotFoundException e) {
-			//logging
-		    System.out.println("MySQL Driver not found.");
-		} catch (SQLException e) {
-			//logging
-		    System.out.println("Failed to retrieve news: " + e.getMessage());
 		}
-
+		catch (SQLException e) {
+			throw new DaoException("Ошибка в работе с данными", e);
+		} catch (ConnectionPoolException e) {
+			throw new DaoException("Ошибка в работе с пулом соединений", e);
+		}
+		finally { 
+			connectionPool.closeConnection(con, st, rs); 
+			}
 		return newsList;
 	}
+	
 	
 	private News createNewsFromResultSet(ResultSet rs) throws SQLException { 
 		int id = rs.getInt("Id"); 
@@ -188,16 +247,17 @@ public class SQLNewsDao implements NewsDao{
 	@Override
 	public List<News> findAll() throws DaoException {
 		List<News> newsList = new ArrayList<>();
+		Connection con = null; 
+		Statement st = null;
+		ResultSet rs = null;
 		try {
 		    
-		    Class.forName("com.mysql.cj.jdbc.Driver");
-		    	   
-		    Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/newsportalbd?useSSL=false&serverTimezone=UTC", "root", "Daria1234");
-		    
-		    Statement st = con.createStatement();
 		   
-		    String query = "SELECT * FROM news;";
-		    ResultSet rs = st.executeQuery(query);
+		   con = connectionPool.takeConnection();
+		    st = con.createStatement();
+		   
+		    String query = "SELECT * FROM news WHERE statusNews = 'active';";
+		    rs = st.executeQuery(query);
 		    System.out.println(rs.toString());
 		    
 		    while (rs.next()) {
@@ -214,13 +274,13 @@ public class SQLNewsDao implements NewsDao{
 		        News news = new News(id, title, brief, content, author, publicationDate, idCategory, views, priority,"active");
 		        newsList.add(news);		     
 		    }		   
-		} catch (ClassNotFoundException e) {
-			//logging
-		    System.out.println("MySQL Driver not found.");
 		} catch (SQLException e) {
-			//logging
-		    System.out.println("Failed to retrieve news: " + e.getMessage());
-		}
+			throw new DaoException("Ошибка в работе с данными", e);
+		} catch (ConnectionPoolException e) {
+			throw new DaoException("Ошибка в работе с пулом соединений", e);
+		}finally { 
+			connectionPool.closeConnection(con, st, rs); 
+			}
 
 		return newsList;
 	}
@@ -228,57 +288,60 @@ public class SQLNewsDao implements NewsDao{
 	@Override
 	public int getTotalNewsCount() throws DaoException {
 		 int count=0;	
+		 Connection con = null; 
+		 Statement st =null;
+		ResultSet rs = null;
 		try {
 		    
-		    Class.forName("com.mysql.cj.jdbc.Driver");
-		    	   
-		    Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/newsportalbd?useSSL=false&serverTimezone=UTC", "root", "Daria1234");
-		    
-		    Statement st = con.createStatement();
+		   
+		   con = connectionPool.takeConnection();
+		     st = con.createStatement();
 		  
-		    String query = "SELECT COUNT(*) FROM news";
-		    ResultSet rs = st.executeQuery(query);
+		    String query = "SELECT COUNT(*) FROM news WHERE statusNews = 'active'";
+		    rs = st.executeQuery(query);
 		    if (rs.next()) { 
 		    	count = rs.getInt(1);
 		    }
 		    
 		       
-		} catch (ClassNotFoundException e) {
-			//logging
-		    System.out.println("MySQL Driver not found.");
 		} catch (SQLException e) {
-			//logging
-		    System.out.println("Failed to retrieve news: " + e.getMessage());
-		}
+			throw new DaoException("Ошибка в работе с данными", e);
+		} catch (ConnectionPoolException e) {
+			throw new DaoException("Ошибка в работе с пулом соединений", e);
+		}finally { 
+			connectionPool.closeConnection(con, st, rs); 
+			}
 		return count;
 	}
 
 	@Override
 	public List<News> getNewsByPage(int page, int pageSize) throws DaoException {
 		List<News> newsList = new ArrayList<>();
+		Connection con = null; 
+		PreparedStatement ps = null; 
+		ResultSet rs = null;
 		try {
 		    
-		    Class.forName("com.mysql.cj.jdbc.Driver");
 		    	   
-		    Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/newsportalbd?useSSL=false&serverTimezone=UTC", "root", "Daria1234"); 
-		    String query = "SELECT * FROM news ORDER BY priority DESC LIMIT ? OFFSET ?"; 
-		    PreparedStatement ps = con.prepareStatement(query); 
+		    con = connectionPool.takeConnection();
+		    String query = "SELECT * FROM news WHERE statusNews = 'active' ORDER BY priority DESC LIMIT ? OFFSET ?"; 
+		    ps = con.prepareStatement(query); 
 		    ps.setInt(1, pageSize); 
 		    ps.setInt(2, (page - 1) * pageSize); 
-		    ResultSet rs = ps.executeQuery();
+		    rs = ps.executeQuery();
 		    while (rs.next()) {
 		    	
 		    	News news = createNewsFromResultSet(rs);
 		        newsList.add(news);		     
 		    }
 			   
-		} catch (ClassNotFoundException e) {
-			//logging
-		    System.out.println("MySQL Driver not found.");
 		} catch (SQLException e) {
-			//logging
-		    System.out.println("Failed to retrieve news: " + e.getMessage());
-		}
+			throw new DaoException("Ошибка в работе с данными", e);
+		} catch (ConnectionPoolException e) {
+			throw new DaoException("Ошибка в работе с пулом соединений", e);
+		}finally { 
+			connectionPool.closeConnection(con, ps, rs); 
+			}
 
 		return newsList;
 	}

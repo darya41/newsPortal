@@ -1,6 +1,7 @@
 package app.yarmak.newsportal.controller.concrete.imp;
 
 import java.io.IOException;
+
 import app.yarmak.newsportal.controller.concrete.Command;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,9 +11,14 @@ public class NoAuth  implements Command {
 	@Override
 	public void execute(HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException {
 		try {
+			request.setAttribute("errorMessage", "Для просмотра новостей необходимо авторизоваться или зарегестрироваться!!!");
+			System.out.println("Для просмотра новостей необходимо авторизоваться или зарегестрироваться!!!");
 			response.sendRedirect("goController?command=go_to_index_main");
-		}catch(Exception e) {
-			response.sendRedirect("WEB-INF/jsp/error.jsp");
+		}
+		catch (Exception e) { 
+			// logging 
+			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
+			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
 		}
 	}
 

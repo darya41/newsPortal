@@ -54,19 +54,13 @@ public class ConnectionPool {
 	    }
 	    
 	    public void initPoolData() throws ConnectionPoolException {
-	        //устанавливается языковая среда англ (для считывания свойств из файла с пропертями?)
+	        
 	        Locale.setDefault(Locale.ENGLISH);
 	        try {
-	            //инициализация драйвера
+	            
 	            Class.forName(driverName);
 
-	            //Когда клиент приходит:
-	            //Если клиент хочет взять коньки, вы сначала проверяете connectionQueue, чтобы увидеть, какие коньки доступны для проката.
-	            //Выдача коньков:
-	            // После того как вы выдаете коньки клиенту, вы перемещаете их в givenAwayConQueue, чтобы отслеживать, что они находятся в использовании.
-	            //Возврат коньков:
-	            // Когда клиент возвращает коньки, вы удаляете их из givenAwayConQueue и возвращаете обратно в connectionQueue, чтобы они снова стали доступными для других клиентов.
-
+	           
 	            givenAwayConQueue = new ArrayBlockingQueue<>(poolSize);
 	            connectionQueue = new ArrayBlockingQueue<>(poolSize);
 
@@ -108,7 +102,7 @@ public class ConnectionPool {
 	            closeConnectionsQueue(givenAwayConQueue);
 	            closeConnectionsQueue(connectionQueue);
 	        } catch (SQLException e) {
-	// logger.log(Level.ERROR, "Error closing the connection.", e);
+	
 	        }
 	    }
 
@@ -156,12 +150,6 @@ public class ConnectionPool {
 	// logger.log(Level.ERROR, "Statement isn't closed.");
 	        }
 	    }
-
-	    /**
-	     * Этот класс реализует интерфейс Connection, позволяя использовать
-	     * его как обычное соединение с БД, при этом добавляя логику управления пулом.
-	     * Класс делегирует выполнение методов объекту класса Connection
-	     */
 
 	    private class PooledConnection implements Connection {
 	        private Connection connection;

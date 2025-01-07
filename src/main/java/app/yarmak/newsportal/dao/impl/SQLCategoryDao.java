@@ -1,7 +1,6 @@
 package app.yarmak.newsportal.dao.impl;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,21 +9,26 @@ import java.util.List;
 
 import app.yarmak.newsportal.bean.Category;
 import app.yarmak.newsportal.dao.CategoryDao;
+import app.yarmak.newsportal.dao.DaoException;
+import app.yarmak.newsportal.jdbc.ConnectionPool;
+import app.yarmak.newsportal.jdbc.ConnectionPoolException;
 
 public class SQLCategoryDao implements CategoryDao {
+	ConnectionPool connectionPool = ConnectionPool.getInstance();
 
 	@Override
-	public List<Category> findAllCategory() {
+	public List<Category> findAllCategory() throws DaoException  {
 		List<Category> categoryList = new ArrayList<>();
+		Connection con = null; 
+		 Statement st =null;
+		ResultSet rs = null;
 		try {
-		    
-		    Class.forName("com.mysql.cj.jdbc.Driver");
 		    	   
-		    Connection con = DriverManager.getConnection("jdbc:mysql://127.0.0.1/newsportalbd?useSSL=false&serverTimezone=UTC", "root", "Daria1234");		    
-		    Statement st = con.createStatement();
+		    con = connectionPool.takeConnection();
+		    st = con.createStatement();
 		   
 		    String query = "SELECT * FROM categories;";
-		    ResultSet rs = st.executeQuery(query);
+		  rs = st.executeQuery(query);
 		    System.out.println(rs.toString());
 		    while (rs.next()) {
 		    	
@@ -37,13 +41,13 @@ public class SQLCategoryDao implements CategoryDao {
 				
 		    }
 			   
-		} catch (ClassNotFoundException e) {
-			//logging
-		    System.out.println("MySQL Driver not found.");
 		} catch (SQLException e) {
-			//logging
-		    System.out.println("Failed to retrieve news: " + e.getMessage());
-		}
+			throw new DaoException("Ошибка в работе с данными", e);
+		} catch (ConnectionPoolException e) {
+			throw new DaoException("Ошибка в работе с пулом соединений", e);
+		}finally { 
+			connectionPool.closeConnection(con, st, rs); 
+			}
 		return categoryList;
 	}
 

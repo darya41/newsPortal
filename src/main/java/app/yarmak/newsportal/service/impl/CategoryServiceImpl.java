@@ -5,6 +5,7 @@ import java.util.List;
 
 import app.yarmak.newsportal.bean.Category;
 import app.yarmak.newsportal.dao.CategoryDao;
+import app.yarmak.newsportal.dao.DaoException;
 import app.yarmak.newsportal.dao.DaoProvider;
 import app.yarmak.newsportal.service.CategoryService;
 
@@ -14,7 +15,13 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<Category> getAllCategory() {
 		
-			return categoryDao.findAllCategory();
+			try {
+				return categoryDao.findAllCategory();
+			} catch (DaoException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
 		
 		
 	}

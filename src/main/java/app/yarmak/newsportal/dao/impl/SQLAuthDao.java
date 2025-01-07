@@ -1,60 +1,60 @@
 package app.yarmak.newsportal.dao.impl;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import app.yarmak.newsportal.bean.Auth;
 import app.yarmak.newsportal.bean.User;
 import app.yarmak.newsportal.dao.AuthDao;
 import app.yarmak.newsportal.dao.DaoException;
+import app.yarmak.newsportal.jdbc.ConnectionPool;
+import app.yarmak.newsportal.jdbc.ConnectionPoolException;
 
 public class SQLAuthDao implements AuthDao {
-
-	private static final String DB_URL = "jdbc:mysql://127.0.0.1/newsportalbd?useSSL=false&serverTimezone=UTC";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "Daria1234";
+	
+	ConnectionPool connectionPool = ConnectionPool.getInstance();
     
 	@Override
 	public User registration(Auth auth, String password) throws DaoException {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			String sql = "INSERT INTO User (firstName,login, password, role, registration_date, status) VALUES (?, ?, ?, ?, ?, ?)";
-			try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-				PreparedStatement stmt = conn.prepareStatement(sql)) {
-		        stmt.setString(1, auth.getUsername());
-		        stmt.setString(2, auth.getEmail());
-		        stmt.setString(3, password);
-		        stmt.setString(4,"user");
-		        java.sql.Timestamp protoTimestamp = auth.getRegistrationDate();
-	            stmt.setTimestamp(5, protoTimestamp);
+		Connection con = null; 
+		PreparedStatement ps = null; 
+		String query = "INSERT INTO User (firstName,login, password, role, registration_date, status) VALUES (?, ?, ?, ?, ?, ?)";
+		try{
+			con = connectionPool.takeConnection();
+			ps = con.prepareStatement(query); 
+		    ps.setString(1, auth.getUsername());
+		    ps.setString(2, auth.getEmail());
+		    ps.setString(3, password);
+		    ps.setString(4,"user");
+		    java.sql.Timestamp protoTimestamp = auth.getRegistrationDate();
+		    ps.setTimestamp(5, protoTimestamp);
 
-	            stmt.setString(6, auth.getStatus());
-	            stmt.executeUpdate();
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    }
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		   ps.setString(6, auth.getStatus());
+		   ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new DaoException("Ошибка в работе с данными", e);
+		} catch (ConnectionPoolException e) {
+			throw new DaoException("Ошибка в работе с пулом соединений", e);
+		}finally { 
+			connectionPool.closeConnection(con, ps); 
+			}
 		return null;
 	}
 
 	@Override
 	public Auth authorization(String login, String password) throws DaoException {
+		Connection con = null; 
+		PreparedStatement ps = null; 
+		ResultSet rs = null;
 		try {
-		    Class.forName("com.mysql.cj.jdbc.Driver");
 		    	   
-		    Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+		   con = connectionPool.takeConnection();		    
 		    
-		    Statement st = con.createStatement();
-		   
 		    String query =  "SELECT * FROM user WHERE login='" + login + "' AND password='" + password + "'";
-		    ResultSet rs = st.executeQuery(query);
+		    ps = con.prepareStatement(query); 
+		    rs = ps.executeQuery(query);
 		    if (rs.next()) {
 				
 		    	int id = rs.getInt("id");
@@ -65,19 +65,18 @@ public class SQLAuthDao implements AuthDao {
 		    	String role =rs.getString("role");
 		    	String status = rs.getString("status");
 		    	
-		    	
 				return new Auth (id,firstName,lastName,role,login, registrationDate,status);
 				
 			}
 		    
 		    	   
-		} catch (ClassNotFoundException e) {
-		    e.printStackTrace();
-		    System.out.println("MySQL Driver not found.");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		    System.out.println("Failed to retrieve news: " + e.getMessage());
-		}
+		}catch (SQLException e) {
+			throw new DaoException("Ошибка в работе с данными", e);
+		} catch (ConnectionPoolException e) {
+			throw new DaoException("Ошибка в работе с пулом соединений", e);
+		}finally { 
+			connectionPool.closeConnection(con, ps, rs); 
+			}
 
 		return null;
 	}

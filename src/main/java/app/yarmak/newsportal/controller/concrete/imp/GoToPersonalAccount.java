@@ -63,8 +63,11 @@ public class GoToPersonalAccount implements Command {
 	        System.out.println("User detail session/n      ------- " + session.getAttribute("userDetail"));
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/personal_account.jsp");
 	        dispatcher.forward(request, response);
-		}catch(Exception e) {
-			response.sendRedirect("WEB-INF/jsp/error.jsp");
+		}
+		catch (Exception e) { 
+			// logging 
+			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
+			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
 		}
         
     }

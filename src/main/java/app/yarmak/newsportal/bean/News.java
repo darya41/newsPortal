@@ -1,7 +1,6 @@
 package app.yarmak.newsportal.bean;
 
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.Objects;
 
 public class News implements Serializable {

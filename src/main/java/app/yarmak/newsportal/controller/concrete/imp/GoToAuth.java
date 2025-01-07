@@ -2,6 +2,7 @@ package app.yarmak.newsportal.controller.concrete.imp;
 
 import java.io.IOException;
 
+
 import app.yarmak.newsportal.controller.concrete.Command;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -15,10 +16,12 @@ public class GoToAuth implements Command{
 		try {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/auth.jsp");
 			dispatcher.forward(request, response);
-		}catch (Exception e) {
-			response.sendRedirect("WEB-INF/jsp/error.jsp");
 		}
-		
+		catch (Exception e) { 
+			// logging 
+			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
+			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
+		}
 	}
 
 }
