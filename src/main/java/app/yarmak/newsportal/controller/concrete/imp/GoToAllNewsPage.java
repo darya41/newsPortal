@@ -1,7 +1,6 @@
 package app.yarmak.newsportal.controller.concrete.imp;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.google.protobuf.ServiceException;
@@ -15,38 +14,31 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class GoToIndexMain implements Command{
+public class GoToAllNewsPage implements Command{
 	private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
-	
 	@Override
 	public void execute(HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException {
 		
-		 List<News> mainNews = null;
-	     List<News> latestNews = null;
-	     List<News> popularNews = null;
+		int page = 1; 
+		int pageSize = 7;
 		
-		try {
-			
-			mainNews = newsService.getMainNews();
-			latestNews = newsService.getLatestNews();
-			popularNews = newsService.getPopularNews();
-			
-			request.setAttribute("mainNews", mainNews);			  
-	        request.setAttribute("latestNews", latestNews);	      	      			
-	        request.setAttribute("popularNews", popularNews);
+		if (request.getParameter("page") != null) { 			
+			page = Integer.parseInt(request.getParameter("page")); 
+		}
+		try { 
+			List<News> newsList = newsService.getNewsByPage(page, pageSize); 
+			int totalNewsCount = newsService.getTotalNewsCount(); 
+			int totalPages = (int) Math.ceil((double) totalNewsCount / pageSize); 
 
-	        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index_main.jsp");
-	        dispatcher.forward(request, response); 
-	        
-		} catch (ServiceException e) {
-			
+			request.setAttribute("newsList", newsList); 			
+			request.setAttribute("currentPage", page); 
+			request.setAttribute("totalPages", totalPages); 
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/all_news.jsp");
+	        dispatcher.forward(request, response);
+		} catch (ServiceException e) { 
 			//logging
 			response.sendRedirect("WEB-INF/jsp/error.jsp");
 		}
-	        
-	       
-			
-	        
 		
 	}
 

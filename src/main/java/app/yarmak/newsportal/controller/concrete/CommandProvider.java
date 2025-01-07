@@ -6,10 +6,14 @@ import java.util.Map;
 import app.yarmak.newsportal.controller.concrete.imp.DoApplyAuthor;
 import app.yarmak.newsportal.controller.concrete.imp.DoAuth;
 import app.yarmak.newsportal.controller.concrete.imp.DoRegistration;
+import app.yarmak.newsportal.controller.concrete.imp.EditNews;
+import app.yarmak.newsportal.controller.concrete.imp.GoToAllNewsPage;
 import app.yarmak.newsportal.controller.concrete.imp.GoToApplyAuthor;
 import app.yarmak.newsportal.controller.concrete.imp.GoToAuth;
+import app.yarmak.newsportal.controller.concrete.imp.GoToEditNews;
 import app.yarmak.newsportal.controller.concrete.imp.GoToApplicationSubmit;
 import app.yarmak.newsportal.controller.concrete.imp.GoToIndexMain;
+import app.yarmak.newsportal.controller.concrete.imp.GoToPageNews;
 import app.yarmak.newsportal.controller.concrete.imp.GoToRegistration;
 import app.yarmak.newsportal.controller.concrete.imp.LogOut;
 import app.yarmak.newsportal.controller.concrete.imp.NoAuth;
@@ -31,6 +35,10 @@ public final class  CommandProvider {
 		commands.put(CommandName.DO_APPLY_AUTHOR, new DoApplyAuthor());
 		commands.put(CommandName.GO_TO_APPLICATION_SUBMIT, new GoToApplicationSubmit());
 		commands.put(CommandName.NO_AUTH, new NoAuth());
+		commands.put(CommandName.GO_TO_EDIT_NEWS, new GoToEditNews());
+		commands.put(CommandName.EDIT_NEWS, new EditNews());
+		commands.put(CommandName.GO_TO_ALL_NEWS_PAGE, new GoToAllNewsPage());
+		commands.put(CommandName.GO_TO_PAGE_NEWS, new GoToPageNews());
 		commands.put(CommandName.LOG_OUT,new LogOut() );
 	}
 	public Command takeCommand(String userCommand) {

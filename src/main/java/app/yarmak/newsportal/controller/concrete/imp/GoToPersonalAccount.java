@@ -22,46 +22,50 @@ public class GoToPersonalAccount implements Command {
 	@Override
 	public void execute(HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException {
 	
-		HttpSession session = request.getSession(false);
-        Integer userId = null;
-        if (session != null) {
-            System.out.println("user Start Personal account------" + session.getAttribute("user"));
-            Auth auth = (Auth) session.getAttribute("user");
-            if (auth != null) {
-                userId = auth.getId();
-                System.out.println(userId);
-            } else {
-                System.out.println("User not found in session.");
-            }
-
-            if (userId != null) {
-                
-                User user = null;
-                try {
-                    auth = userService.getUserById(userId);
-                    request.setAttribute("user", auth);
-                    try {
-                        user = userService.getUserDetailById(userId);
-                        System.out.println("User detail/n      ------- " + user);
-                        
-                        if (user != null) {
-                            System.out.println("User detail ррррррррр/n      ------- " + user);
-                            request.setAttribute("userDetail", user);
-                            session.setAttribute("userDetail", user); // Добавляем атрибут в сессию
-                        }
-                    } catch (DaoException e) {
-                        e.printStackTrace();
-                    }
-                    
-                } catch (ServiceException e) {
-                    e.printStackTrace();
-                }
-  
-            }
-        }       
-        System.out.println("User detail session/n      ------- " + session.getAttribute("userDetail"));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/personal_account.jsp");
-        dispatcher.forward(request, response);
+		try {
+			HttpSession session = request.getSession(false);
+	        Integer userId = null;
+	        if (session != null) {
+	            System.out.println("user Start Personal account------" + session.getAttribute("user"));
+	            Auth auth = (Auth) session.getAttribute("user");
+	            if (auth != null) {
+	                userId = auth.getId();
+	                System.out.println(userId);
+	            } else {
+	                System.out.println("User not found in session.");
+	            }
+	
+	            if (userId != null) {
+	                
+	                User user = null;
+	                try {
+	                    auth = userService.getUserById(userId);
+	                    request.setAttribute("user", auth);
+	                    try {
+	                        user = userService.getUserDetailById(userId);
+	                        System.out.println("User detail/n      ------- " + user);
+	                        
+	                        if (user != null) {
+	                            System.out.println("User detail ррррррррр/n      ------- " + user);
+	                            request.setAttribute("userDetail", user);
+	                            session.setAttribute("userDetail", user); // Добавляем атрибут в сессию
+	                        }
+	                    } catch (DaoException e) {
+	                        e.printStackTrace();
+	                    }
+	                    
+	                } catch (ServiceException e) {
+	                    e.printStackTrace();
+	                }
+	  
+	            }
+	        }       
+	        System.out.println("User detail session/n      ------- " + session.getAttribute("userDetail"));
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/personal_account.jsp");
+	        dispatcher.forward(request, response);
+		}catch(Exception e) {
+			response.sendRedirect("WEB-INF/jsp/error.jsp");
+		}
         
     }
 

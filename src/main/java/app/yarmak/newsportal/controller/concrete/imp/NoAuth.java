@@ -9,7 +9,11 @@ import jakarta.servlet.http.HttpServletResponse;
 public class NoAuth  implements Command {
 	@Override
 	public void execute(HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException {
-		response.sendRedirect("goController?command=go_to_index_main");
+		try {
+			response.sendRedirect("goController?command=go_to_index_main");
+		}catch(Exception e) {
+			response.sendRedirect("WEB-INF/jsp/error.jsp");
+		}
 	}
 
 }

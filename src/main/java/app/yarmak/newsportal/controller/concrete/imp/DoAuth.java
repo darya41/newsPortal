@@ -1,6 +1,8 @@
 package app.yarmak.newsportal.controller.concrete.imp;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 import com.google.protobuf.ServiceException;
 
@@ -8,7 +10,6 @@ import app.yarmak.newsportal.bean.Auth;
 import app.yarmak.newsportal.controller.concrete.Command;
 import app.yarmak.newsportal.service.AuthService;
 import app.yarmak.newsportal.service.ServiceProvider;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,27 +26,26 @@ public class DoAuth implements Command {
 		String password = request.getParameter("password");
 		
 		Auth auth = null;
+		
 		try {
-			System.out.println("-----------1");
 			auth = authService.signIn(login,password);
-			System.out.println(auth);
-		} catch (ServiceException e) {
-			e.printStackTrace();
-		}
-		if(auth == null) {
-			request.setAttribute("authError", "Неправильный логин или пароль!");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("goController?command=go_to_auth");
-            dispatcher.forward(request, response);
-            return;
-		}
+			if(auth == null) {
+				String errorMessage = URLEncoder.encode("Неправильный логин или пароль!", 
+						StandardCharsets.UTF_8.toString());
+                response.sendRedirect("goController?command=go_to_auth&authError=" +
+						errorMessage);
+	            return;
+			}
+			
 			HttpSession session = (HttpSession) request.getSession(true);
 			session.setAttribute("user", auth);
-		System.out.println("User set in session: " + session.getAttribute("user"));
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("goController?command=go_to_index_main");
-		dispatcher.forward(request, response);
-
-		
+			
+			response.sendRedirect("goController?command=go_to_index_main");	
+			 
+		} catch (ServiceException e) {
+			//logging
+			response.sendRedirect("WEB-INF/jsp/error.jsp");
+		}		
 	}
 
 }

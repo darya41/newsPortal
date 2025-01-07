@@ -238,8 +238,9 @@ button:hover {
         <form action="Controller" method="post">
         <h2>Вход</h2>
         <div class="error-message" id="error-message" style="color: red; margin-top:0;">
-            <c:if test="${not empty requestScope.authError}">
-                <c:out value="${requestScope.authError}" />
+        	<c:set var="authError" value="${param.authError}" />
+            <c:if test="${not empty authError}">
+                <c:out value="${authError}" />
             </c:if>
         </div>
             <input type="hidden" name="command" value="do_auth">

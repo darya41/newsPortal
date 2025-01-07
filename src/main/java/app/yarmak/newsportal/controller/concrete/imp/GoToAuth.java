@@ -12,8 +12,12 @@ public class GoToAuth implements Command{
 
 	@Override
 	public void execute(HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/auth.jsp");
-		dispatcher.forward(request, response);
+		try {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/auth.jsp");
+			dispatcher.forward(request, response);
+		}catch (Exception e) {
+			response.sendRedirect("WEB-INF/jsp/error.jsp");
+		}
 		
 	}
 

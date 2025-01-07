@@ -16,12 +16,13 @@ public class News implements Serializable {
 	 private int idCategory;
 	 private int views;
 	 private int priority;
+	 private String status;
 	
 	public News() {
 	}
 	
 	public News(int id,String title, String brief, String content, String author, 
-			java.sql.Timestamp  publicationDate,int idCategory,int views, int priority) {
+			java.sql.Timestamp  publicationDate,int idCategory,int views, int priority, String status) {
 		super();
 		this.id=id;
 		this.title = title;
@@ -32,6 +33,7 @@ public class News implements Serializable {
 		this.idCategory=idCategory;
 		this.views=views;
 		this.priority = priority;
+		this.status = status;
 	}
 	public int getId() {
 		return id;
@@ -104,11 +106,17 @@ public class News implements Serializable {
    public void setPriority(int priority) {
        this.priority = priority;
    }
+   public String getStatus() {
+	   return status;
+   }
+   public void setStatus(String status) {
+	   this.status=status;
+   }
 
 	
 	@Override
 	public int hashCode() {
-		 return Objects.hash(id, title, brief, content, author, publicationDate, idCategory, views);
+		 return Objects.hash(id, title, brief, content, author, publicationDate, idCategory, views,priority, status);
 	}
 	
 	@Override
@@ -124,7 +132,8 @@ public class News implements Serializable {
 	            Objects.equals(author, news.author) &&
 	            Objects.equals(publicationDate, news.publicationDate) &&
 	            Objects.equals(idCategory, news.idCategory)&&
-	            Objects.equals(priority, news.priority);
+	            Objects.equals(priority, news.priority)&&
+	    		Objects.equals(status, news.status);
 	    
 	}
 
@@ -139,23 +148,12 @@ public class News implements Serializable {
                ", publicationDate=" + publicationDate +
                ", category='" + idCategory + '\'' +
                ", views=" + views +
+                ", views=" + views +
+                 ", views=" + views +
                '}';
    }	
 	
-	public static Comparator<News> compareByDate() {
-       return Comparator.comparing(News::getPublicationDate).reversed();
-   }
-
-   public static Comparator<News> compareByViews() {
-       return Comparator.comparingInt(News::getViews).reversed();
-   }
-
-   public static Comparator<News> compareByMain() {
-       return Comparator.comparing(News::getPriority) 
-                        .thenComparing(News::getPublicationDate) 
-                        .thenComparingInt(News::getViews) 
-                        .reversed();
-   }
+	
 
 
 }

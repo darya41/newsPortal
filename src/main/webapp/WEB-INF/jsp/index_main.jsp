@@ -294,8 +294,8 @@ h2 {
         <nav>
             <ul class="menu">
                 <li><a href="#">Главная</a></li>
-                <li><a href="#">Новости</a></li>
-                <li><a href="#">Категории</a></li>
+                <li><a href="Controller?command=go_to_all_news_page">Новости</a></li>
+                <li><a href="#" >Категории</a></li>
             </ul>
             <div class="auth-buttons">
                 <c:choose>
@@ -363,15 +363,16 @@ h2 {
                     <c:set var="fullName" value="${user.username} ${user.lastName}" />
                     <c:choose>
                         <c:when test="${(fullName == item.author && user.role == 'author')}">
-                            <button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${item.id}'">Редактировать</button>
-                            <button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${item.id}'">Удалить</button>
-                        </c:when>
+    						<button class="edit-btn" onclick="window.location.href='Controller?command=go_to_edit_news&id=${item.id}'">Редактировать</button>
+    						<button class="delete-btn" onclick="window.location.href='Controller?command=delete_news&id=${item.id}'">Удалить</button>
+						</c:when>
+
                     </c:choose>
                     </c:if>
                
                 <c:choose>
                         <c:when test="${user.role == 'admin'}">
-                            <button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${item.id}'">Редактировать</button>
+                            <button class="edit-btn" onclick="window.location.href='goController?command=go_to_edit_news&id=${item.id}'">Редактировать</button>
                             <button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${item.id}'">Удалить</button>
                         </c:when>
                     </c:choose>
@@ -440,7 +441,7 @@ h2 {
                
                 <c:choose>
                         <c:when test="${user.role == 'admin'}">
-                            <button class="edit-btn" onclick="window.location.href='Controller?command=edit_article&id=${item.id}'">Редактировать</button>
+                            <button class="edit-btn" onclick="window.location.href='goController?command=command=go_to_edit_news&id=${item.id}'">Редактировать</button>
                             <button class="delete-btn" onclick="window.location.href='Controller?command=delete_article&id=${item.id}'">Удалить</button>
                         </c:when>
                     </c:choose>

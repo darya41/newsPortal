@@ -287,17 +287,24 @@ button[type="submit"]:hover {
          <input type="hidden" name="command" value="do_registration"/>
             <div class="input-group">
                 <label for="username">Имя пользователя</label>
-                <input type="text" id="username" name="username" required>
+                <input type="text" id="username" name="username" value="${sessionScope.username}" required>
             </div>
             <div class="input-group">
                 <label for="email">Электронная почта</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" value="${sessionScope.email}" required>
             </div>
             <div class="input-group">
                 <label for="password">Пароль</label>
                 <input type="password" id="password" name="password" required>
             </div>
+      
             <div class="input-group">
+            	<div class="error-message" id="error-message" style="color: red; margin-top:0;">
+        			<c:set var="authError" value="${param.authError}" />
+            		<c:if test="${not empty authError}">
+                		<c:out value="${authError}" />
+            		</c:if>
+        		</div>
                 <label for="confirm-password">Подтвердите пароль</label>
                 <input type="password" id="confirm-password" name="confirm-password" required>
             </div>
