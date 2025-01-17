@@ -1,4 +1,4 @@
-package app.yarmak.newsportal.jdbc;
+package app.yarmak.newsportal.dao.jdbc;
 
 import java.sql.Array;
 import java.sql.Blob;
@@ -122,32 +122,32 @@ public class ConnectionPool {
 
 	    public void closeConnection(Connection con, Statement st, ResultSet rs) {
 	        try {
-	            con.close();
+	        	if (con != null) { con.close(); }
 	        } catch (SQLException e) {
-	// logger.log(Level.ERROR, "Connection isn't return to the pool.");
+	        	e.printStackTrace();
 	        }
 	        try {
-	            rs.close();
+	        	if (rs != null) { rs.close(); }
 	        } catch (SQLException e) {
-	// logger.log(Level.ERROR, "ResultSet isn't closed.");
+	        	e.printStackTrace();
 	        }
 	        try {
-	            st.close();
+	        	if (st != null) { st.close(); }
 	        } catch (SQLException e) {
-	// logger.log(Level.ERROR, "Statement isn't closed.");
+	        	e.printStackTrace();
 	        }
 	    }
 
 	    public void closeConnection(Connection con, Statement st) {
 	        try {
-	            con.close();
+	        	if (con != null) { con.close(); }
 	        } catch (SQLException e) {
-	// logger.log(Level.ERROR, "Connection isn't return to the pool.");
+	        	e.printStackTrace();
 	        }
 	        try {
-	            st.close();
+	        	if (st != null) { st.close(); }
 	        } catch (SQLException e) {
-	// logger.log(Level.ERROR, "Statement isn't closed.");
+	        	e.printStackTrace();
 	        }
 	    }
 

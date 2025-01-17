@@ -3,14 +3,17 @@ package app.yarmak.newsportal.controller.concrete;
 import java.util.HashMap;
 import java.util.Map;
 
+import app.yarmak.newsportal.controller.concrete.imp.AddNews;
 import app.yarmak.newsportal.controller.concrete.imp.DeleteNews;
 import app.yarmak.newsportal.controller.concrete.imp.DoApplyAuthor;
 import app.yarmak.newsportal.controller.concrete.imp.DoAuth;
 import app.yarmak.newsportal.controller.concrete.imp.DoRegistration;
 import app.yarmak.newsportal.controller.concrete.imp.EditNews;
+import app.yarmak.newsportal.controller.concrete.imp.GoToAddNewsPage;
 import app.yarmak.newsportal.controller.concrete.imp.GoToAllNewsPage;
 import app.yarmak.newsportal.controller.concrete.imp.GoToApplyAuthor;
 import app.yarmak.newsportal.controller.concrete.imp.GoToAuth;
+import app.yarmak.newsportal.controller.concrete.imp.GoToCategoryPage;
 import app.yarmak.newsportal.controller.concrete.imp.GoToEditNews;
 import app.yarmak.newsportal.controller.concrete.imp.GoToApplicationSubmit;
 import app.yarmak.newsportal.controller.concrete.imp.GoToIndexMain;
@@ -41,7 +44,11 @@ public final class  CommandProvider {
 		commands.put(CommandName.GO_TO_ALL_NEWS_PAGE, new GoToAllNewsPage());
 		commands.put(CommandName.GO_TO_PAGE_NEWS, new GoToPageNews());
 		commands.put(CommandName.DELETE_NEWS, new DeleteNews());
+		commands.put(CommandName.GO_TO_ADD_NEWS_PAGE,new GoToAddNewsPage());
+		commands.put(CommandName.ADD_NEWS, new AddNews());
+		commands.put(CommandName.GO_TO_CATEGORY_PAGE, new GoToCategoryPage());
 		commands.put(CommandName.LOG_OUT,new LogOut() );
+		
 	}
 	public Command takeCommand(String userCommand) {
 		CommandName commandName = null;

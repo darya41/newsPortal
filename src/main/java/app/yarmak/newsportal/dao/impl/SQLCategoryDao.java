@@ -10,35 +10,33 @@ import java.util.List;
 import app.yarmak.newsportal.bean.Category;
 import app.yarmak.newsportal.dao.CategoryDao;
 import app.yarmak.newsportal.dao.DaoException;
-import app.yarmak.newsportal.jdbc.ConnectionPool;
-import app.yarmak.newsportal.jdbc.ConnectionPoolException;
+import app.yarmak.newsportal.dao.jdbc.ConnectionPool;
+import app.yarmak.newsportal.dao.jdbc.ConnectionPoolException;
 
 public class SQLCategoryDao implements CategoryDao {
-	ConnectionPool connectionPool = ConnectionPool.getInstance();
-
+	private final ConnectionPool connectionPool = ConnectionPool.getInstance();
+	private static final String QUERY_FIND_ALL_CATEGORIES = "SELECT * FROM categories";
+	
 	@Override
 	public List<Category> findAllCategory() throws DaoException  {
 		List<Category> categoryList = new ArrayList<>();
 		Connection con = null; 
-		 Statement st =null;
+		Statement st =null;
 		ResultSet rs = null;
-		try {
-		    	   
+		
+		try {		    	   
 		    con = connectionPool.takeConnection();
 		    st = con.createStatement();
-		   
-		    String query = "SELECT * FROM categories;";
-		  rs = st.executeQuery(query);
-		    System.out.println(rs.toString());
-		    while (rs.next()) {
-		    	
+		    rs = st.executeQuery( QUERY_FIND_ALL_CATEGORIES);
+		    
+		    while (rs.next()) {		    	
 		    	int id = rs.getInt("Id");    
 				String title = rs.getString("title"); 
 				String description = rs.getString("description"); 
 				String imageUrl =null;
-				Category category = new Category(id,title,description,imageUrl);
-				categoryList.add(category);
 				
+				Category category = new Category(id,title,description,imageUrl);
+				categoryList.add(category);			
 		    }
 			   
 		} catch (SQLException e) {
@@ -48,6 +46,7 @@ public class SQLCategoryDao implements CategoryDao {
 		}finally { 
 			connectionPool.closeConnection(con, st, rs); 
 			}
+		
 		return categoryList;
 	}
 

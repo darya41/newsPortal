@@ -24,7 +24,6 @@ public class NewsServiceImpl implements NewsService{
 		}
 	}
 	
-
 	@Override
 	public List<News> getMainNews() throws ServiceException {
 		try {
@@ -55,10 +54,13 @@ public class NewsServiceImpl implements NewsService{
 		}
 	}
 
-
 	@Override
 	public News getNewsById(int id) throws ServiceException {
 		try {
+			if (id <= 0) { 
+				throw new ServiceException("Invalid news ID"); 
+			}
+			
 			return newsDao.findById(id);
 		} catch (DaoException e) {
 			//logging
@@ -70,6 +72,10 @@ public class NewsServiceImpl implements NewsService{
 	@Override
 	public void upDate(News news) throws ServiceException {
 		try {
+			if (news == null || news.getId() <= 0) { 
+				throw new ServiceException("Invalid news data"); 
+			}
+			
 			newsDao.upDate(news);
 		} catch (DaoException e) {
 			//logging
@@ -93,6 +99,10 @@ public class NewsServiceImpl implements NewsService{
 	@Override
 	public List<News> getNewsByPage(int page, int pageSize) throws ServiceException {
 		try {
+			if (page <= 0 || pageSize <= 0) { 
+				throw new ServiceException("Invalid page or page size"); 
+			}
+			
 			return newsDao.getNewsByPage(page,pageSize);
 		} catch (DaoException e) {
 			//logging
@@ -104,6 +114,10 @@ public class NewsServiceImpl implements NewsService{
 	@Override
 	public void deleteNews(News news) throws ServiceException {
 		try {
+			if (news == null || news.getId() <= 0) { 
+				throw new ServiceException("Invalid news data"); 
+			}
+			
 			newsDao.deleteNews(news);
 		} catch (DaoException e) {
 			//logging
@@ -116,6 +130,10 @@ public class NewsServiceImpl implements NewsService{
 	@Override
 	public void AddNewView(News news) throws ServiceException {
 		try {
+			if (news == null || news.getId() <= 0) { 
+				throw new ServiceException("Invalid news data"); 
+			}
+			
 			newsDao.AddNewView(news);
 		} catch (DaoException e) {
 			//logging

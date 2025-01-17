@@ -285,6 +285,9 @@ h2 {
 }
 .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgb(0,0,0); background-color: rgba(0,0,0,0.4); } .modal-content { background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 500px; text-align: center; } .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; } .close:hover, .close:focus { color: black; text-decoration: none; cursor: pointer; } .confirm-btn, .cancel-btn { padding: 10px 20px; margin: 10px; border: none; cursor: pointer; } .confirm-btn { background-color: #e74c3c; color: white; } .cancel-btn { background-color: #1abc9c; color: white; }
 	
+.logo-a{
+	color:white;
+}
 }
   </style>
      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -292,7 +295,9 @@ h2 {
 </head>
 <body>
     <header>
-        <div class="logo">Новостной Портал</div>
+        <div class="logo">
+    		<a class="logo-a" href="#">Новостной Портал</a>
+    	</div>
         <nav>
             <ul class="menu">
                 <li><a href="#">Главная</a></li>
@@ -312,8 +317,6 @@ h2 {
         </nav>
     </header>
     <main>
-    
-
         <section class="hero">
         	<c:choose>
 		    	<c:when test="${not empty sessionScope.user}">
@@ -347,7 +350,7 @@ h2 {
         		<c:set var="fullName" value=" ${user.username} ${user.lastName}" />
         		<h3>${user.username} ${user.lastName}</h3>
         		<p>Здесь вы можете создавать и редактировать свои новости.</p>
-       		 	<!-- Добавьте ссылки на страницы создания и редактирования новостей -->
+       		 	<button class="more-btn" onclick="window.location.href='goController?command=go_to_add_news_page'">Добавить новость</button>
     			</section>
 			</c:if>
 			

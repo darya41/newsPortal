@@ -5,7 +5,6 @@ import java.util.List;
 import com.google.protobuf.ServiceException;
 
 import app.yarmak.newsportal.bean.News;
-import app.yarmak.newsportal.dao.DaoException;
 
 public interface NewsService {
 	List<News> getAllNews() throws ServiceException;

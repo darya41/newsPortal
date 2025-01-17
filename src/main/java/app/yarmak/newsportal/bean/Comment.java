@@ -2,16 +2,17 @@ package app.yarmak.newsportal.bean;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
-public class Comment  implements Serializable{
-	private static final long serialVersionUID = 1L;
-	
-	private String commentId;
+public class Comment implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private String commentId;
     private String userId;
     private String articleId;
     private String content;
     private LocalDateTime timestamp;
-    private double rating; 
+    private double rating;
 
     public Comment(String commentId, String userId, String articleId, String content, LocalDateTime timestamp, double rating) {
         this.commentId = commentId;
@@ -22,7 +23,6 @@ public class Comment  implements Serializable{
         this.rating = rating;
     }
 
- 
     public String getCommentId() {
         return commentId;
     }
@@ -71,4 +71,33 @@ public class Comment  implements Serializable{
         this.rating = rating;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Comment comment = (Comment) obj;
+        return Double.compare(comment.rating, rating) == 0 &&
+                Objects.equals(commentId, comment.commentId) &&
+                Objects.equals(userId, comment.userId) &&
+                Objects.equals(articleId, comment.articleId) &&
+                Objects.equals(content, comment.content) &&
+                Objects.equals(timestamp, comment.timestamp);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(commentId, userId, articleId, content, timestamp, rating);
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "commentId='" + commentId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", articleId='" + articleId + '\'' +
+                ", content='" + content + '\'' +
+                ", timestamp=" + timestamp +
+                ", rating=" + rating +
+                '}';
+    }
 }

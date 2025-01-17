@@ -18,7 +18,6 @@ public class CategoryServiceImpl implements CategoryService {
 			try {
 				return categoryDao.findAllCategory();
 			} catch (DaoException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;

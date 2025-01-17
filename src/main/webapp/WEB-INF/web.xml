@@ -48,6 +48,36 @@
 	</error-page>
   
 	
+	<filter>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<filter-class>app.yarmak.newsportal.controller.filter.AuthenticationFilter</filter-class>
+	</filter>
+	<filter-mapping>
+    	<filter-name>AuthenticationFilter</filter-name>
+    	<url-pattern>/Controller</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+    	<display-name>CharacterEncodingFilter</display-name>
+    	<filter-name>CharacterEncodingFilter</filter-name>
+    	<filter-class>app.yarmak.newsportal.controller.filter.CharacterEncodingFilter</filter-class>
+  	</filter>
+  	<filter-mapping>
+    	<filter-name>CharacterEncodingFilter</filter-name>
+    	<url-pattern>/MyController</url-pattern>
+  	</filter-mapping>
+	
+	
+	<filter>
+    	<display-name>RememberMeFilter</display-name>
+    	<filter-name>RememberMeFilter</filter-name>
+    	<filter-class>app.yarmak.newsportal.controller.filter.RememberMeFilter</filter-class>
+  	</filter>
+  	<filter-mapping>
+    	<filter-name>RememberMeFilter</filter-name>
+    	<url-pattern>/MyController</url-pattern>
+  	</filter-mapping>
+	
 	<servlet-mapping>
     	<servlet-name>default</servlet-name>
     	<url-pattern>/images/*</url-pattern>

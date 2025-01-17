@@ -1,4 +1,4 @@
-package app.yarmak.newsportal.jdbc;
+package app.yarmak.newsportal.dao.jdbc;
 
 import java.util.ResourceBundle;
 

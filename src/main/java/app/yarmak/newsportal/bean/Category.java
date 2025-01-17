@@ -1,19 +1,19 @@
 package app.yarmak.newsportal.bean;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Category implements Serializable {
-	private static final long serialVersionUID = 1L;
-	
-	private int id;
+    private static final long serialVersionUID = 1L;
+
+    private int id;
     private String name;
     private String description;
     private String imageUrl;
 
     public Category() {
-    	
     }
-    
+
     public Category(int id, String name, String description, String imageUrl) {
         this.id = id;
         this.name = name;
@@ -21,7 +21,6 @@ public class Category implements Serializable {
         this.imageUrl = imageUrl;
     }
 
-   
     public int getId() {
         return id;
     }
@@ -55,6 +54,22 @@ public class Category implements Serializable {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Category category = (Category) obj;
+        return id == category.id &&
+                Objects.equals(name, category.name) &&
+                Objects.equals(description, category.description) &&
+                Objects.equals(imageUrl, category.imageUrl);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, imageUrl);
+    }
+
+    @Override
     public String toString() {
         return "Category{" +
                 "id=" + id +
@@ -63,5 +78,4 @@ public class Category implements Serializable {
                 ", imageUrl='" + imageUrl + '\'' +
                 '}';
     }
-
 }

@@ -1,5 +1,6 @@
 package app.yarmak.newsportal.bean;
 
+import java.sql.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
@@ -8,7 +9,7 @@ public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
-	private java.sql.Timestamp dateBirth;
+	private Timestamp dateBirth;
 	private String phone;
 	private List<Integer> bookmarkedArticles;
 	private List<Integer> readingHistory;
@@ -21,7 +22,7 @@ public class User implements Serializable{
 		
 	}
 	
-	public User(java.sql.Timestamp dateBirth, String phone, 
+	public User(Timestamp dateBirth, String phone, 
 			List<Integer> bookmarkedArticles, List<Integer> readingHistory, 
 			List<Integer> commentList, List<Integer> likesList) {
         this.dateBirth = dateBirth;
@@ -32,11 +33,11 @@ public class User implements Serializable{
         this.likesList = likesList;
     }
 
-    public java.sql.Timestamp getDateBirth() {
+    public Timestamp getDateBirth() {
         return dateBirth;
     }
 
-    public void setDateBirth(java.sql.Timestamp dateBirth) {
+    public void setDateBirth(Timestamp dateBirth) {
         this.dateBirth = dateBirth;
     }
 
@@ -82,14 +83,12 @@ public class User implements Serializable{
         this.likesList = likesList;
     }
 
-    // hashCode
     @Override
     public int hashCode() {
         return Objects.hash( dateBirth,phone, bookmarkedArticles, 
         		readingHistory, commentList, likesList);
     }
 
-    // equals
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -103,7 +102,6 @@ public class User implements Serializable{
                 Objects.equals(likesList, user.likesList);
     }
 
-    // toString
     @Override
     public String toString() {
         return "User{" +

@@ -9,4 +9,6 @@ import app.yarmak.newsportal.dao.DaoException;
 public interface UserService {
 	User getUserDetailById(int id)throws DaoException;
 	Auth getUserById(int id)  throws ServiceException;
+	Auth rememberMe(String token) throws ServiceException;
+	
 }

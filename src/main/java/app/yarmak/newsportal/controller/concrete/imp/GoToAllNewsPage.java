@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class GoToAllNewsPage implements Command{
 	private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
 	@Override
-	public void execute(HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int page = 1; 
 		int pageSize = 7;

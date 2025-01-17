@@ -110,7 +110,9 @@ footer {
 </head>
 <body>
 <header>
-    <div class="logo">Новостной Портал</div>
+     <div class="logo">
+    	<a href="Controller?command=go_to_index_main">Новостной Портал</a>
+    </div>
     <nav>
         <ul class="menu">
             <li><a href="#">Главная</a></li>

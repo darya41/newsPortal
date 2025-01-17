@@ -21,7 +21,7 @@ public class GoToEditNews implements Command{
 	private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
 
 	@Override
-	public void execute(HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException {
+	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
 			int idNews = Integer.parseInt(request.getParameter("id"));

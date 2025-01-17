@@ -263,11 +263,13 @@ button[type="submit"]:hover {
 </head>
 <body>
 <header>
-        <div class="logo">Новостной Портал</div>
+        <div class="logo">
+    		<a href="Controller?command=go_to_index_main">Новостной Портал</a>
+    	</div>
         <nav>
             <ul class="menu">
                 <li><a href="#">Главная</a></li>
-                <li><a href="#">Новости</a></li>
+                <li><a href="Controller?command=go_to_all_news_page">Новости</a></li>
                 <li><a href="#">Категории</a></li>
             </ul>
             <div class="auth-buttons">

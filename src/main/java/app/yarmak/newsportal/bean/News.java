@@ -151,8 +151,4 @@ public class News implements Serializable {
                  ", views=" + views +
                '}';
    }	
-	
-	
-
-
 }

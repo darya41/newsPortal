@@ -9,10 +9,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class NoAuth  implements Command {
 	@Override
-	public void execute(HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException {
+	public void execute(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		try {
 			request.setAttribute("errorMessage", "Для просмотра новостей необходимо авторизоваться или зарегестрироваться!!!");
-			System.out.println("Для просмотра новостей необходимо авторизоваться или зарегестрироваться!!!");
 			response.sendRedirect("goController?command=go_to_index_main");
 		}
 		catch (Exception e) { 

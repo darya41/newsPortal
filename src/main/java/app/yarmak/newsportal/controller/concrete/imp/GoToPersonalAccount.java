@@ -20,7 +20,7 @@ public class GoToPersonalAccount implements Command {
 
 	private final UserService userService = ServiceProvider.getInstance().getUserService();
 	@Override
-	public void execute(HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException {
+	public void execute(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 	
 		try {
 			HttpSession session = request.getSession(false);

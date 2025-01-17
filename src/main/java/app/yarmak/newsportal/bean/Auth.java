@@ -1,19 +1,27 @@
 package app.yarmak.newsportal.bean;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Auth {
+public class Auth implements Serializable {	
+	private static final long serialVersionUID = 1L;
+	
 	private int id;
-	 private String username;
-	 private String lastName;
+	private String username;
+	private String lastName;
 	private String role;
     private String email;
- 
     private  java.sql.Timestamp registrationDate;
     private String status;
+    private String token;
 
+    public Auth() {
+    	
+    }
 
-    public Auth(int id,String username,String lastName,String role, String email,  java.sql.Timestamp registrationDate2 , String status) {
+    public Auth(int id,String username,String lastName,String role, 
+    		String email,  java.sql.Timestamp registrationDate2 , 
+    		String status, String token) {
         this.id=id;
     	this.username = username;
     	this.lastName = lastName;
@@ -21,9 +29,8 @@ public class Auth {
         this.role = role;
         this.status = status;
         this.registrationDate = registrationDate2;
+        this.token = token;
     }
-
-
 
 	public int getId() {
     	return id;
@@ -78,18 +85,12 @@ public class Auth {
     public void setRegistrationDate( java.sql.Timestamp registrationDate) {
         this.registrationDate = registrationDate;
     }
+    public String getToken() {
+        return status;
+    }
 
-    @Override
-    public String toString() {
-        return "Auth{" +
-        		"id='" + id+'\''+
-                "username='" + username + '\'' +
-                "lastName'"+ lastName+'\''+
-                ", email='" + email + '\'' +
-                ", role='" + role + '\'' +
-                ", status='" + status + '\'' +
-                ", registrationDate=" + registrationDate +
-                '}';
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override
@@ -103,12 +104,27 @@ public class Auth {
                email.equals(auth.email) &&
                role.equals(auth.role) &&
                status.equals(auth.status) &&
+               token.equals(auth.token) &&
                registrationDate.equals(auth.registrationDate);
     }
 
 
     @Override
     public int hashCode() {
-        return Objects.hash(id,username, lastName,email, role, status, registrationDate);
+        return Objects.hash(id,username, lastName,email, role, status,
+        		registrationDate, token);
+    }
+    
+    @Override
+    public String toString() {
+        return "Auth{" +
+        		"id='" + id+'\''+
+                "username='" + username + '\'' +
+                "lastName'"+ lastName+'\''+
+                ", email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                ", status='" + status + '\'' +
+                ", registrationDate=" + registrationDate +
+                '}';
     }
 }

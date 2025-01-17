@@ -1,12 +1,13 @@
-package app.yarmak.newsportal.controller.concrete;
+package app.yarmak.newsportal.controller.concrete.imp;
 
 import java.io.IOException;
 
+import app.yarmak.newsportal.controller.concrete.Command;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class NoSuchCommand implements Command{
+public class AddNews implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) 
@@ -14,7 +15,5 @@ public class NoSuchCommand implements Command{
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
-	
+
 }
