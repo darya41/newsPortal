@@ -9,6 +9,7 @@ import app.yarmak.newsportal.dao.DaoException;
 import app.yarmak.newsportal.dao.DaoProvider;
 import app.yarmak.newsportal.dao.NewsDao;
 import app.yarmak.newsportal.service.NewsService;
+import app.yarmak.newsportal.service.ServiceExeption;
 
 public class NewsServiceImpl implements NewsService{
 
@@ -114,8 +115,11 @@ public class NewsServiceImpl implements NewsService{
 	@Override
 	public void deleteNews(News news) throws ServiceException {
 		try {
+			
 			if (news == null || news.getId() <= 0) { 
+				
 				throw new ServiceException("Invalid news data"); 
+				
 			}
 			
 			newsDao.deleteNews(news);
@@ -130,7 +134,10 @@ public class NewsServiceImpl implements NewsService{
 	@Override
 	public void AddNewView(News news) throws ServiceException {
 		try {
+			
 			if (news == null || news.getId() <= 0) { 
+				
+				
 				throw new ServiceException("Invalid news data"); 
 			}
 			
@@ -138,6 +145,21 @@ public class NewsServiceImpl implements NewsService{
 		} catch (DaoException e) {
 			//logging
 	        throw new ServiceException("Failed to retrieve news");
+		}
+		
+	}
+
+	@Override
+	public void AddNews(News news) throws ServiceException  {
+		try {
+			System.out.println("-------A1");
+			newsDao.add(news);
+			System.out.println("-------A2");
+		} catch (DaoException e) {
+			//logging
+			System.out.println("-------AExeption1");
+			throw new ServiceException("Failed to retrieve news");
+	       
 		}
 		
 	}

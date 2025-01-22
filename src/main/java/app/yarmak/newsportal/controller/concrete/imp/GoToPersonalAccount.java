@@ -60,7 +60,7 @@ public class GoToPersonalAccount implements Command {
 	  
 	            }
 	        }       
-	        System.out.println("User detail session/n      ------- " + session.getAttribute("userDetail"));
+	  
 	        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/personal_account.jsp");
 	        dispatcher.forward(request, response);
 		}

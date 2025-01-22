@@ -38,7 +38,6 @@ public class RememberMeFilter extends HttpFilter implements Filter {
 
         try {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
-            HttpServletResponse httpResponse = (HttpServletResponse) response;
             HttpSession session = httpRequest.getSession(false);
 
             if (session == null || session.getAttribute("user") == null) {
@@ -54,7 +53,7 @@ public class RememberMeFilter extends HttpFilter implements Filter {
                                 session = httpRequest.getSession(true);
                             }
                             session.setAttribute("user", user);
-                            break; // Выход из цикла, если cookie найден
+                            break; 
                         }
                     }
                 }

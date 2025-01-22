@@ -17,5 +17,6 @@ public interface NewsService {
 	List<News> getNewsByPage(int page, int pageSize) throws ServiceException;
 	void deleteNews(News news) throws ServiceException;
 	void AddNewView(News news) throws ServiceException;
+	void AddNews(News news) throws ServiceException;
 
 }

@@ -1,6 +1,7 @@
 package app.yarmak.newsportal.dao.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,9 +18,40 @@ import app.yarmak.newsportal.dao.jdbc.ConnectionPoolException;
 public class SQLNewsDao implements NewsDao{
 
 	private final ConnectionPool connectionPool = ConnectionPool.getInstance();
+	
+	
+	private static final String QUERY_ADD_NEWS = "INSERT INTO news (title, brief, content, author,publicationDate, idCategory, views,priority, statusNews) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)";
 	@Override
 	public void add(News news) throws DaoException {
-		// TODO Auto-generated method stub
+		System.out.println("-------Dao-1");
+		Connection con = null; 
+		PreparedStatement ps = null; 
+		ResultSet rs = null;
+		try {
+			System.out.println("-------Dao-2");
+			con = connectionPool.takeConnection();	     
+	        ps = con.prepareStatement(QUERY_ADD_NEWS);
+	        System.out.println("-------Dao-3");
+	        ps.setString(1, news.getTitle());
+	        ps.setString(2, news.getBrief());
+	        ps.setString(3, news.getContent());
+	        ps.setString(4, news.getAuthor());
+	        ps.setDate(5, new Date(news.getPublicationDate().getTime())); 
+	        ps.setInt(6, news.getCategory()); 
+	        ps.setInt(7, news.getViews()); 
+	        ps.setInt(8, news.getPriority());
+	        ps.setString(9, news.getStatus());
+	        System.out.println("-------Dao-4");
+	        ps.executeUpdate();
+	        System.out.println("-------Dao-5");
+			   
+		} catch (SQLException e) {
+			throw new DaoException("Ошибка в работе с данными", e);
+		} catch (ConnectionPoolException e) {
+			throw new DaoException("Ошибка в работе с пулом соединений", e);
+		}finally { 
+			connectionPool.closeConnection(con, ps, rs); 
+		}
 		
 	}
 
@@ -70,6 +102,7 @@ public class SQLNewsDao implements NewsDao{
 	        ps.setString(2, news.getBrief());
 	        ps.setString(3, news.getContent());
 	        ps.setString(4, news.getAuthor());
+	        
 	        ps.setInt(5, news.getCategory());
 	        ps.setInt(6, news.getPriority());
 	        ps.setInt(7, news.getId());
