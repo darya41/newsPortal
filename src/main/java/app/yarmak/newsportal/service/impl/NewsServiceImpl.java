@@ -132,7 +132,7 @@ public class NewsServiceImpl implements NewsService{
 
 
 	@Override
-	public void AddNewView(News news) throws ServiceException {
+	public void addNewView(News news) throws ServiceException {
 		try {
 			
 			if (news == null || news.getId() <= 0) { 
@@ -150,18 +150,36 @@ public class NewsServiceImpl implements NewsService{
 	}
 
 	@Override
-	public void AddNews(News news) throws ServiceException  {
+	public void addNews(News news) throws ServiceException  {
 		try {
-			System.out.println("-------A1");
 			newsDao.add(news);
-			System.out.println("-------A2");
 		} catch (DaoException e) {
 			//logging
-			System.out.println("-------AExeption1");
+			throw new ServiceException("Failed to retrieve news");
+	       
+		}		
+	}
+
+	@Override
+	public List<News> searchNews(String query,int limit, int offset) throws ServiceException {
+		try {
+			return newsDao.searchNews(query,limit, offset);
+		} catch (DaoException e) {
+			//logging
 			throw new ServiceException("Failed to retrieve news");
 	       
 		}
 		
+	}
+
+	@Override
+	public int getTotalSeachNewsResult(String query) throws ServiceException {
+		try {
+			return newsDao.getTotalSeachNewsResult(query);
+		} catch (DaoException e) {
+			//logging
+	        throw new ServiceException("Failed to retrieve news");
+		}
 	}
 
 }

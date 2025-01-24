@@ -140,6 +140,7 @@ nav .login-button {
     font-weight: bold;
     background-color: #005bb5;
 }
+.search-bar { display: flex; justify-content: center; margin: 20px 0; margin-top:30px; } .search-bar input[type="text"] { width: 300px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; } .search-bar button { padding: 10px 20px; background-color: #1abc9c; color: white; border: none; border-radius: 5px; margin-left: 10px; cursor: pointer; } .search-bar button:hover { background-color: #005bb5; }
 </style>
 </head>
 <body>
@@ -166,6 +167,22 @@ nav .login-button {
     </nav>
 </header>
 <main>
+	<div class="search-bar">
+	    <form action="Controller" method="post">
+    <input type="hidden" name="command" value="search_news">
+    <c:choose>
+        <c:when test="${empty param.query}">
+            <input type="text" name="query" placeholder="Поиск новостей...">
+        </c:when>
+        <c:otherwise>
+            <input type="text" name="query" value="${param.query}">
+        </c:otherwise>
+    </c:choose>
+    <button type="submit">Поиск</button>
+</form>
+
+	</div>
+
     <div class="news-list">
         <c:forEach var="news" items="${newsList}">
             <div class="news-item">
@@ -177,17 +194,25 @@ nav .login-button {
         </c:forEach>
     </div>
     <div class="pagination">
-        <c:forEach var="i" begin="1" end="${totalPages}">
-            <c:choose>
-                <c:when test="${i == currentPage}">
-                    <span class="current-page">${i}</span>
-                </c:when>
-                <c:otherwise>
-                    <a href="Controller?command=go_to_all_news_page&page=${i}">${i}</a>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
-    </div>
+    <c:forEach var="i" begin="1" end="${totalPages}">
+        <c:choose>
+            <c:when test="${i == currentPage}">
+                <span class="current-page">${i}</span>
+            </c:when>
+            <c:otherwise>
+                <c:choose>
+                    <c:when test="${empty query}">
+                        <a href="Controller?command=go_to_all_news_page&page=${i}">${i}</a>
+                    </c:when>
+                    <c:otherwise>
+                        <a href="Controller?command=search_news&page=${i}&query=${param.query}">${i}</a>
+                    </c:otherwise>
+                </c:choose>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+</div>
+
 </main>
 <footer>
     <p>© 2024 Новостной Портал. Все права защищены.</p>

@@ -288,6 +288,9 @@ h2 {
 .logo-a{
 	color:white;
 }
+.errorM{
+color:red;
+}
 }
   </style>
      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
@@ -330,9 +333,7 @@ h2 {
 		    	<c:otherwise>
 		        	<h1> Добро пожаловать на наш Новостной Портал!</h1>
             		<p>Последние новости и обновления</p>
-            		<c:if test="${not empty errorMessage}">
-                      	<p style="color=red;">${errorMessage}</p>
-                      </c:if>
+            		
 		   		 </c:otherwise>
 			</c:choose>
 			
@@ -353,6 +354,10 @@ h2 {
        		 	<button class="more-btn" onclick="window.location.href='goController?command=go_to_add_news_page'">Добавить новость</button>
     			</section>
 			</c:if>
+			
+			<c:if test="${not empty errorMessage}">
+                 <p class="errorM" style="color=red;">${errorMessage}</p>
+            </c:if>
 			
 			           
         </section>
@@ -405,10 +410,10 @@ h2 {
                 <p><c:out value="${last.brief}" /></p>
                 <p>Автор: <c:out value="${last.author}" /></p>
                  <c:if test="${not empty sessionScope.user}">
-                	<button class="more-btn" onclick="window.location.href='goController?command=go_to_page_news&id=${item.id}'">Подробнее</button>
+                	<button class="more-btn" onclick="window.location.href='Controller?command=go_to_page_news&id=${last.id}'">Подробнее</button>
                  </c:if>
                  <c:if test="${empty sessionScope.user}">                
-                 	<button class="more-btn" onclick="window.location.href='goController?command=no_auth'">Подробнее</button>
+                 	<button class="more-btn" onclick="window.location.href='Controller?command=no_auth'">Подробнее</button>
                 </c:if>
                 
                 <c:if test="${not empty sessionScope.user}">

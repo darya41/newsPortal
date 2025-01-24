@@ -23,7 +23,9 @@ public class GoToIndexMain implements Command{
 		 List<News> mainNews = null;
 	     List<News> latestNews = null;
 	     List<News> popularNews = null;
-	     
+	     if (request.getParameter("errorMessage")!=null) {
+	    	 request.setAttribute("errorMessage", request.getParameter("errorMessage"));	
+	     }
 		try {
 			mainNews = newsService.getMainNews();
 			latestNews = newsService.getLatestNews();

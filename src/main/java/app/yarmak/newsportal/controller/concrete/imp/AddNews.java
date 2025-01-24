@@ -41,7 +41,7 @@ public class AddNews implements Command {
 			int priority = Integer.parseInt(priorityStr);
 			
 			News news = new News(0,title,brief,content,author,publicationDate,idCategory,0,priority,"active");
-			newsService.AddNews(news);
+			newsService.addNews(news);
 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index_main.jsp");
 	        dispatcher.forward(request, response);

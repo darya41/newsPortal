@@ -16,11 +16,12 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class GoToAllNewsPage implements Command{
 	private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
+	private int page = 1; 
+	private final int pageSize = 7;
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int page = 1; 
-		int pageSize = 7;
+		
 		
 		if (request.getParameter("page") != null) { 			
 			page = Integer.parseInt(request.getParameter("page")); 

@@ -24,7 +24,7 @@ public class GoToPageNews implements Command{
 			News news = newsService.getNewsById(idNews);
 			request.setAttribute("news", news);	
 			
-			newsService.AddNewView(news);
+			newsService.addNewView(news);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/page_news.jsp");
 	        dispatcher.forward(request, response); 
 		} catch (ServiceException e) {

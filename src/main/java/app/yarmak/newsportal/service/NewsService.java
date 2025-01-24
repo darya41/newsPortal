@@ -16,7 +16,9 @@ public interface NewsService {
 	int getTotalNewsCount()throws ServiceException;
 	List<News> getNewsByPage(int page, int pageSize) throws ServiceException;
 	void deleteNews(News news) throws ServiceException;
-	void AddNewView(News news) throws ServiceException;
-	void AddNews(News news) throws ServiceException;
+	void addNewView(News news) throws ServiceException;
+	void addNews(News news) throws ServiceException;
+	List<News> searchNews(String query,int limit, int offset) throws ServiceException;
+	int getTotalSeachNewsResult(String query) throws ServiceException;
 
 }

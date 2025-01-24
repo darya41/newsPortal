@@ -17,6 +17,8 @@ public interface NewsDao {
 	List<News> getNewsByPage(int page, int pageSize)  throws DaoException;
 	void deleteNews(News news) throws DaoException;
 	void AddNewView(News news) throws DaoException;
+	List<News> searchNews(String query,int limit, int offset) throws DaoException;
+	int getTotalSeachNewsResult(String query) throws DaoException;
 	
 
 }

@@ -21,6 +21,7 @@ import app.yarmak.newsportal.controller.concrete.imp.GoToPageNews;
 import app.yarmak.newsportal.controller.concrete.imp.GoToRegistration;
 import app.yarmak.newsportal.controller.concrete.imp.LogOut;
 import app.yarmak.newsportal.controller.concrete.imp.NoAuth;
+import app.yarmak.newsportal.controller.concrete.imp.SearchNews;
 import app.yarmak.newsportal.controller.concrete.imp.GoToPersonalAccount;
 
 
@@ -47,6 +48,7 @@ public final class  CommandProvider {
 		commands.put(CommandName.GO_TO_ADD_NEWS_PAGE,new GoToAddNewsPage());
 		commands.put(CommandName.ADD_NEWS, new AddNews());
 		commands.put(CommandName.GO_TO_CATEGORY_PAGE, new GoToCategoryPage());
+		commands.put(CommandName.SEARCH_NEWS, new SearchNews());
 		commands.put(CommandName.LOG_OUT,new LogOut() );
 		
 	}
