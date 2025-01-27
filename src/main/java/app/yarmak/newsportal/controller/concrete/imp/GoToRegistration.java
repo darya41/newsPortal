@@ -13,6 +13,7 @@ public class GoToRegistration implements Command {
 	@Override
 	public void execute(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		
+		// Фильтр аутефикации проверяет права доступа к странице
 		try {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/registration.jsp");
 			dispatcher.forward(request, response);

@@ -2,7 +2,6 @@ package app.yarmak.newsportal.dao;
 
 import app.yarmak.newsportal.dao.impl.SQLAuthDao;
 import app.yarmak.newsportal.dao.impl.SQLCategoryDao;
-import app.yarmak.newsportal.dao.impl.SQLCommentDao;
 import app.yarmak.newsportal.dao.impl.SQLNewsDao;
 import app.yarmak.newsportal.dao.impl.SQLUserDao;
 
@@ -15,7 +14,6 @@ public class DaoProvider {
 	private final UserDao userDao = new SQLUserDao();
 	private final NewsDao newsDao = new SQLNewsDao();
 	private final AuthDao authDao = new SQLAuthDao();
-	private final CommentDao commentDao = new SQLCommentDao();
 	private final CategoryDao categoryDao= new SQLCategoryDao();
 	
 	public UserDao getUserDao() {
@@ -29,9 +27,6 @@ public class DaoProvider {
 		return authDao;
 	}
 	
-	public CommentDao getCommentDao() {
-		return commentDao;
-	}
 	public CategoryDao getCategoryDao() {
 		return categoryDao;
 	}

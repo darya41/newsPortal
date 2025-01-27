@@ -23,6 +23,7 @@ public class GoToEditNews implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// Фильтр аутефикации проверяет права доступа к странице
 		try {
 			int idNews = Integer.parseInt(request.getParameter("id"));
 			News news = newsService.getNewsById(idNews);
@@ -42,11 +43,6 @@ public class GoToEditNews implements Command{
 			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
 		}
-		
-		
-		
-		 
-		
 	}
 
 }

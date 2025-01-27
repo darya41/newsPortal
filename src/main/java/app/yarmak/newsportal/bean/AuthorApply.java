@@ -70,65 +70,60 @@ public class AuthorApply implements Serializable{
 		this.specialization = specialization;
 	}
 
-	    public String getWorkExamples() {
-	        return workExamples;
-	    }
+	public String getWorkExamples() {
+	    return workExamples;
+	}
 
-	    public void setWorkExamples(String workExamples) {
-	        this.workExamples = workExamples;
-	    }
+	public void setWorkExamples(String workExamples) {
+		this.workExamples = workExamples;
+	}
 
-	    public String getPhone() {
-	        return phone;
-	    }
+	public String getPhone() {
+		return phone;
+	}
 
-	    public void setPhone(String phone) {
-	        this.phone = phone;
-	    }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-	    public String getSocialLinks() {
-	        return socialLinks;
-	    }
+	public String getSocialLinks() {
+		return socialLinks;
+	}
 
-	    public void setSocialLinks(String socialLinks) {
-	        this.socialLinks = socialLinks;
-	    }
+	public void setSocialLinks(String socialLinks) {
+		this.socialLinks = socialLinks;
+	}
 	    
-	    @Override
-	    public boolean equals(Object obj) {
-	        if (this == obj) return true;
-	        if (obj == null || getClass() != obj.getClass()) return false;
-	        AuthorApply that = (AuthorApply) obj;
-	        return Objects.equals(firstName, that.firstName) &&
-	                Objects.equals(lastName, that.lastName) &&
-	                Objects.equals(email, that.email) &&
-	                Objects.equals(bio, that.bio) &&
-	                Objects.equals(specialization, that.specialization) &&
-	                Objects.equals(workExamples, that.workExamples) &&
-	                Objects.equals(phone, that.phone) &&
-	                Objects.equals(socialLinks, that.socialLinks) ;
-	    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null || getClass() != obj.getClass()) return false;
+		AuthorApply that = (AuthorApply) obj;
+		return Objects.equals(firstName, that.firstName) &&
+	    Objects.equals(lastName, that.lastName) &&
+	    Objects.equals(email, that.email) &&
+	    Objects.equals(bio, that.bio) &&
+	    Objects.equals(specialization, that.specialization) &&
+	    Objects.equals(workExamples, that.workExamples) &&
+	    Objects.equals(phone, that.phone) &&
+	    Objects.equals(socialLinks, that.socialLinks) ;
+	}
 
-	    @Override
-	    public int hashCode() {
-	        return Objects.hash(firstName, lastName, email, bio, 
-	        		specialization, workExamples, phone, socialLinks);
-	    }
+	@Override
+	public int hashCode() {
+	     return Objects.hash(firstName, lastName, email, bio,
+	    		 specialization, workExamples, phone, socialLinks);
+	}
 	    
-	    @Override
-	    public String toString() {
-	        return "AuthorApply{" +
-	                "firstName='" + firstName + '\'' +
-	                ", lastName='" + lastName + '\'' +
-	                ", email='" + email + '\'' +
-	                ", bio='" + bio + '\'' +
-	                ", specialization='" + specialization + '\'' +
-	                ", workExamples='" + workExamples + '\'' +
-	                ", phone='" + phone + '\'' +
-	                ", socialLinks='" + socialLinks + '\'' +
-	                '}';
+	@Override
+	public String toString() {
+		return "AuthorApply{" + "firstName='" +
+				firstName + '\'' +", email='" + email + '\'' +
+	            ", bio='" + bio + '\'' +
+	            ", specialization='" + specialization + '\'' +
+	            ", workExamples='" + workExamples + '\'' +
+	            ", phone='" + phone + '\'' +
+	            ", socialLinks='" + socialLinks + '\'' +
+	            '}';
 	    }
 }
-
-
-

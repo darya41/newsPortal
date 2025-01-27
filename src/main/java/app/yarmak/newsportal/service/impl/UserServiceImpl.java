@@ -17,35 +17,33 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Auth getUserById(int id) throws ServiceException {
-		
 		try {
 			return userDao.getUserById(id);
-		} catch (DaoException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-
-	@Override
-	public User getUserDetailById(int id) throws DaoException {
-		try {
-			 System.out.println("User Service     ------- " + id);
-			return userDao.getUserDetailById(id);
 			
 		} catch (DaoException e) {
 			e.printStackTrace();
+			throw new ServiceException("Ошибка при получении пользователя по ID: " + id, e);
 		}
-		return null;
+	}
+
+	@Override
+	public User getUserDetailById(int id) throws ServiceException {
+		try {
+			return userDao.getUserDetailById(id);	
+			
+		} catch (DaoException e) {
+			e.printStackTrace();
+			throw new ServiceException("Ошибка при получении деталей пользователя по ID: " + id, e);
+		}
 	}
 
 
 	public Auth rememberMe(String token) throws ServiceException {
 		try {
-			Auth auth = authDao.findUserByToken(token);
-			return auth;
+			return authDao.findUserByToken(token);
+			
 		}catch(DaoException e) {
-			throw new ServiceException(e);
+			throw new ServiceException("Ошибка при поиске пользователя по токену: " + token, e);
 		}
 
 	}

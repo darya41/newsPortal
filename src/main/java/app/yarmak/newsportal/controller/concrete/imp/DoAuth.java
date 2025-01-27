@@ -43,7 +43,7 @@ public class DoAuth implements Command {
 			
 			Auth auth = authService.signIn(login,password);			
 			if(auth==null) {
-				String errorMessage = URLEncoder.encode("Неправильный логин или пароль!",				StandardCharsets.UTF_8.toString());
+				String errorMessage = URLEncoder.encode("Неправильный логин или пароль!",StandardCharsets.UTF_8.toString());
                 response.sendRedirect("goController?command=go_to_auth&authError="+errorMessage);
 	            return;
 			}

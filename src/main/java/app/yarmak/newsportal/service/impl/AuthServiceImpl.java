@@ -9,38 +9,30 @@ import app.yarmak.newsportal.dao.DaoProvider;
 import app.yarmak.newsportal.dao.UserDao;
 import app.yarmak.newsportal.service.AuthService;
 
-public class AuthServiceImpl implements AuthService{
+public class AuthServiceImpl implements AuthService {
 
 	private final AuthDao authDao = DaoProvider.getInstance().getAuthDao();
 	private final UserDao userDao = DaoProvider.getInstance().getUserDao();
 	@Override
 	public Auth signIn(String login, String password) throws ServiceException {
 		try {
-			if (login == null || login.isEmpty() || password == null || password.isEmpty()) { 
-				throw new ServiceException("Ошибка логина или пароля"); 
-			}
-			
 			return authDao.authorization(login, password);
+			
 		} catch (DaoException e) {
-			throw new ServiceException(e);
+			 throw new ServiceException("Error authorization",e);
 		}
 	}
 
 	@Override
 	public boolean registrration(Auth auth, String password) throws ServiceException {
-		try {
-			if (auth == null || auth.getEmail() == null || auth.getEmail().isEmpty() || password == null || password.isEmpty()) { 
-				throw new ServiceException("Auth и пароль не должны быть пустыми"); 
-			}
-			
+		try {			
 			if(!userDao.isEmailRegistered(auth.getEmail())) {
 				 return false;
 			}
-			
 			authDao.registration(auth,password);
 			
 		} catch (DaoException e) {
-			throw new ServiceException(e);
+            throw new ServiceException("Error registration", e);
 		}
 		return true;
 	}
@@ -48,15 +40,10 @@ public class AuthServiceImpl implements AuthService{
 	@Override
 	public void registratedToken(Auth auth) throws ServiceException {
 		try { 
-			if (auth == null) { 
-				throw new ServiceException("Auth не должен быть пустым"); 
-			}
-			
 			authDao.registratedToken(auth); 
+			
 			} catch (Exception e) { 
-				throw new ServiceException("Failed to update user", e); 
-		}
-		
+				throw new ServiceException("Failed to registrated user token", e); 
+		}		
 	}
-
 }

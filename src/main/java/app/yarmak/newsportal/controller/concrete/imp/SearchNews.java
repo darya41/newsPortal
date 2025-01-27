@@ -35,7 +35,7 @@ public class SearchNews implements Command {
             request.setAttribute("currentPage", page); 
             request.setAttribute("totalPages", totalPages); 
             request.setAttribute("query", query);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/all_news.jsp");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/news.jsp");
             dispatcher.forward(request, response);
         } catch (ServiceException e) { 
             // logging 

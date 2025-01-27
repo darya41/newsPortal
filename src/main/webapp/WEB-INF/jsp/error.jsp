@@ -115,9 +115,9 @@ footer {
     </div>
     <nav>
         <ul class="menu">
-            <li><a href="#">Главная</a></li>
+            <li><a href="Controller?command=go_to_index_main">Главная</a></li>
             <li><a href="goController?command=go_to_all_news_page">Новости</a></li>
-            <li><a href="#">Категории</a></li>
+            <li><a href="Controller?command=go_to_category_page">Категории</a></li>
         </ul>
         <div class="auth-buttons">
             <c:choose>

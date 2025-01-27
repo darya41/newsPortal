@@ -2,6 +2,8 @@ package app.yarmak.newsportal.controller.concrete.imp;
 
 import java.io.IOException;
 
+import com.google.protobuf.ServiceException;
+
 import app.yarmak.newsportal.bean.News;
 import app.yarmak.newsportal.controller.concrete.Command;
 import app.yarmak.newsportal.service.NewsService;
@@ -31,8 +33,11 @@ public class DeleteNews implements Command {
 			News news = new News(id, "", "","", "", null, 0, 0, 0,"deleted"); 
 			newsService.deleteNews(news);
 			response.sendRedirect("goController?command=go_to_index_main");
-		}
-		catch (Exception e) { 
+			
+		} catch (ServiceException e) {
+            request.setAttribute("errorMessage", "Произошла ошибка в сервисном слое: " + e.getMessage());
+            request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response);
+        } catch (Exception e) { 
 			// logging 
 			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 

@@ -45,9 +45,8 @@ public class SQLCategoryDao implements CategoryDao {
 			throw new DaoException("Ошибка в работе с пулом соединений", e);
 		}finally { 
 			connectionPool.closeConnection(con, st, rs); 
-			}
+		}
 		
 		return categoryList;
 	}
-
 }

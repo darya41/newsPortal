@@ -1,3 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page isELIgnored="false" %>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -12,11 +17,29 @@
             padding: 0;
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            margin-left: 20px;
-        }
+       header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: -webkit-sticky; /* Для поддержки в Safari */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 2px ridge;
+    margin-bottom: 0;
+}
+
+
+
+header .logo {
+	font-size: 24px;
+	font-weight: bold;
+	margin-left: 20px;
+}
+
 
         nav {
             display: flex;
@@ -123,7 +146,7 @@
     	</div>
         <nav>
             <ul class="menu">
-                <li><a href="#">Главная</a></li>
+                <li><a href="Controller?command=go_to_index_main">Главная</a></li>
                 <li><a href="Controller?command=go_to_all_news_page">Новости</a></li>
                 <li><a href="#">Категории</a></li>
             </ul>
@@ -143,8 +166,10 @@
         <div class="categories-container">
             <div class="category-title">Категории новостей</div>
             <ul class="category-list">
-            	<c:forEach var="item" items="${category}">
-            	 	<li><a href="Controller?command=go_to_category&category=politics">"$category.title"</a></li>
+            	<c:forEach var="item" items="${categories}">
+            	 	<li><a href="Controller?command=go_to_category&category=politics">${item.name}</a></li>
+            	 	<p>${item.description}</p>
+            	 	<br>
             	</c:forEach>                            
             </ul>
         </div>

@@ -23,15 +23,12 @@ public class SQLNewsDao implements NewsDao{
 	private static final String QUERY_ADD_NEWS = "INSERT INTO news (title, brief, content, author,publicationDate, idCategory, views,priority, statusNews) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)";
 	@Override
 	public void add(News news) throws DaoException {
-		System.out.println("-------Dao-1");
-		Connection con = null; 
-		PreparedStatement ps = null; 
-		ResultSet rs = null;
-		try {
-			System.out.println("-------Dao-2");
-			con = connectionPool.takeConnection();	     
-	        ps = con.prepareStatement(QUERY_ADD_NEWS);
-	        System.out.println("-------Dao-3");
+		
+		//Конструкция try-with-resources, автоматически закрывает ресурсы
+		
+		try (Connection con =  connectionPool.takeConnection();	
+				PreparedStatement ps = con.prepareStatement(QUERY_ADD_NEWS);) {
+
 	        ps.setString(1, news.getTitle());
 	        ps.setString(2, news.getBrief());
 	        ps.setString(3, news.getContent());
@@ -41,18 +38,14 @@ public class SQLNewsDao implements NewsDao{
 	        ps.setInt(7, news.getViews()); 
 	        ps.setInt(8, news.getPriority());
 	        ps.setString(9, news.getStatus());
-	        System.out.println("-------Dao-4");
+	      
 	        ps.executeUpdate();
-	        System.out.println("-------Dao-5");
-			   
+	        			   
 		} catch (SQLException e) {
 			throw new DaoException("Ошибка в работе с данными", e);
 		} catch (ConnectionPoolException e) {
 			throw new DaoException("Ошибка в работе с пулом соединений", e);
-		}finally { 
-			connectionPool.closeConnection(con, ps, rs); 
-		}
-		
+		}		
 	}
 
 	private static final String QUERY_FIND_BY_ID = "SELECT * FROM news WHERE id = ?";
@@ -90,13 +83,9 @@ public class SQLNewsDao implements NewsDao{
 	
 	@Override
 	public void upDate(News news) throws DaoException {
-
-		Connection con = null; 
-		PreparedStatement ps = null; 
 			    
-	    try {	        
-	        con = connectionPool.takeConnection();	     
-	        ps = con.prepareStatement(QUERY_UPDATE);
+	    try(Connection con = connectionPool.takeConnection();
+	    		PreparedStatement ps =con.prepareStatement(QUERY_UPDATE); ) {	        
 	        
 	        ps.setString(1, news.getTitle());
 	        ps.setString(2, news.getBrief());
@@ -114,22 +103,15 @@ public class SQLNewsDao implements NewsDao{
 		} catch (ConnectionPoolException e) {
 			throw new DaoException("Ошибка в работе с пулом соединений", e);
 		}
-	    finally {
-	    	connectionPool.closeConnection(con, ps); 
-	    }
 	}
 	
 	private static final String QUERY_ADD_NEW_VIEW = "UPDATE news SET views=? WHERE id = ?";
 	
 	public void AddNewView(News news) throws DaoException {
-
-		Connection con = null; 
-		PreparedStatement ps = null; 
 		    
-	    try {	        
-	        con = connectionPool.takeConnection();
-	        ps = con.prepareStatement(QUERY_ADD_NEW_VIEW);
-	        
+		 try(Connection con = connectionPool.takeConnection();
+		    		PreparedStatement ps =con.prepareStatement(QUERY_ADD_NEW_VIEW); ) {	        
+	       	        
 	        ps.setInt(1, news.getViews()+1);
 	        ps.setInt(2, news.getId());
 	        
@@ -140,22 +122,15 @@ public class SQLNewsDao implements NewsDao{
 		} catch (ConnectionPoolException e) {
 			throw new DaoException("Ошибка в работе с пулом соединений", e);
 		}
-	    finally {
-	    	connectionPool.closeConnection(con, ps); 
-	    }
 	}
 	
 	private static final String QUERY_DELETE_NEWS = "UPDATE news SET statusNews=? WHERE id = ?";
 	
 	public void deleteNews(News news) throws DaoException {
-		Connection con = null; 
-		PreparedStatement ps = null; 
 			    
-	    try {
-	        
-	        con = connectionPool.takeConnection();
-	        ps = con.prepareStatement(QUERY_DELETE_NEWS);
-	        
+	    try (Connection con = connectionPool.takeConnection();
+	    		PreparedStatement ps =con.prepareStatement(QUERY_DELETE_NEWS); )  {
+	        	       
 	        ps.setString(1, news.getStatus());	       
 	        ps.setInt(2, news.getId());
 	        
@@ -165,11 +140,7 @@ public class SQLNewsDao implements NewsDao{
 			throw new DaoException("Ошибка в работе с данными", e);
 		} catch (ConnectionPoolException e) {
 			throw new DaoException("Ошибка в работе с пулом соединений", e);
-		}
-	    finally {
-	    	connectionPool.closeConnection(con, ps); 
-	    }
-		
+		}		
 	}
 	
 	private static final String QUARY_FIND_MAIN_NEWS = "SELECT * FROM news WHERE statusNews = 'active' ORDER BY priority DESC LIMIT 6;";
@@ -207,7 +178,6 @@ public class SQLNewsDao implements NewsDao{
 		ResultSet rs = null;
 		
 	    try  {
-
 	    	 con = connectionPool.takeConnection();	    	
 		     ps = con.prepareStatement(query);
 		     rs = ps.executeQuery();
@@ -242,11 +212,6 @@ public class SQLNewsDao implements NewsDao{
 		return new News(id, title, brief, content, author, publicationDate, idCategory, views, priority,"active"); 		
 	}
 	
-	private static final String QUARY_GET_TOTAL_NEWS ="SELECT COUNT(*) FROM news WHERE statusNews = 'active'";
-
-	
-	
-	
 	private static final String QUARY_GET_NEWS_BY_PAGE =  "SELECT * FROM news WHERE statusNews = 'active' ORDER BY priority DESC LIMIT ? OFFSET ?";
 
 	@Override
@@ -278,7 +243,6 @@ public class SQLNewsDao implements NewsDao{
 		}finally { 
 			connectionPool.closeConnection(con, ps, rs); 
 		}
-
 		return newsList;
 	}
 
@@ -319,6 +283,8 @@ public class SQLNewsDao implements NewsDao{
 
 	    return newsList;
 	}
+	
+	private static final String QUARY_GET_TOTAL_NEWS ="SELECT COUNT(*) FROM news WHERE statusNews = 'active'";
 	
 	@Override
 	public int getTotalNewsCount() throws DaoException {
@@ -363,7 +329,7 @@ public class SQLNewsDao implements NewsDao{
 		        rs = ps.executeQuery(); 
 		        if (rs.next()) { 
 		        	return rs.getInt(1); 
-		        	}
+		        }
 			 
 		} catch (SQLException e) {
 			throw new DaoException("Ошибка в работе с данными", e);
@@ -373,8 +339,5 @@ public class SQLNewsDao implements NewsDao{
 			connectionPool.closeConnection(con,ps, rs); 
 		}
 		return 0;
-	
 	}
-
-
 }

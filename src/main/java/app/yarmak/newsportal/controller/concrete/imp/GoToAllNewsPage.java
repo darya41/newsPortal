@@ -20,13 +20,14 @@ public class GoToAllNewsPage implements Command{
 	private final int pageSize = 7;
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		// Фильтр аутефикации проверяет права доступа к странице
 		
-		
-		
-		if (request.getParameter("page") != null) { 			
-			page = Integer.parseInt(request.getParameter("page")); 
-		}
 		try { 
+			if (request.getParameter("page") != null) { 			
+				page = Integer.parseInt(request.getParameter("page")); 
+			}
+			
 			List<News> newsList = newsService.getNewsByPage(page, pageSize); 
 			int totalNewsCount = newsService.getTotalNewsCount(); 
 			int totalPages = (int) Math.ceil((double) totalNewsCount / pageSize); 
@@ -34,7 +35,7 @@ public class GoToAllNewsPage implements Command{
 			request.setAttribute("newsList", newsList); 			
 			request.setAttribute("currentPage", page); 
 			request.setAttribute("totalPages", totalPages); 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/all_news.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/news.jsp");
 	        dispatcher.forward(request, response);
 		} catch (ServiceException e) {
 			//logging

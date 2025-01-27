@@ -48,7 +48,6 @@ public class AddNews implements Command {
 			
 		} catch (ServiceException e) {
 			//logging
-			System.out.println("-------S1");
 			e.printStackTrace();
 			request.setAttribute("errorMessage", "Произошла ошибка в сервисном слое.");
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response);
@@ -56,7 +55,6 @@ public class AddNews implements Command {
 		catch (Exception e) { 
 			// logging 
 			e.printStackTrace();
-			System.out.println("-------E1");
 			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
 		}

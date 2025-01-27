@@ -49,6 +49,7 @@ public class EditNews implements Command {
 			News news = new News(id, title, brief, content, author, null, idCategory, 0, priority,"active"); 
 			newsService.upDate(news);
 			response.sendRedirect("goController?command=go_to_index_main");
+			
 		} catch (ServiceException e) {
 			//logging
 			request.setAttribute("errorMessage", "Произошла ошибка в сервисном слое.");

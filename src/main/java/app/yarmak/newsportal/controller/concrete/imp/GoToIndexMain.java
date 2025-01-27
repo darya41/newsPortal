@@ -20,13 +20,16 @@ public class GoToIndexMain implements Command{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		// Фильтр аутефикации проверяет права доступа к странице
 		 List<News> mainNews = null;
 	     List<News> latestNews = null;
 	     List<News> popularNews = null;
-	     if (request.getParameter("errorMessage")!=null) {
-	    	 request.setAttribute("errorMessage", request.getParameter("errorMessage"));	
-	     }
+	    
 		try {
+			if (request.getParameter("errorMessage")!=null) {
+		    	request.setAttribute("errorMessage", request.getParameter("errorMessage"));	
+		    }
+			 
 			mainNews = newsService.getMainNews();
 			latestNews = newsService.getLatestNews();
 			popularNews = newsService.getPopularNews();
@@ -47,12 +50,7 @@ public class GoToIndexMain implements Command{
 			e.printStackTrace();
 			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
-		}
-	        
-	       
-			
-	        
-		
+		}		
 	}
 
 }

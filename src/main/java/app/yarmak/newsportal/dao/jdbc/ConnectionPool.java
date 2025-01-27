@@ -55,7 +55,7 @@ public class ConnectionPool {
 	    
 	    public void initPoolData() throws ConnectionPoolException {
 	        
-	        Locale.setDefault(Locale.ENGLISH);
+	       
 	        try {
 	            
 	            Class.forName(driverName);
@@ -210,12 +210,7 @@ public class ConnectionPool {
 	        @Override
 	        public NClob createNClob() throws SQLException {
 	            return connection.createNClob();
-	        }
-
-	        @Override
-	        public SQLXML createSQLXML() throws SQLException {
-	            return connection.createSQLXML();
-	        }
+	        }	       
 
 	        @Override
 	        public Statement createStatement() throws SQLException {
@@ -441,11 +436,6 @@ public class ConnectionPool {
 	            connection.rollback(arg0);
 	        }
 
-	        public void setClientInfo1(Properties arg0)
-	                throws SQLClientInfoException {
-	            connection.setClientInfo(arg0);
-	        }
-
 	        @Override
 	        public void setNetworkTimeout(Executor arg0, int arg1)
 	                throws SQLException {
@@ -466,6 +456,12 @@ public class ConnectionPool {
 			public void setClientInfo(Properties properties) throws SQLClientInfoException {
 				// TODO Auto-generated method stub
 				
+			}
+
+			@Override
+			public SQLXML createSQLXML() throws SQLException {
+				// TODO Auto-generated method stub
+				return null;
 			}
 	    }
 

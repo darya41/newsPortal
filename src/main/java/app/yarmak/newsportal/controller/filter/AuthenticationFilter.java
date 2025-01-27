@@ -29,7 +29,8 @@ public class AuthenticationFilter extends HttpFilter {
             "go_to_auth", "do_auth",
             "go_to_registration", "do_registration",
             "do_apply_authot", "go_to_apply_author",
-            "go_to_application_submit", "search_news"
+            "go_to_application_submit", "search_news",
+            "go_to_category_page"
     );
 
     private static final List<String> AUTHOR_COMMANDS = Arrays.asList( 
@@ -63,7 +64,6 @@ public class AuthenticationFilter extends HttpFilter {
 
         String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
         String command = httpRequest.getParameter("command");
-        System.out.println(command);
 
         if ("/Controller".equals(path) && PUBLIC_COMMANDS.contains(command)) {
             chain.doFilter(request, response);
@@ -79,7 +79,6 @@ public class AuthenticationFilter extends HttpFilter {
         
         Auth auth = (Auth) httpRequest.getSession().getAttribute("user");
         String userRole = auth.getRole();
-        System.out.println(userRole);
 
         if ("/Controller".equals(path)) {
         	System.out.println("-------1");
@@ -87,16 +86,18 @@ public class AuthenticationFilter extends HttpFilter {
                 chain.doFilter(request, response);
                 return;
             }
+            
             if (ADMIN_COMMANDS.contains(command) && "admin".equals(userRole)) {
                 chain.doFilter(request, response);
                 return;
             }
+            
             if (USER_COMMANDS.contains(command)) {
                 chain.doFilter(request, response);
                 return;
             }
         }
-        System.out.println("-------1");
+        
         if (!httpResponse.isCommitted()) {
             httpResponse.sendRedirect(URL);
         }
