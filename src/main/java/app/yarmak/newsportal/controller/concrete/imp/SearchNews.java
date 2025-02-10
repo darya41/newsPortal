@@ -50,11 +50,15 @@ public class SearchNews implements Command {
             request.setAttribute("errorMessage", "Ошибка при поиске новостей"); 
             RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/error.jsp");
             dispatcher.forward(request, response);
-        } catch (Exception e) { 
-            // logging 
-            request.setAttribute("errorMessage", "Произошла общая ошибка"); 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/error.jsp");
-            dispatcher.forward(request, response);
-        }
+        } catch (ServletException | IOException e ) {
+			// logging 
+			request.setAttribute("errorMessage", "Ошибка при открытии страницы."); 
+			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
+		} catch (Exception e) { 
+			
+			// logging 
+			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
+			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
+		}
     }
 }

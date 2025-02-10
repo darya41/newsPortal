@@ -45,6 +45,7 @@ header .logo {
 	font-size: 24px;
 	font-weight: bold;
 	margin-left: 20px;
+	color: white;
 }
 
 nav {

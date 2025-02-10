@@ -35,12 +35,12 @@ public class GoToEditNews implements Command{
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/editNews.jsp");
 	        dispatcher.forward(request, response);
 	        
-		} catch (ServiceException e) {
-			//logging
-			request.setAttribute("errorMessage", "Произошла ошибка в сервисном слое.");
-			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response);
-		}	
-		catch (Exception e) { 
+		} catch (ServletException | IOException e ) {
+			// logging 
+			request.setAttribute("errorMessage", "Ошибка при открытии страницы."); 
+			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
+		} catch (Exception e) { 
+			
 			// logging 
 			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 

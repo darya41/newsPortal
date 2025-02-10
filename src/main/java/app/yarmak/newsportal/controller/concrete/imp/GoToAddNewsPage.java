@@ -24,11 +24,16 @@ public class GoToAddNewsPage implements Command{
 		try {
 			List<Category> categories = categoryService.getAllCategory();
 			request.setAttribute("categories", categories);				
-			
-			 RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/add_news.jsp");
-		     dispatcher.forward(request, response); 
+
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/add_news.jsp");
+			dispatcher.forward(request, response); 
 		        
-		}catch (Exception e) { 
+		} catch (ServletException | IOException e ) {
+			// logging 
+			request.setAttribute("errorMessage", "Ошибка при открытии страницы."); 
+			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
+		} catch (Exception e) { 
+			
 			// logging 
 			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 

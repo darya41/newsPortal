@@ -19,7 +19,9 @@
 	background-color: #f4f4f4;
 }
 
-
+a{
+color:white;
+}
 header {
     background-color: #333;
     color: white;

@@ -32,6 +32,10 @@
             font-size: 24px;
             font-weight: bold;
             margin-left: 20px;
+            color:white;
+        }
+        header a{
+        color:white;
         }
         nav {
             display: flex;

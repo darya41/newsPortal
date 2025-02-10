@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -204,7 +205,7 @@ public class SQLNewsDao implements NewsDao{
 		String brief = rs.getString("brief"); 
 		String content = rs.getString("content"); 
 		String author = rs.getString("author"); 
-		java.sql.Timestamp publicationDate = rs.getTimestamp("publicationDate"); 
+		Timestamp publicationDate = rs.getTimestamp("publicationDate"); 
 		int idCategory = rs.getInt("idCategory"); 
 		int views = rs.getInt("views"); 
 		int priority = rs.getInt("priority"); 
@@ -279,7 +280,6 @@ public class SQLNewsDao implements NewsDao{
 	    } catch (SQLException e) {	    	
 	        throw new DaoException("Ошибка в работе с данными", e);	        
 	    } catch (ConnectionPoolException e) {
-	    	e.printStackTrace();
 	        throw new DaoException("Ошибка в работе с пулом соединений", e);
 	    } finally {
 	        connectionPool.closeConnection(con, ps, rs);

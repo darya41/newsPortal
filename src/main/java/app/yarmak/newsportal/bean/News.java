@@ -1,6 +1,7 @@
 package app.yarmak.newsportal.bean;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 public class News implements Serializable {
@@ -11,7 +12,7 @@ public class News implements Serializable {
 	 private String brief;
 	 private String content;
 	 private String author;
-	 private java.sql.Timestamp publicationDate;
+	 private Timestamp publicationDate;
 	 private int idCategory;
 	 private int views;
 	 private int priority;
@@ -21,7 +22,7 @@ public class News implements Serializable {
 	}
 	
 	public News(int id,String title, String brief, String content, String author, 
-			java.sql.Timestamp  publicationDate,int idCategory,int views, int priority, String status) {
+			Timestamp  publicationDate,int idCategory,int views, int priority, String status) {
 		super();
 		this.id=id;
 		this.title = title;
@@ -74,11 +75,11 @@ public class News implements Serializable {
        this.author = author;
    }
 
-   public java.sql.Timestamp  getPublicationDate() {
+   public Timestamp  getPublicationDate() {
        return publicationDate;
    }
 
-   public void setPublicationDate(java.sql.Timestamp  publicationDate) {
+   public void setPublicationDate(Timestamp  publicationDate) {
        this.publicationDate = publicationDate;
    }
 

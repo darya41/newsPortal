@@ -2,6 +2,7 @@ package app.yarmak.newsportal.bean;
 
 import java.io.Serializable;
 import java.util.Objects;
+import java.sql.*;
 
 public class Auth implements Serializable {	
 	private static final long serialVersionUID = 1L;
@@ -11,7 +12,7 @@ public class Auth implements Serializable {
 	private String lastName;
 	private String role;
     private String email;
-    private  java.sql.Timestamp registrationDate;
+    private Timestamp registrationDate;
     private String status;
     private String token;
 
@@ -20,7 +21,7 @@ public class Auth implements Serializable {
     }
 
     public Auth(int id,String username,String lastName,String role, 
-    		String email,  java.sql.Timestamp registrationDate2 , 
+    		String email, Timestamp registrationDate2 , 
     		String status, String token) {
         this.id=id;
     	this.username = username;
@@ -78,11 +79,11 @@ public class Auth implements Serializable {
         this.status = status;
     }
 
-    public  java.sql.Timestamp getRegistrationDate() {
+    public  Timestamp getRegistrationDate() {
         return registrationDate;
     }
 
-    public void setRegistrationDate( java.sql.Timestamp registrationDate) {
+    public void setRegistrationDate( Timestamp registrationDate) {
         this.registrationDate = registrationDate;
     }
     public String getToken() {
