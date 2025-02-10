@@ -15,7 +15,6 @@ import app.yarmak.newsportal.controller.concrete.imp.GoToApplyAuthor;
 import app.yarmak.newsportal.controller.concrete.imp.GoToAuth;
 import app.yarmak.newsportal.controller.concrete.imp.GoToCategoryPage;
 import app.yarmak.newsportal.controller.concrete.imp.GoToEditNews;
-import app.yarmak.newsportal.controller.concrete.imp.GoToApplicationSubmit;
 import app.yarmak.newsportal.controller.concrete.imp.GoToIndexMain;
 import app.yarmak.newsportal.controller.concrete.imp.GoToPageNews;
 import app.yarmak.newsportal.controller.concrete.imp.GoToRegistration;
@@ -38,7 +37,6 @@ public final class  CommandProvider {
 		commands.put(CommandName.GO_TO_PERSONAL_ACCOUNT, new GoToPersonalAccount());
 		commands.put(CommandName.GO_TO_APPLY_AUTHOR, new GoToApplyAuthor());
 		commands.put(CommandName.DO_APPLY_AUTHOR, new DoApplyAuthor());
-		commands.put(CommandName.GO_TO_APPLICATION_SUBMIT, new GoToApplicationSubmit());
 		commands.put(CommandName.NO_AUTH, new NoAuth());
 		commands.put(CommandName.GO_TO_EDIT_NEWS, new GoToEditNews());
 		commands.put(CommandName.EDIT_NEWS, new EditNews());

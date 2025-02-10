@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Заявка принята</title>
+    <link rel="icon" type="image/x-icon" href="<%=request.getContextPath() %>/images/news.ico">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -112,14 +113,14 @@
     <main>
         <h2>Заявка успешно принята!</h2>
         <p>Спасибо за вашу заявку. Мы свяжемся с вами после её рассмотрения администратором. Пожалуйста, ожидайте подтверждения.</p>
-        <a href="index.html" class="back-button">Вернуться на главную страницу</a>
+        <a href="goController?command=go_to_index_main" class="back-button">Вернуться на главную страницу</a>
 
         <div class="content-section">
             <h3>Рекомендованные статьи:</h3>
             <ul>
-                <li><a href="#">Как писать увлекательные статьи</a></li>
-                <li><a href="#">Советы по улучшению стиля письма</a></li>
-                <li><a href="#">Последние новости в мире журналистики</a></li>
+                <li><a href="https://begemot.ai/course-work?utm_source=yandex&utm_campaign=108968886&utm_content=---autotargeting&yclid=7593239332709466111">Нейросеть для текста</a></li>
+                <li><a href="https://sdelaem.agency/blog/skuchnaya-tema/?ysclid=m6yqgoxai189433313">Как писать интересные статьи, если у вас скучная тема</a></li>
+                <li><a href="https://petr-panda.ru/kak-pisat-interesno/?ysclid=m6yqhiwb4z542383666">Как писать сильно и интересно? 33 совета от Петра Панды</a></li>
             </ul>
         </div>
 

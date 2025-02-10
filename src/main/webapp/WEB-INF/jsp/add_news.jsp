@@ -9,6 +9,7 @@
 <html>
 <head>
     <title>Добавить новость</title>
+    <link rel="icon" type="image/x-icon" href="<%=request.getContextPath() %>/images/news.ico">
     <style>
     
         body {

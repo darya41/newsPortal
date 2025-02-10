@@ -22,8 +22,6 @@ public class GoToRegistration implements Command {
 			// logging 
 			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
-		}
-		
+		}		
 	}
-
 }

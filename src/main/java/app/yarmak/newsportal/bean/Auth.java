@@ -108,7 +108,6 @@ public class Auth implements Serializable {
                registrationDate.equals(auth.registrationDate);
     }
 
-
     @Override
     public int hashCode() {
         return Objects.hash(id,username, lastName,email, role, status,

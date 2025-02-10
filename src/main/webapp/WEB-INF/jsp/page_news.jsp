@@ -10,6 +10,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="icon" type="image/x-icon" href="<%=request.getContextPath() %>/images/news.ico">
 <style>
 body {
 	font-family: Arial, sans-serif;

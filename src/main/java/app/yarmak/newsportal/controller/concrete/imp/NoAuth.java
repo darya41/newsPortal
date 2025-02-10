@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 public class NoAuth  implements Command {
+	@SuppressWarnings("deprecation")
 	private static final String errorMessage= URLEncoder.encode("Ошибка авторизации. Войдите или зарегистрируйтесь в системе.");
 	@Override
 	public void execute(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {

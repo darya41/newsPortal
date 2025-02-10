@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Заявка на автора</title>
+<link rel="icon" type="image/x-icon" href="<%=request.getContextPath() %>/images/news.ico">
 <style>
 body {
     font-family: Arial, sans-serif;
@@ -175,6 +176,7 @@ textarea {
 </head>
 <body>
 <header>
+
          <div class="logo">
     		<a href="Controller?command=go_to_index_main">Новостной Портал</a>
     	</div>

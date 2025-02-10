@@ -19,19 +19,17 @@ public class GoToCategoryPage implements Command{
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// Фильтр аутефикации проверяет права доступа к странице
-				try {		
-					List<Category> categories = categoryService.getAllCategory();
-					request.setAttribute("categories", categories);		
+		try {		
+			List<Category> categories = categoryService.getAllCategory();
+			request.setAttribute("categories", categories);		
 					
-					RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/category.jsp");
-					dispatcher.forward(request, response);
-				}
-				catch (Exception e) { 
-					// logging 
-					request.setAttribute("errorMessage", "Произошла общая ошибка."); 
-					request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
-				}
-		
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/category.jsp");
+			dispatcher.forward(request, response);
+			
+		}catch (Exception e) { 
+			// logging 
+			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
+			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
+		}	
 	}
-
 }

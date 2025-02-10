@@ -17,7 +17,8 @@ import jakarta.servlet.http.HttpServletResponse;
 public class GoToAllNewsPage implements Command{
 	private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
 	private int page = 1; 
-	private final int pageSize = 7;
+	private final int pageSize = 9;
+	private int totalPages = 1;
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -30,13 +31,17 @@ public class GoToAllNewsPage implements Command{
 			
 			List<News> newsList = newsService.getNewsByPage(page, pageSize); 
 			int totalNewsCount = newsService.getTotalNewsCount(); 
-			int totalPages = (int) Math.ceil((double) totalNewsCount / pageSize); 
+			
+			if (totalNewsCount != pageSize) {
+				totalPages = (int)Math.ceil((double) totalNewsCount / pageSize);
+			}
 
 			request.setAttribute("newsList", newsList); 			
 			request.setAttribute("currentPage", page); 
 			request.setAttribute("totalPages", totalPages); 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/news.jsp");
 	        dispatcher.forward(request, response);
+	        
 		} catch (ServiceException e) {
 			//logging
 			request.setAttribute("errorMessage", "Произошла ошибка в сервисном слое.");
@@ -46,8 +51,6 @@ public class GoToAllNewsPage implements Command{
 			// logging 
 			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
-		}
-		
+		}	
 	}
-
 }

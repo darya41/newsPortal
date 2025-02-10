@@ -7,7 +7,6 @@ import com.google.protobuf.ServiceException;
 import app.yarmak.newsportal.bean.Auth;
 import app.yarmak.newsportal.bean.User;
 import app.yarmak.newsportal.controller.concrete.Command;
-import app.yarmak.newsportal.dao.DaoException;
 import app.yarmak.newsportal.service.ServiceProvider;
 import app.yarmak.newsportal.service.UserService;
 import jakarta.servlet.RequestDispatcher;
@@ -23,6 +22,7 @@ public class GoToPersonalAccount implements Command {
 	public void execute(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 	
 		// Фильтр аутефикации проверяет права доступа к странице
+		
 		try {
 			HttpSession session = request.getSession(false);
 	        Integer userId = null;
@@ -41,8 +41,7 @@ public class GoToPersonalAccount implements Command {
 	                user = userService.getUserDetailById(userId);
 	               
 	                if (user != null) {
-	                	request.setAttribute("userDetail", user);
-	                	session.setAttribute("userDetail", user); // Добавляем атрибут в сессию
+	                	session.setAttribute("userDetail", user); 
 	                }
 	            }
 	        }       
@@ -52,15 +51,12 @@ public class GoToPersonalAccount implements Command {
 		}
 		catch (ServiceException e) {
 			//logging
-			e.printStackTrace();
 			request.setAttribute("errorMessage", "Произошла ошибка в сервисном слое.");
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response);
 		}catch (Exception e) { 
 			// logging 
 			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
-		}
-        
+		}      
     }
-
 }

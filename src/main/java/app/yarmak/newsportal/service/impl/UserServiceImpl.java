@@ -21,7 +21,6 @@ public class UserServiceImpl implements UserService {
 			return userDao.getUserById(id);
 			
 		} catch (DaoException e) {
-			e.printStackTrace();
 			throw new ServiceException("Ошибка при получении пользователя по ID: " + id, e);
 		}
 	}
@@ -32,7 +31,6 @@ public class UserServiceImpl implements UserService {
 			return userDao.getUserDetailById(id);	
 			
 		} catch (DaoException e) {
-			e.printStackTrace();
 			throw new ServiceException("Ошибка при получении деталей пользователя по ID: " + id, e);
 		}
 	}
@@ -45,7 +43,5 @@ public class UserServiceImpl implements UserService {
 		}catch(DaoException e) {
 			throw new ServiceException("Ошибка при поиске пользователя по токену: " + token, e);
 		}
-
 	}
-
 }

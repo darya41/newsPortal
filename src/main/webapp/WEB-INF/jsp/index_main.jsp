@@ -14,7 +14,7 @@
     <link rel="stylesheet" href=".\css\style.css">
     <title>Главная страница</title>
     
-   
+   	<link rel="icon" type="image/x-icon" href="<%=request.getContextPath() %>/images/news.ico"> 
     <style>
 body {
 	font-family: Arial, sans-serif;

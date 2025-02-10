@@ -39,6 +39,7 @@ public class DoRegistration implements Command{
 		 session.setAttribute("email", username);
 		 		 
 	    try {
+	    	
 	    	if (Validator.isNullOrEmpty(username) || Validator.isNullOrEmpty(email) || 
 	    			Validator.isNullOrEmpty(password) || Validator.isNullOrEmpty(confirmPassword)) { 
 	    		String errorMessage = "Все поля должны быть заполнены."; 

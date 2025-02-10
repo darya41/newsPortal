@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Ошибка</title>
+<link rel="icon" type="image/x-icon" href="<%=request.getContextPath() %>/images/news.ico">
 <style>
 body {
     font-family: Arial, sans-serif;

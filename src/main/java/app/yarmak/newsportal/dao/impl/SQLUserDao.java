@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 import app.yarmak.newsportal.bean.Auth;
@@ -17,7 +18,7 @@ public class SQLUserDao implements UserDao{
 	
 	private final ConnectionPool connectionPool = ConnectionPool.getInstance();
 
-	private static final String QUERY_IS_EMAIL_REGISTRATRED = "SELECT COUNT(*) FROM users WHERE email = ?";
+	private static final String QUERY_IS_EMAIL_REGISTRATRED = "SELECT COUNT(*) FROM users WHERE login = ?";
 	
 	@Override
 	public boolean isEmailRegistered(String email) throws DaoException {
@@ -63,8 +64,8 @@ public class SQLUserDao implements UserDao{
 	            	 String lastName =rs.getString("lastName");
 	                 String userName =rs.getString("firstName");  
 	                 String role = rs.getString("role");	
-	                 String email = rs.getString("email");
-	                 java.sql.Timestamp   registrationDate = rs.getTimestamp("registration_date");
+	                 String email = rs.getString("login");
+	                 Timestamp   registrationDate = rs.getTimestamp("registration_date");
 	                 String status =rs.getString("status");
 	                 String token = rs.getString("token");
 
@@ -99,7 +100,7 @@ public class SQLUserDao implements UserDao{
 	           
 	        if (rs.next()) {
 	               
-	    	   java.sql.Timestamp dateBirth = rs.getTimestamp("dateBirth");
+	    	   Timestamp dateBirth = rs.getTimestamp("dateBirth");
 	    	   String phone = rs.getString("phone");
 	     
 	    	   // Пока что заглушки, в будущем будут новые таблицы

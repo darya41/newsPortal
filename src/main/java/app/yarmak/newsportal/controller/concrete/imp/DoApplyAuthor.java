@@ -40,7 +40,7 @@ public class DoApplyAuthor implements Command{
 			 return; 
 		}
 		 
-		if (Validator.arePasswordMatching(password, confirmPassword)) { 
+		if (!Validator.arePasswordMatching(password, confirmPassword)) { 
 			request.setAttribute("authError", "Пароль не совпадает."); 
 			RequestDispatcher dispatcher = request.getRequestDispatcher("goController?command=go_to_apply_author"); 
 			dispatcher.forward(request, response); 
@@ -50,13 +50,9 @@ public class DoApplyAuthor implements Command{
 		 AuthorApply authorApply = new AuthorApply(firstName,lastName,email,bio,
 				 specialization,workExamples,phone,socialLinks);
 		 
-		 HttpSession session = request.getSession();
-		 session.setAttribute("authorApply", authorApply);
-
-	     session.removeAttribute("authorApply");
-
 	        // Продолжение обработки заявки
-	    }
+	     
+	 	RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/application_submit.jsp");
+		dispatcher.forward(request, response);
+	}
 }
-
-

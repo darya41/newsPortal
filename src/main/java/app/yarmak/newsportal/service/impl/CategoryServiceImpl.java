@@ -16,13 +16,10 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<Category> getAllCategory()  throws ServiceException {
 		
-			try {
-				return categoryDao.findAllCategory();
-				
-			} catch (DaoException e) {
-				e.printStackTrace();
-				throw new ServiceException("Failed to retrieve categories", e);
-			}				
+		try {
+			return categoryDao.findAllCategory();				
+		} catch (DaoException e) {
+			throw new ServiceException("Failed to retrieve categories", e);
+		}				
 	}
-
 }

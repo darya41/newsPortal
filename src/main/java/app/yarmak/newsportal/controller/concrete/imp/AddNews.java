@@ -11,7 +11,6 @@ import app.yarmak.newsportal.bean.News;
 import app.yarmak.newsportal.controller.concrete.Command;
 import app.yarmak.newsportal.service.NewsService;
 import app.yarmak.newsportal.service.ServiceProvider;
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,8 +22,7 @@ public class AddNews implements Command {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) 
-			throws ServletException, IOException {
-		
+			throws ServletException, IOException {		
 		
 		try {
 			String title = request.getParameter("title");
@@ -43,18 +41,15 @@ public class AddNews implements Command {
 			News news = new News(0,title,brief,content,author,publicationDate,idCategory,0,priority,"active");
 			newsService.addNews(news);
 
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index_main.jsp");
-	        dispatcher.forward(request, response);
+			response.sendRedirect("goController?command=go_to_index_main");	
 			
 		} catch (ServiceException e) {
 			//logging
-			e.printStackTrace();
 			request.setAttribute("errorMessage", "Произошла ошибка в сервисном слое.");
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response);
 		}	
 		catch (Exception e) { 
 			// logging 
-			e.printStackTrace();
 			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
 		}

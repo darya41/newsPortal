@@ -24,6 +24,7 @@ public class GoToEditNews implements Command{
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		// Фильтр аутефикации проверяет права доступа к странице
+		
 		try {
 			int idNews = Integer.parseInt(request.getParameter("id"));
 			News news = newsService.getNewsById(idNews);
@@ -33,6 +34,7 @@ public class GoToEditNews implements Command{
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/editNews.jsp");
 	        dispatcher.forward(request, response);
+	        
 		} catch (ServiceException e) {
 			//logging
 			request.setAttribute("errorMessage", "Произошла ошибка в сервисном слое.");
@@ -44,5 +46,4 @@ public class GoToEditNews implements Command{
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
 		}
 	}
-
 }

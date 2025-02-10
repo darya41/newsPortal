@@ -246,39 +246,43 @@ public class SQLNewsDao implements NewsDao{
 		return newsList;
 	}
 
-	private static final String QUERY_GET_SEARCH_RESULTS = "SELECT * FROM news WHERE title LIKE ? OR brief LIKE ? OR content LIKE ? ORDER BY priority DESC LIMIT ? OFFSET ?";
-	
+	private static final String QUERY_GET_SEARCH_RESULTS = "SELECT * FROM news WHERE LOWER(title) LIKE ? OR LOWER(brief) LIKE ? LIMIT ? OFFSET ?;"; // Без ORDER BY
+	   
 	@Override
 	public List<News> searchNews(String query, int page, int pageSize) throws DaoException {
 	    List<News> newsList = new ArrayList<>();
-	    Connection con = null; 
-	    PreparedStatement ps = null; 
+	    Connection con = null;
+	    PreparedStatement ps = null;
 	    ResultSet rs = null;
 
 	    try {
+	    	
+	        int offset = (page - 1) * pageSize;
+
 	        con = connectionPool.takeConnection();
 	        ps = con.prepareStatement(QUERY_GET_SEARCH_RESULTS);
-	        
-	        String searchQuery = "%" + query + "%";
+
+	        String searchQuery = "%" + query.toLowerCase() + "%";
 	        ps.setString(1, searchQuery);
 	        ps.setString(2, searchQuery);
-	        ps.setString(3, searchQuery);
-	        
-	        ps.setInt(4, pageSize);
-	        ps.setInt(5, (page - 1) * pageSize);
-	        
+
+	        ps.setInt(3, pageSize);
+	        ps.setInt(4, offset);
+
 	        rs = ps.executeQuery();
-	        
-	        while (rs.next()) {             
+
+	        while (rs.next()) {	            
 	            News news = createNewsFromResultSet(rs);
-	            newsList.add(news);          
+	            newsList.add(news);
 	        }
-	    } catch (SQLException e) {
-	        throw new DaoException("Ошибка в работе с данными", e);
+
+	    } catch (SQLException e) {	    	
+	        throw new DaoException("Ошибка в работе с данными", e);	        
 	    } catch (ConnectionPoolException e) {
+	    	e.printStackTrace();
 	        throw new DaoException("Ошибка в работе с пулом соединений", e);
-	    } finally { 
-	        connectionPool.closeConnection(con, ps, rs); 
+	    } finally {
+	        connectionPool.closeConnection(con, ps, rs);
 	    }
 
 	    return newsList;
@@ -308,10 +312,10 @@ public class SQLNewsDao implements NewsDao{
 			connectionPool.closeConnection(con, st, rs); 
 			}
 		return 0;
-	}
-	
+	}	
 
-	private static final String QUERY_GET_TOTAL_SEARCH_RESULTS = "SELECT COUNT(*) FROM news WHERE title LIKE ? OR brief LIKE ? OR content LIKE ?";
+	private static final String QUERY_GET_TOTAL_SEARCH_RESULTS = "SELECT COUNT(*) FROM news WHERE LOWER(title) LIKE ? OR LOWER(brief) LIKE ?";
+	
 	@Override
 	public int getTotalSeachNewsResult(String query) throws DaoException {
 		Connection con = null; 
@@ -321,10 +325,9 @@ public class SQLNewsDao implements NewsDao{
 			 con = connectionPool.takeConnection();
 		        ps = con.prepareStatement(QUERY_GET_TOTAL_SEARCH_RESULTS);
 		        
-		        String searchQuery = "%" + query + "%";
+		        String searchQuery = "%" + query.toLowerCase() + "%";
 		        ps.setString(1, searchQuery);
 		        ps.setString(2, searchQuery);
-		        ps.setString(3, searchQuery);
 		        
 		        rs = ps.executeQuery(); 
 		        if (rs.next()) { 

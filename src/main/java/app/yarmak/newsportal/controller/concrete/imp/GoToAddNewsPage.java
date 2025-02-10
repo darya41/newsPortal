@@ -20,6 +20,7 @@ public class GoToAddNewsPage implements Command{
 	public void execute(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		
 		// Фильтр аутефикации проверяет права доступа к странице
+		
 		try {
 			List<Category> categories = categoryService.getAllCategory();
 			request.setAttribute("categories", categories);				

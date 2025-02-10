@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Новости</title>
+<link rel="icon" type="image/x-icon" href="<%=request.getContextPath() %>/images/news.ico">
 <style>
 footer {
 	background-color: #333;
@@ -45,6 +46,9 @@ header .logo {
     font-size: 24px;
     font-weight: bold;
     margin-left: 20px;
+}
+.logo a {
+color: white;
 }
 
 nav {
@@ -96,51 +100,120 @@ nav .login-button {
     border-radius: 5px;
 }
 
-.news-list {
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 800px;
-    margin: 20px auto;
-}
+  main {
+            width: 80%;
+            margin: 20px auto;
+            overflow: hidden; /* Добавляем overflow: hidden; для корректной работы с float */
+        }
 
-.news-item {
-    margin-bottom: 20px;
-}
+        .search-bar {
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-.news-item h2 {
-    margin: 0;
-    font-size: 1.5em;
-}
+        .search-bar form {
+         display: flex;
+            justify-content: center;  /* Center the search bar items */
+            align-items: center;
+        }
 
-.news-item p {
-    margin: 5px 0;
-}
+        .search-bar input[type="text"] {
+            padding: 10px;
+            width: 60%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
 
-.pagination {
-    text-align: center;
-    margin-top: 20px;
-}
+        .search-bar button {
+            background-color: #1abc9c; /* Updated Button Color */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
 
-.pagination a {
-    margin: 0 5px;
-    padding: 10px 15px;
-    background-color: #1abc9c;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-}
+        .search-bar button:hover {
+            background-color: #16a085; /* Darker shade for hover */
+        }
 
-.pagination a:hover {
-    background-color: #005bb5;
-}
+        .news-list {
+        margin-top:40px;
+            display: flex; /* Use flexbox */
+            flex-wrap: wrap; /* Allow items to wrap to the next line */
+            justify-content: space-around; /* Distribute items evenly */
+        }
 
-.pagination .current-page {
-    font-weight: bold;
-    background-color: #005bb5;
-}
-.search-bar { display: flex; justify-content: center; margin: 20px 0; margin-top:30px; } .search-bar input[type="text"] { width: 300px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; } .search-bar button { padding: 10px 20px; background-color: #1abc9c; color: white; border: none; border-radius: 5px; margin-left: 10px; cursor: pointer; } .search-bar button:hover { background-color: #005bb5; }
+        .news-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            width: 30%; /* Adjust as needed */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            box-sizing: border-box; /* Important for padding and width */
+        }
+
+        .news-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-item h2 {
+            margin-top: 0;
+            font-size: 20px;
+            color: #333;
+        }
+
+        .news-item p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .news-item a {
+            display: inline-block;
+            background-color: #1abc9c;
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .news-item a:hover {
+            background-color: #2980b9;
+        }
+
+        /* Стили для пагинации */
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .pagination a, .pagination span {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 0 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+             text-decoration: none;
+            color: #333;
+            background-color: #fff;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination a:hover {
+            background-color: #eee;
+        }
+
+        .pagination .current-page {
+            background-color: #1abc9c;
+            color: white;
+            border-color: #1abc9c;
+        }
 </style>
 </head>
 <body>

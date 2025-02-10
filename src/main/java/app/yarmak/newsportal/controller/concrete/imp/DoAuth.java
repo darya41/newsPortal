@@ -35,6 +35,7 @@ public class DoAuth implements Command {
 		String rememberMe = request.getParameter("remember-me"); 		
 		
 		try {
+			
 			if (Validator.isNullOrEmpty(login)|| Validator.isNullOrEmpty(password)) { 
 				String errorMessage = URLEncoder.encode("Логин и пароль должны быть заполнены.", StandardCharsets.UTF_8.toString()); 
 				response.sendRedirect("goController?command=go_to_auth&authError=" + errorMessage); 
@@ -65,13 +66,11 @@ public class DoAuth implements Command {
 			 
 		} catch (ServiceException e) {
 			//logging
-			e.printStackTrace();
 			request.setAttribute("errorMessage", "Произошла ошибка в сервисном слое.");
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response);
 		}	
 		catch (Exception e) { 
 			// logging 
-			e.printStackTrace();
 			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
 		}

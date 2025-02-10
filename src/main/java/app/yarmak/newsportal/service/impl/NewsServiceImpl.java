@@ -78,7 +78,6 @@ public class NewsServiceImpl implements NewsService{
 		}	
 	}
 
-
 	@Override
 	public int getTotalNewsCount() throws ServiceException {
 		try {
@@ -155,5 +154,4 @@ public class NewsServiceImpl implements NewsService{
 	        throw new ServiceException("Failed to retrieve total search news result",e);
 		}
 	}
-
 }

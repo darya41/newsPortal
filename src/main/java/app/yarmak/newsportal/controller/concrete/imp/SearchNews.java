@@ -17,20 +17,28 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SearchNews implements Command {
     
     private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
-    private final int pageSize = 7;
+    private final int pageSize = 9;
     private int page = 1; 
+	private int totalPages = 1;
     
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String query = request.getParameter("query"); 
         List<News> newsList = null; 
+        
         try { 
             if (request.getParameter("page") != null) {             
                 page = Integer.parseInt(request.getParameter("page")); 
             }
-            newsList = newsService.searchNews(query,page,pageSize); 
+            
             int totalNewsCount = newsService.getTotalSeachNewsResult(query);
-            int totalPages = (int) Math.ceil((double) totalNewsCount / pageSize);
+            
+            if (totalNewsCount != pageSize) {
+				totalPages = (int)Math.ceil((double) totalNewsCount / pageSize);
+			} 
+            
+            newsList = newsService.searchNews(query,page,pageSize);           
+            
             request.setAttribute("newsList", newsList);             
             request.setAttribute("currentPage", page); 
             request.setAttribute("totalPages", totalPages); 

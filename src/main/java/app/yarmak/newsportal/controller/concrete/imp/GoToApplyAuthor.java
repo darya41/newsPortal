@@ -15,6 +15,7 @@ public class GoToApplyAuthor implements Command {
 	public void execute(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 		
 		// Фильтр аутефикации проверяет права доступа к странице
+		
 		try {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/apply_author.jsp");
 			dispatcher.forward(request, response);
@@ -23,8 +24,6 @@ public class GoToApplyAuthor implements Command {
 			// logging 
 			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
-		}
-		
+		}	
 	}
-
 }

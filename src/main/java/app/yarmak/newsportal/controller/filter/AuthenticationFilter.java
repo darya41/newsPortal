@@ -2,8 +2,6 @@ package app.yarmak.newsportal.controller.filter;
 
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.Arrays;
-import java.util.List;
 
 import app.yarmak.newsportal.bean.Auth;
 import jakarta.servlet.FilterChain;
@@ -24,33 +22,6 @@ public class AuthenticationFilter extends HttpFilter {
 
     private static final String URL = "Controller?command=go_to_index_main&errorMessage=" + errorMessage;
 
-    private static final List<String> PUBLIC_COMMANDS = Arrays.asList( 
-            "go_to_index_main", "go_to_all_news_page", 
-            "go_to_auth", "do_auth",
-            "go_to_registration", "do_registration",
-            "do_apply_authot", "go_to_apply_author",
-            "go_to_application_submit", "search_news",
-            "go_to_category_page"
-    );
-
-    private static final List<String> AUTHOR_COMMANDS = Arrays.asList( 
-            "add_news", "delete_news", "go_to_page_news",
-            "edit_news", "go_to_edit_news_page",
-            "go_to_edit_news", "go_to_personal_account",
-            "log_out"
-    );
-
-    private static final List<String> ADMIN_COMMANDS = Arrays.asList( 
-            "delete_news", "go_to_page_news",
-            "edit_news", "go_to_edit_news", "go_to_personal_account",
-            "log_out"
-    );
-
-    private static final List<String> USER_COMMANDS = Arrays.asList(
-            "go_to_personal_account", "go_to_page_news",
-            "log_out"
-    );
-    
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         // Инициализация фильтра
@@ -65,7 +36,7 @@ public class AuthenticationFilter extends HttpFilter {
         String path = httpRequest.getRequestURI().substring(httpRequest.getContextPath().length());
         String command = httpRequest.getParameter("command");
 
-        if ("/Controller".equals(path) && PUBLIC_COMMANDS.contains(command)) {
+        if ("/Controller".equals(path) && Permissions.PUBLIC_COMMANDS.contains(command)) {
             chain.doFilter(request, response);
             return;
         }
@@ -80,24 +51,11 @@ public class AuthenticationFilter extends HttpFilter {
         Auth auth = (Auth) httpRequest.getSession().getAttribute("user");
         String userRole = auth.getRole();
 
-        if ("/Controller".equals(path)) {
-        	System.out.println("-------1");
-            if (AUTHOR_COMMANDS.contains(command) && "author".equals(userRole)) {
-                chain.doFilter(request, response);
-                return;
-            }
-            
-            if (ADMIN_COMMANDS.contains(command) && "admin".equals(userRole)) {
-                chain.doFilter(request, response);
-                return;
-            }
-            
-            if (USER_COMMANDS.contains(command)) {
-                chain.doFilter(request, response);
-                return;
-            }
+        if ("/Controller".equals(path) && Permissions.isCommandAllowed(command, userRole)) {
+            chain.doFilter(request, response);
+            return;
         }
-        
+               
         if (!httpResponse.isCommitted()) {
             httpResponse.sendRedirect(URL);
         }

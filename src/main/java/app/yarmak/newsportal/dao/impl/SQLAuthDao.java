@@ -92,7 +92,9 @@ public class SQLAuthDao implements AuthDao {
 		
 		        try  {
 		        	con = connectionPool.takeConnection();		    		 
-		  		    ps = con.prepareStatement( FIND_USER_BY_TOKEN);
+		  		    
+					ps = con.prepareStatement( FIND_USER_BY_TOKEN);
+					 
 		            ps.setString(1, token);
 		            rs = ps.executeQuery();
 		             
@@ -110,9 +112,10 @@ public class SQLAuthDao implements AuthDao {
 		            
 		        } catch (SQLException e) {
 		            throw new DaoException("Failed to retrieve user by token", e);
-		        } catch (ConnectionPoolException e) {
+		        } catch (ConnectionPoolException e  ) {
 		        	throw new DaoException("Failed to retrieve user by token", e);
-				
+				}catch (Exception e) {
+					throw new DaoException("Failed to retrieve user by token", e);
 				}finally { 
 					connectionPool.closeConnection(con, ps, rs); 
 				}

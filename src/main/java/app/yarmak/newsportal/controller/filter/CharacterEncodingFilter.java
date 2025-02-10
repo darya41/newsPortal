@@ -38,6 +38,4 @@ public class CharacterEncodingFilter extends HttpFilter  implements Filter{
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-
 }

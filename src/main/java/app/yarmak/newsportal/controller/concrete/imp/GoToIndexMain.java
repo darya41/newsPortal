@@ -26,6 +26,7 @@ public class GoToIndexMain implements Command{
 	     List<News> popularNews = null;
 	    
 		try {
+			
 			if (request.getParameter("errorMessage")!=null) {
 		    	request.setAttribute("errorMessage", request.getParameter("errorMessage"));	
 		    }
@@ -41,16 +42,13 @@ public class GoToIndexMain implements Command{
 	        
 		} catch (ServiceException e) {
 			//logging
-			e.printStackTrace();
 			request.setAttribute("errorMessage", "Произошла ошибка в сервисном слое.");
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response);
 		}	
 		catch (Exception e) { 
 			// logging 
-			e.printStackTrace();
 			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
 		}		
 	}
-
 }

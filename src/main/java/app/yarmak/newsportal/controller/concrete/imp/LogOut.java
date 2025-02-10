@@ -31,13 +31,10 @@ public class LogOut implements Command{
 				 }
 
 		        response.sendRedirect("goController?command=go_to_index_main");
-		}	
-		catch (Exception e) { 
+		} catch (Exception e) { 
 			// logging 
 			request.setAttribute("errorMessage", "Произошла общая ошибка."); 
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
-		}
-		
+		}	
 	}
-
 }

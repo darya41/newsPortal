@@ -15,11 +15,11 @@ public class Validator {
 		return pattern.matcher(email).matches();
 	}
 	
-	public static boolean arePasswordMatching(
-			String password, String confirmPassword) {
-		return password!= null && confirmPassword !=null 
-				&& password.equals(confirmPassword);
+	public static boolean arePasswordMatching(String password, String confirmPassword) {
+	    return password != null && confirmPassword != null
+	           && password.trim().equals(confirmPassword.trim());
 	}
+
 	
 	public static boolean isValidId(String id) {
 		try {

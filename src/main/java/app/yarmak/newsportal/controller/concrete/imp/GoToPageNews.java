@@ -17,9 +17,9 @@ public class GoToPageNews implements Command{
 	private final NewsService newsService = ServiceProvider.getInstance().getNewsService();
 	@Override
 	public void execute(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
-		
-		
+				
 		try {
+			
 			int idNews = Integer.parseInt(request.getParameter("id"));
 			News news = newsService.getNewsById(idNews);
 			request.setAttribute("news", news);	
@@ -38,5 +38,4 @@ public class GoToPageNews implements Command{
 			request.getRequestDispatcher("WEB-INF/jsp/error.jsp").forward(request, response); 
 		}		
 	}
-
 }
