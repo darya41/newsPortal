@@ -32,15 +32,22 @@
 #Технологии
 
 Язык программирования: Java
+
 Веб-технологии: Servlets, JSP
+
 База данных: MySQL
+
 Фронтенд: HTML, CSS, JavaScript
+
 Сборка: Maven
+
 Веб-сервер: Apache Tomcat
 
 
 Контакты
 
 Автор: Darya Yarmak
+
 Email: daraermak41@gmail.com
+
 GitHub: darya41  
